@@ -1,0 +1,28 @@
+# https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository
+name: Feature Request
+description: 提出一個功能請求
+labels: ['enhancement']
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 描述你的請求
+      description: 清楚簡明地描述你希望達成的功能與目的。
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 解決方案
+      description: 你有什麼解決方案或想法來實現這個功能，請附上參考資料（例：Figma 連結）。
+    validations:
+      required: true
+
+  - type: textarea
+    id: info
+    attributes:
+      label: 其他資訊
+      description: 其他有關的附加資訊。（例：Notion、Ora 任務等等）。
+    validations:
+      required: true

@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "@oppa-toy-creative/root"
+		},
+		{
+			"path": "apps/directus-oppa-toy"
+		},
+		{
+			"path": "apps/oppa-toy-creative-web"
+		},
+	],
+	"settings": {
+		"editor.tabSize": 2,
+		"html.format.wrapAttributes": "force-expand-multiline",
+		"cSpell.words": [
+			"gsap",
+			"nuxt",
+			"OPPA"
+		]
+	}
+}
