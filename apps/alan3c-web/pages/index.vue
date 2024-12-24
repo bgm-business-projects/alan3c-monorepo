@@ -1,6 +1,7 @@
 <template>
   <div class="w-full flex flex-col">
     home
+    <div>test</div>
   </div>
 </template>
 
@@ -10,7 +11,7 @@ useSeoMeta({
   description: 'home',
   keywords: 'home',
   ogTitle: 'home',
-  ogDescription: 'home'
+  ogDescription: 'home',
 })
 </script>
 
