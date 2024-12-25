@@ -14,21 +14,21 @@
     />
   </div>
 </template>
+
 <script lang="ts" setup>
 import { useImage } from '@vueuse/core'
 
 interface Props {
   src: string;
   alt?: string;
-  color?: string; 
+  color?: string;
 }
 const props = withDefaults(defineProps<Props>(), {
-  color: 'black'
-});
+  color: 'black',
+})
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
-}>();
+}>()
 const { isLoading } = useImage({ src: props.src })
-
 </script>

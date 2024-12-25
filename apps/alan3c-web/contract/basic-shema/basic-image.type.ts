@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 export const basicImageSchema = z.object({
   id: z.string().uuid(),
@@ -26,6 +26,6 @@ export const basicImageSchema = z.object({
   focal_point_y: z.number().nullable(),
   tus_id: z.string().nullable(),
   tus_data: z.unknown().nullable(),
-});
+})
 
 export type BasicImage = z.infer<typeof basicImageSchema>

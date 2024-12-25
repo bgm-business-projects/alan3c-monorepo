@@ -4,57 +4,61 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   modules: [
-    "nuxt-quasar-ui", 
-    "@nuxtjs/i18n",
+    'nuxt-quasar-ui',
+    '@nuxtjs/i18n',
     '@pinia/nuxt',
     'dayjs-nuxt',
-    "nuxt-gtag",
+    'nuxt-gtag',
     '@nuxt/image',
     '@unocss/nuxt',
     '@vueuse/nuxt',
-    'nuxt-swiper'
+    'nuxt-swiper',
   ],
+  i18n: {
+    strategy: 'no_prefix',
+    vueI18n: './i18n.config.ts',
+  },
   image: {
     domains: [
-      'https://oppa-toy-creative.de.r.appspot.com'
-    ]
+      'https://alan3c.de.r.appspot.com',
+    ],
   },
   quasar: {
     plugins: [
       'Notify',
       'Dialog',
-      'Loading'
+      'Loading',
     ],
     config: {
       notify: {},
     },
-    extras:{
+    extras: {
       fontIcons: [
-        'material-symbols-outlined'
-      ]
-    }
+        'material-symbols-outlined',
+      ],
+    },
   },
   dayjs: {
-    locales: [ 'zh-tw'],
+    locales: ['zh-tw'],
     defaultLocale: 'zh-tw',
     defaultTimezone: 'Asia/Taipei',
-    plugins: [ 'utc', 'timezone' ]
+    plugins: ['utc', 'timezone'],
   },
   vite: {
     css: {
       preprocessorOptions: {
         sass: {
-          additionalData: '@use "@/assets/_colors.sass" as *\n'
-        }
-      }
-    }
+          additionalData: '@use "@/assets/_colors.sass" as *\n',
+        },
+      },
+    },
   },
   css: [
-    '@/assets/style/main.sass'
+    '@/assets/style/main.sass',
   ],
   unocss: {
     nuxtLayers: true,
-    preflight: true
+    preflight: true,
   },
   // devServer: {
   //   https: true
@@ -62,7 +66,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       // 客戶端和服務端都可以訪問的環境變數
+      // eslint-disable-next-line node/prefer-global/process
       apiBaseUrl: process.env.NUXT_API_BASE_URL || 'https://localhost:3000',
-    }
-  }
+    },
+  },
 })

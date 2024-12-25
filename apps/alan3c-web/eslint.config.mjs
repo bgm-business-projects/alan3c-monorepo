@@ -40,7 +40,7 @@ export default antfu(
       'vue/block-order': ['error', {
         order: [['script', 'template'], 'style'],
       }],
-      // 'vue/multi-word-component-names': 'error',
+      'vue/multi-word-component-names': 'off',
     },
   },
   {

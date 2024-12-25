@@ -1,10 +1,12 @@
 <template>
-  <slot :bind="bind"></slot>
+  <slot :bind="bind" />
 </template>
+
 <script lang="ts" setup>
 const el = ref<Element>()
-function bind (ref: Element|null|ComponentPublicInstance) {
-  if(!(ref instanceof Element) ) return
+function bind(ref: Element | null | ComponentPublicInstance) {
+  if (!(ref instanceof Element))
+    return
   el.value = ref
 }
 </script>

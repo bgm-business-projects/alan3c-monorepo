@@ -1,1 +1,1 @@
-export * from './basic-image.type';
+export * from './basic-image.type'

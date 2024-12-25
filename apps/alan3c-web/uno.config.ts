@@ -1,99 +1,85 @@
-import { mergeConfigs } from '@unocss/core'
-import config from './.nuxt/uno.config.mjs'
-import { transformerDirectives } from 'unocss'
+import { kebabCase } from 'lodash-es'
+import { filter, isTruthy, join, map, pipe } from 'remeda'
+import { defineConfig, presetUno } from 'unocss'
 
-const DIRECTION_MAPPINGS: { [key: string]: string } = { t: 'top', r: 'right', b: 'bottom', l: 'left' }
+const PREFIX = 'bg|text|border' as const
 
-// 顏色查找函數
-const resolveColor = (theme: any, color: string): string => {
-  const keys = color.split('-')
-  let current = theme.colors
-  for (const key of keys) {
-    if (current[key]) {
-      current = current[key]
-    } else {
-      return color // 如果未找到，返回原始顏色
-    }
-  }
-  return typeof current === 'string' ? current : color
-}
-
-export default mergeConfigs([config, {
-  rules: [
-    // 設定邊框顏色和預設樣式
-    [
-      /^b(t|r|b|l)?-(.*)/,
-      ([, d, c], { theme }) => {
-        const direction = d ? DIRECTION_MAPPINGS[d] || '' : ''
-        const p = direction ? `border-${direction}` : 'border'
-        const resolvedColor = resolveColor(theme, c)
-        return {
-          [p]: `1px solid ${resolvedColor}`,
-        }
-      },
-    ],
-    // 設定邊框樣式和寬度
-    [
-      /^b(t|r|b|l)?-(\d+px|solid|dotted|dashed|double|groove|ridge|inset|outset)$/,
-      ([, d, s]) => {
-        const direction = d ? DIRECTION_MAPPINGS[d] || '' : ''
-        const p = direction ? `border-${direction}` : 'border'
-        if (/^\d/.test(s)) {
-          return {
-            [`${p}-width`]: s,
-          }
-        } else {
-          return {
-            [`${p}-style`]: s,
-          }
-        }
-      },
-    ],
-    [
-      'max-width',{
-        'width': '100%',
-        'max-width': '80rem'
-      }
-    ],
-    [
-      'layout-padding', {
-        'padding-left': '5%',
-        'padding-right': '5%'
-      }
-    ],
-    [
-      'flex-center', {
-        'display': 'flex',
-        'justify-content': 'center',
-        'align-items': 'center'
-      }
-    ],
-  ],
+export default defineConfig({
   theme: {
     colors: {
-      primary: {
-        red: '#7A0D0D',
-        white: '#fff',
-        orange: '#FF7A00'
-      },
-      light: {
-        gray: '#EAEAEA',
-        red: '#EBE9E9'
-      },
-      highlight: {
-        yellow: '#FFF6EB'
-      },
-      dark: {
-        gray: '#6F6F6F',
-        red: '#5B1A1A'
-      }
+      primary: '#FFA500',
+      secondary: '#FFD18C',
+      accent: '#FFF8D6',
+      dark: '#CA6A2E',
     },
-    extend: {
-    }
   },
-  transformers: [
-    // @ts-expect-error    
-    transformerDirectives()
-  ]
-  // your overrides
-}])
+  shortcuts: [
+    {
+      'fit': 'w-full h-full',
+      'flex-col': 'flex flex-col',
+      'flex-center': 'flex justify-center items-center',
+      'border': 'border-solid border-1 border-[#E1E1E1]',
+      'max-width': 'w-full max-w-80rem',
+      'layout-padding': 'px-5%',
+    },
+  ],
+  rules: [
+    [
+      new RegExp(`(${PREFIX})-(.*)$`),
+      ([prefix, value], { theme }) => {
+        const typeCssMap: Record<(typeof PREFIX)[number], string> = {
+          bg: 'background-color',
+          text: 'color',
+          border: 'border-color',
+        }
+
+        const name = typeCssMap[prefix]
+
+        if (theme.colors?.[value]) {
+          return {
+            [name]: theme.colors[value],
+          }
+        }
+      },
+    ],
+  ],
+  safelist: [
+    /** 相容 quasar color 參數用法，需要事先產生 class
+     *
+     * https://quasar.dev/style/color-palette#adding-your-own-colors
+     * https://unocss.dev/guide/extracting#safelist
+     */
+    ({ theme }) => {
+      const prefixes = PREFIX.split('|')
+      const suffixes = Object.keys(theme.colors || {})
+
+      // 組合所有可能的 class
+      const combinations = prefixes.flatMap((prefix) =>
+        suffixes.map((suffix) => `${prefix}-${kebabCase(suffix)}`),
+      )
+
+      return combinations
+    },
+  ],
+  preflights: [
+    {
+      // 覆蓋 Quasar 預設 color 之 CSS 變數
+      getCSS({ theme }) {
+        const list = pipe(
+          Object.entries(theme.colors || {}),
+          map(([key, value]) => {
+            if (typeof value === 'string' && value.startsWith('#'))
+              return `--q-${kebabCase(key)}: ${value}`
+          }),
+          filter(isTruthy),
+          join(';'),
+        )
+
+        return `:root { ${list} }`
+      },
+    },
+  ],
+  presets: [
+    presetUno(),
+  ],
+})

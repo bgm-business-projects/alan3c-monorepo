@@ -12,10 +12,11 @@
   "dependencies": {
     "@nuxt/image": "^1.7.0",
     "@nuxt/types": "^2.18.1",
-    "@nuxtjs/i18n": "^8.3.1",
+    "@nuxtjs/i18n": "^9.1.1",
     "@pinia/nuxt": "^0.5.1",
     "@quasar/extras": "^1.16.12",
     "@ts-rest/core": "^3.30.4",
+    "@types/animejs": "^3.1.12",
     "@typescript-eslint/eslint-plugin": "^8.18.2",
     "@typescript-eslint/parser": "^8.18.2",
     "@unocss/core": "^0.62.3",
@@ -24,6 +25,7 @@
     "@unocss/webpack": "^0.62.3",
     "@vueuse/core": "^10.11.0",
     "@vueuse/nuxt": "^10.11.0",
+    "animejs": "^3.2.2",
     "esbuild": "^0.23.0",
     "gsap": "^3.12.5",
     "nuxt": "^3.12.3",
@@ -32,6 +34,7 @@
     "nuxt-swiper": "^1.2.2",
     "pinia": "^2.1.7",
     "quasar": "^2.16.6",
+    "remeda": "^2.19.0",
     "unocss": "^0.61.7",
     "vue": "latest",
     "zod": "^3.22.4"
