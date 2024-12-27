@@ -8,11 +8,14 @@
         <nuxt-page />
       </div>
     </template>
-    <template #footer />
+    <template #footer>
+      <the-footer />
+    </template>
   </nuxt-layout>
 </template>
 
 <script setup lang="ts">
+import TheFooter from './components/the-footer.vue'
 import TheHeader from './components/the-header.vue'
 </script>
 

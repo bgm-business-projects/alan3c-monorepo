@@ -1,7 +1,7 @@
 <template>
-  <div class="fixed py-1rem flex justify-center layout-padding w-full">
+  <div class="fixed py-1rem flex justify-center layout-padding w-full z-9999">
     <div class="flex items-center gap-2rem max-width border rounded-1rem lg:border-none lg:rounded-0 overflow-hidden">
-      <div class="backdrop-blur-md lg:backdrop-blur-none w-full lg:w-auto flex flex-col">
+      <div class="backdrop-blur-xl lg:backdrop-blur-none w-full lg:w-auto flex flex-col">
         <div class="flex items-center p-1rem lg:p-0">
           <div class="flex flex-row items-center gap-.5rem">
             <nuxt-img
@@ -81,23 +81,33 @@
         </div>
       </div>
       <!-- 電腦版選單 -->
-      <div class="hidden lg:!flex items-center border rounded-.5rem px-2rem py-.5rem gap-x-1.5rem flex-1 lg:!backdrop-blur-sm">
+      <div class="hidden lg:!flex items-center border rounded-.5rem px-2rem py-.5rem gap-x-1.5rem flex-1 lg:!backdrop-blur-xl">
         <div class="flex gap-x-1.5rem gap-y-.5rem  flex-1">
           <nuxt-link
             v-for="item in data"
             :key="item.name"
             :to="localePath(item.route)"
-            class="font-500"
+            class="font-500 relative py-.15rem link"
           >
+            <div
+              class="absolute bottom-0 border-primary border-solid border-b-3px duration-300"
+              :class="isActiveStyle(localePath(item.route))"
+            />
             {{ item.name }}
           </nuxt-link>
         </div>
-        <div class="flex gap-.5rem font-500">
-          <div @click="setLocale('zh')">
+        <div class="flex font-500 relative">
+          <div
+            class="h-100% aspect-1/1 absolute bg-primary rounded-full duration-300"
+            :class="circlePosition"
+          />
+          <div class="relative px-.2rem cursor-pointer" @click="setLocale('zh')">
             中
           </div>
-          <div>/</div>
-          <div @click="setLocale('en')">
+          <div class="relative px-.3rem">
+            /
+          </div>
+          <div class="relative px-.2rem cursor-pointer" @click="setLocale('en')">
             英
           </div>
         </div>
@@ -110,12 +120,15 @@
 import { ref } from 'vue'
 
 const { setLocale } = useI18n()
+const { locale } = useI18n()
+
+const route = useRoute()
 
 const data = ref([
   {
     name: '老闆的家',
     route: {
-      name: 'index',
+      name: 'home',
     },
   },
   {
@@ -145,13 +158,13 @@ const data = ref([
   {
     name: '參考文件',
     route: {
-      name: 'artificial-intelligence',
+      name: 'reference-document',
     },
   },
   {
     name: '課程教材',
     route: {
-      name: 'artificial-intelligence',
+      name: 'course-materials',
     },
   },
   {
@@ -165,7 +178,28 @@ const data = ref([
 const localePath = useLocalePath()
 
 const showMenu = ref(false)
+
+const circlePosition = computed(() => {
+  if (locale.value === 'zh') {
+    return 'left-0'
+  }
+  else if (locale.value === 'en') {
+    return 'left-100% translate-x-[-100%]'
+  }
+  return ''
+})
+
+function isActiveStyle(localePath: string) {
+  if (route.name === 'home' && localePath === '/') {
+    return 'w-full'
+  }
+  return route.name === localePath.split('/')[1] ? 'w-full' : 'w-0'
+}
 </script>
 
 <style scoped lang="sass">
+.link
+  &:hover
+    div
+      width: 100%
 </style>

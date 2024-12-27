@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@vueuse/nuxt',
     'nuxt-swiper',
+    'nuxt-marquee',
   ],
   i18n: {
     strategy: 'no_prefix',
@@ -68,6 +69,15 @@ export default defineNuxtConfig({
       // 客戶端和服務端都可以訪問的環境變數
       // eslint-disable-next-line node/prefer-global/process
       apiBaseUrl: process.env.NUXT_API_BASE_URL || 'https://localhost:3000',
+    },
+  },
+  hooks: {
+    'pages:extend': function (pages) {
+      pages.push({
+        name: 'home',
+        path: '/',
+        file: '~/pages/home/index.vue',
+      })
     },
   },
 })

@@ -1,7 +1,7 @@
 <template>
-  <div class="layout-padding flex flex-col items-center">
+  <div class="flex flex-col items-center">
     <slot name="header" />
-    <div class="w-full py-4.5rem max-width">
+    <div class="w-full py-4.5rem">
       <slot />
     </div>
     <slot name="footer" />
