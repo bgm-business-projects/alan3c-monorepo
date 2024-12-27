@@ -8,6 +8,9 @@
         <div
           v-for="category in traineeCategories" :key="category.id"
           class="bg-[#f4f4f4] px-1rem py-.2rem rounded-.5rem"
+          :class="{
+            'bg-accent': category.translations.name === currentCategory,
+          }"
         >
           <nuxt-link
             :to="localePath({
@@ -109,11 +112,11 @@ const { data: trainee, refresh: refreshTrainee } = useLazyAsyncData('trainee', a
 })
 
 useSeoMeta({
-  title: 'home',
-  description: 'home',
-  keywords: 'home',
-  ogTitle: 'home',
-  ogDescription: 'home',
+  title: '我的徒弟',
+  description: '我的徒弟',
+  keywords: '我的徒弟',
+  ogTitle: '我的徒弟',
+  ogDescription: '我的徒弟',
 })
 </script>
 

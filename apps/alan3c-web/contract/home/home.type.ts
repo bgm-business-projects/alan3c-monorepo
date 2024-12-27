@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { basicImageSchema } from '../basic-shema'
+import { basicFileSchema } from '../basic-shema'
 
 const incumbentSchema = z.object({
   title: z.string(),
@@ -23,7 +23,7 @@ export const homeSchema = z.object(
       {
         id: z.number(),
         translations: z.array(translationSchema),
-        mainImage: basicImageSchema,
+        mainImage: basicFileSchema,
       },
     ),
   },

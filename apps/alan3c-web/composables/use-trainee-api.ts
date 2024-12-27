@@ -24,7 +24,15 @@ export function useTraineeApi(
     }
   }
 
+  async function downloadFile(fileId: string) {
+    const result = await traineeApi.value.downloadTraineeFile({ params: { id: fileId } })
+    if (result.status === 200) {
+      return result.body
+    }
+  }
+
   return {
     findList,
+    downloadFile,
   }
 }

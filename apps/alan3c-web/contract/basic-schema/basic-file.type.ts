@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const basicImageSchema = z.object({
+export const basicFileSchema = z.object({
   id: z.string().uuid(),
   storage: z.string(),
   filename_disk: z.string(),
@@ -28,4 +28,4 @@ export const basicImageSchema = z.object({
   tus_data: z.unknown().nullable(),
 })
 
-export type BasicImage = z.infer<typeof basicImageSchema>
+export type BasicFile = z.infer<typeof basicFileSchema>
