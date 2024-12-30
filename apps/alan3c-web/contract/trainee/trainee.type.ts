@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { basicFileSchema } from '../basic-shema'
+import { basicFileSchema } from '../basic-schema'
 
 const translationSchema = z.object({
   id: z.number(),

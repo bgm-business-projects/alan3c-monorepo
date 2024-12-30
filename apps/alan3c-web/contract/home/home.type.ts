@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { basicFileSchema } from '../basic-shema'
+import { basicFileSchema } from '../basic-schema'
 
 const incumbentSchema = z.object({
   title: z.string(),
@@ -14,7 +14,7 @@ const translationSchema = z.object({
   home_id: z.number(),
   homeLanguages_code: z.enum(['en', 'zh']),
   incumbent: z.array(incumbentSchema),
-  researcArea: z.array(researchAreaSchema),
+  researchArea: z.array(researchAreaSchema),
 })
 
 export const homeSchema = z.object(

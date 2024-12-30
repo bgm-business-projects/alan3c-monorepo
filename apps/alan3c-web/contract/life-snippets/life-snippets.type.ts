@@ -1,31 +1,15 @@
-import { z } from 'zod'
-import { basicFileSchema } from '../basic-schema'
+import type { AcademicLecture } from './academic-lecture/academic-lecture.type'
+import type { AdministrativeYears } from './administrative-years/administrative-years.type'
+import type { GrowthRecord } from './growth-record/growth-record.type'
+import type { LeisureTime } from './leisure-time/leisure-time.type'
+import type { PrimeOfLife } from './prime-of-life/prime-of-life.type'
+import type { TeacherStudentSnapshots } from './teacher-student-snapshots/teacher-student-snapshots.type'
 
-const translationSchema = z.object({
-  id: z.number(),
-  trainee_id: z.number(),
-  traineeLanguages_code: z.string(),
-  name: z.string().nullable(),
-  topic: z.string().nullable(),
-  graduation: z.string().nullable(),
-  title: z.string().nullable(),
-})
-
-const traineeSchema = z.object({
-  id: z.number(),
-  sort: z.number().nullable(),
-  mainImage: basicFileSchema,
-  file: basicFileSchema,
-  email: z.string().email(),
-  web: z.string().url(),
-  traineeCategory: z.number(),
-  translations: z.array(translationSchema),
-})
-
-export const traineeListSchema = z.object(
-  {
-    data: z.array(traineeSchema),
-  },
-)
-
-export type TraineeList = z.infer<typeof traineeListSchema>
+export interface LifeSnippets {
+  teacherStudentSnapshots?: TeacherStudentSnapshots; // 可選屬性
+  growthRecord?: GrowthRecord;
+  leisureTime?: LeisureTime;
+  academicLecture?: AcademicLecture;
+  primeOfLife?: PrimeOfLife;
+  administrativeYears?: AdministrativeYears;
+}
