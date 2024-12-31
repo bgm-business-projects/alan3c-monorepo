@@ -3,11 +3,13 @@ import { administrativeYearsListSchema } from './administrative-years.type'
 
 const mainImage = 'mainImage.*'
 const translations = 'translations.*'
-const administrativeYears = 'administrativeYears.*.*.*'
+const subMainImage = 'administrativeYears.administrativeYears_id.mainImage.*'
+const subTranslations = 'administrativeYears.administrativeYears_id.translations.*'
+const moreFileList = 'administrativeYears.administrativeYears_id.moreFileList.*'
 
 export const getAdministrativeYears = {
   method: 'GET',
-  path: `/items/administrativeYearsMain?fields=*,${mainImage},${translations},${administrativeYears}`,
+  path: `/items/administrativeYearsMain?fields=*,${mainImage},${translations},${subMainImage},${subTranslations},${moreFileList}`,
   responses: {
     200: administrativeYearsListSchema,
   },

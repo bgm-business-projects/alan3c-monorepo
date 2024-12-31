@@ -1,8 +1,8 @@
 <template>
   <div class="fixed py-1rem flex justify-center layout-padding w-full z-9999">
-    <div class="flex items-center gap-2rem max-width border rounded-1rem lg:border-none lg:rounded-0 overflow-hidden">
-      <div class="backdrop-blur-xl lg:backdrop-blur-none w-full lg:w-auto flex flex-col">
-        <div class="flex items-center p-1rem lg:p-0">
+    <div class="flex items-center max-width border rounded-1rem lg:border-none lg:rounded-0 overflow-hidden ">
+      <div class="backdrop-blur-lg lg:backdrop-blur-none w-full lg:w-auto flex flex-col">
+        <div class="flex items-center bg-white px-2rem py-.5rem rounded-.5rem lg:border">
           <div class="flex flex-row items-center gap-.5rem">
             <nuxt-img
               src="/logo.png"
@@ -81,7 +81,7 @@
         </div>
       </div>
       <!-- 電腦版選單 -->
-      <div class="hidden lg:!flex items-center border rounded-.5rem px-2rem py-.5rem gap-x-1.5rem flex-1 lg:!backdrop-blur-xl">
+      <div class="hidden lg:!flex items-center border rounded-.5rem px-2rem py-.5rem gap-x-1.5rem flex-1 lg:!backdrop-blur-lg">
         <div class="flex gap-x-1.5rem gap-y-.5rem  flex-1">
           <nuxt-link
             v-for="item in data"

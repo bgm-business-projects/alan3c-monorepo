@@ -3,11 +3,13 @@ import { primeOfLifesSchema } from './prime-of-life.type'
 
 const mainImage = 'mainImage.*'
 const translations = 'translations.*'
-const primeOfLife = 'primeOfLife.*.*.*'
+const subMainImage = 'primeOfLife.primeOfLife_id.mainImage.*'
+const subTranslations = 'primeOfLife.primeOfLife_id.translations.*'
+const moreFileList = 'primeOfLife.primeOfLife_id.moreFileList.*'
 
 export const getPrimeOfLife = {
   method: 'GET',
-  path: `/items/primeOfLifeMain?fields=*,${mainImage},${translations},${primeOfLife}`,
+  path: `/items/primeOfLifeMain?fields=*,${mainImage},${translations},${subMainImage},${subTranslations},${moreFileList}`,
   responses: {
     200: primeOfLifesSchema,
   },

@@ -7,22 +7,29 @@
     </div>
     <div class="w-full max-w-600px relative aspect-1/1 flex items-center justify-center">
       <div ref="circle" class="max-width absolute border-primary border-2px border-solid border-opacity-40  w-full aspect-1/1 rounded-full circle-animation">
-        <nuxt-link
+        <div
           v-for="(rotation, index) in divRotations"
           :key="index"
-          :to="localePath({ name: 'home-life-snippets-id', params: { id: getTranslation(index + 1) } })"
-          class="absolute w-130px aspect-1/1 flex flex-col items-center flex-nowrap gap-10px rotate-back-circle"
+          class="absolute w-130px aspect-1/1 rotate-back-circle"
           :style="{ ...positionOnCircle(index + 1), transform: `rotate(${rotation}deg)` }"
         >
-          <nuxt-img
-            v-if="getImage(index + 1)"
-            :src="getImage(index + 1)"
-            class="w-full"
-          />
-          <h2 class="text-lg font-semibold">
-            {{ getTranslation(index + 1) }}
-          </h2>
-        </nuxt-link>
+          <nuxt-link
+            :to="localePath({
+              name: 'home-life-snippets-id',
+              params: { id: getTranslation(index + 1) },
+            })"
+            class="w-full flex flex-col items-center flex-nowrap gap-10px"
+          >
+            <nuxt-img
+              v-if="getImage(index + 1)"
+              :src="getImage(index + 1)"
+              class="w-full"
+            />
+            <h2 class="text-lg font-semibold">
+              {{ getTranslation(index + 1) }}
+            </h2>
+          </nuxt-link>
+        </div>
       </div>
       <div class="flex flex-col justify-center items-center gap-10px">
         <nuxt-img
@@ -45,16 +52,6 @@ const { locale } = useI18n()
 const localePath = useLocalePath()
 
 const useLifeSnippets = useLifeSnippetsApi()
-const { data: lifeSnippetsMain, refresh: refreshLifeSnippetsMain } = useLazyAsyncData('life-snippets-main', async () => {
-  const [err, result] = await to (useLifeSnippets.findLifeSnippets())
-  if (err) {
-    return Promise.reject(err)
-  }
-  return result
-}, {
-  watch: [locale],
-})
-
 const { data: lifeSnippets, refresh: refreshLifeSnippets } = useLazyAsyncData('life-snippets', async () => {
   const data: LifeSnippets = {
     teacherStudentSnapshots: undefined,
@@ -105,6 +102,16 @@ const { data: lifeSnippets, refresh: refreshLifeSnippets } = useLazyAsyncData('l
     console.error('Error fetching teacher-student snapshots:', error)
   }
   return data
+}, {
+  watch: [locale],
+})
+
+const { data: lifeSnippetsMain, refresh: refreshLifeSnippetsMain } = useLazyAsyncData('life-snippets-main', async () => {
+  const [err, result] = await to (useLifeSnippets.findLifeSnippets())
+  if (err) {
+    return Promise.reject(err)
+  }
+  return result
 }, {
   watch: [locale],
 })

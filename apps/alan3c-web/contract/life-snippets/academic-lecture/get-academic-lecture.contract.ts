@@ -3,11 +3,13 @@ import { academicLecturesSchema } from './academic-lecture.type'
 
 const mainImage = 'mainImage.*'
 const translations = 'translations.*'
-const academicLecture = 'academicLecture.*.*.*'
+const subMainImage = 'academicLecture.academicLecture_id.mainImage.*'
+const subTranslations = 'academicLecture.academicLecture_id.translations.*'
+const moreFileList = 'academicLecture.academicLecture_id.moreFileList.*'
 
 export const getAcademicLecture = {
   method: 'GET',
-  path: `/items/academicLectureMain?fields=*,${mainImage},${translations},${academicLecture}`,
+  path: `/items/academicLectureMain?fields=*,${mainImage},${translations},${subMainImage},${subTranslations},${moreFileList}`,
   responses: {
     200: academicLecturesSchema,
   },
