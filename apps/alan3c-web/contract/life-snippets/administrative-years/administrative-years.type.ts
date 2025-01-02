@@ -1,57 +1,110 @@
 import { z } from 'zod'
 import { basicFileSchema } from '../../basic-schema'
 
-export const translationSchema = z.object({
+const translationSchema = z.object({
   id: z.number(),
   administrativeYearsMain_id: z.number(),
   administrativeYearsMainLanguages_code: z.string(),
   name: z.string(),
 })
 
-export const snapshotTranslationSchema = z.object({
+const moreFileListSchema = z.object({
+  id: z.number(),
+  administrativeYears_id: z.number(),
+  directus_files_id: z.string(),
+})
+
+const administrativeYearsTranslationsSchema = z.object({
   id: z.number(),
   administrativeYears_id: z.number(),
   administrativeYearsLanguages_code: z.string(),
   name: z.string(),
 })
 
+const administrativeYearsBasicSchema = z.object({
+  administrativeYears_id: z.object({
+    translations: z.array(administrativeYearsTranslationsSchema),
+    file: basicFileSchema,
+    moreFileList: z.array(moreFileListSchema).default([]),
+  }),
+})
+
 export const administrativeYearsSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  file: basicFileSchema,
-  translations: z.array(snapshotTranslationSchema),
+  data: z.object({
+    id: z.number(),
+    key: z.string(),
+    translations: z.array(translationSchema),
+    mainImage: basicFileSchema,
+  }),
 })
 
-export const nestedadministrativeYearsSchema = z.object({
-  id: z.number(),
-  administrativeYearsMain_id: z.number(),
-  administrativeYears_id: administrativeYearsSchema,
+export const administrativeYearsDeepSchema = z.object({
+  data: z.object({
+    id: z.number(),
+    key: z.string(),
+    translations: z.array(translationSchema),
+    administrativeYears: z.array(administrativeYearsBasicSchema),
+    mainImage: basicFileSchema,
+  }),
 })
 
-export const administrativeYearsMainSchema = z.object({
-  id: z.number(),
-  mainImage: basicFileSchema,
-  translations: z.array(translationSchema),
-  administrativeYears: z.array(nestedadministrativeYearsSchema),
-})
+export type AdministrativeYears = z.infer<typeof administrativeYearsSchema>
+export const isAdministrativeYears = (data: unknown): data is AdministrativeYears => administrativeYearsSchema.safeParse(data).success
 
-export const dataSchema = z.object({
-  id: z.number(),
-  translations: z.array(translationSchema),
-  administrativeYears: z.array(
-    z.object({
-      id: z.number(),
-      administrativeYearsMain_id: administrativeYearsMainSchema,
-      administrativeYears_id: administrativeYearsSchema,
-    }),
-  ),
-  mainImage: basicFileSchema,
-})
+export type AdministrativeYearsDeep = z.infer<typeof administrativeYearsDeepSchema>
+export const isAdministrativeYearsDeep = (data: unknown): data is AdministrativeYearsDeep => administrativeYearsDeepSchema.safeParse(data).success
 
-export const administrativeYearsListSchema = z.object(
-  {
-    data: dataSchema,
-  },
-)
+// export const translationSchema = z.object({
+//   id: z.number(),
+//   administrativeYearsMain_id: z.number(),
+//   administrativeYearsMainLanguages_code: z.string(),
+//   name: z.string(),
+// })
 
-export type AdministrativeYears = z.infer<typeof administrativeYearsListSchema>
+// export const snapshotTranslationSchema = z.object({
+//   id: z.number(),
+//   administrativeYears_id: z.number(),
+//   administrativeYearsLanguages_code: z.string(),
+//   name: z.string(),
+// })
+
+// export const administrativeYearsSchema = z.object({
+//   id: z.number(),
+//   name: z.string(),
+//   file: basicFileSchema,
+//   translations: z.array(snapshotTranslationSchema),
+// })
+
+// export const nestedadministrativeYearsSchema = z.object({
+//   id: z.number(),
+//   administrativeYearsMain_id: z.number(),
+//   administrativeYears_id: administrativeYearsSchema,
+// })
+
+// export const administrativeYearsMainSchema = z.object({
+//   id: z.number(),
+//   mainImage: basicFileSchema,
+//   translations: z.array(translationSchema),
+//   administrativeYears: z.array(nestedadministrativeYearsSchema),
+// })
+
+// export const dataSchema = z.object({
+//   id: z.number(),
+//   translations: z.array(translationSchema),
+//   administrativeYears: z.array(
+//     z.object({
+//       id: z.number(),
+//       administrativeYearsMain_id: administrativeYearsMainSchema,
+//       administrativeYears_id: administrativeYearsSchema,
+//     }),
+//   ),
+//   mainImage: basicFileSchema,
+// })
+
+// export const administrativeYearsListSchema = z.object(
+//   {
+//     data: dataSchema,
+//   },
+// )
+
+// export type AdministrativeYears = z.infer<typeof administrativeYearsListSchema>

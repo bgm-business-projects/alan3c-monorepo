@@ -64,32 +64,32 @@ const { data: lifeSnippets, refresh: refreshLifeSnippets } = useLazyAsyncData('l
   try {
     const [err, result] = await to(Promise.all([
       useLifeSnippets.findTeacherStudentSnapshots().then((res) => {
-        if (res?.data) {
+        if (res) {
           data.teacherStudentSnapshots = res
         }
       }),
       useLifeSnippets.findGrowthRecord().then((res) => {
-        if (res?.data) {
+        if (res) {
           data.growthRecord = res
         }
       }),
       useLifeSnippets.findLeisureTime().then((res) => {
-        if (res?.data) {
+        if (res) {
           data.leisureTime = res
         }
       }),
       useLifeSnippets.findAcademicLecture().then((res) => {
-        if (res?.data) {
+        if (res) {
           data.academicLecture = res
         }
       }),
       useLifeSnippets.findPrimeOfLife().then((res) => {
-        if (res?.data) {
+        if (res) {
           data.primeOfLife = res
         }
       }),
       useLifeSnippets.findAdministrativeYears().then((res) => {
-        if (res?.data) {
+        if (res) {
           data.administrativeYears = res
         }
       }),
@@ -144,7 +144,7 @@ function getImage(index: number) {
   const key = keys[index - 1]
   const snippets = lifeSnippets.value as LifeSnippets | null
   if (snippets && snippets[key]) {
-    return combineImageUrl(snippets[key]?.data.mainImage.filename_disk)
+    return combineImageUrl(snippets[key].data.mainImage.filename_disk)
   }
   return undefined
 }

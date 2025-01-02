@@ -13,45 +13,93 @@ export function useLifeSnippetsApi(
     return useClient(lifeSnippetsContract, clientHeader)
   })
 
-  async function findTeacherStudentSnapshots() {
-    const result = await lifeSnippetsApi.value.getTeacherStudentSnapshots()
-    if (result.status === 200) {
-      return result.body
+  async function findTeacherStudentSnapshots(deep: boolean = false) {
+    if (deep) {
+      const result = await lifeSnippetsApi.value.getTeacherStudentSnapshotsDeep()
+      if (result.status === 200) {
+        return result.body
+      }
+    }
+    else {
+      const result = await lifeSnippetsApi.value.getTeacherStudentSnapshots()
+      if (result.status === 200) {
+        return result.body
+      }
     }
   }
 
-  async function findGrowthRecord() {
-    const result = await lifeSnippetsApi.value.getGrowthRecord()
-    if (result.status === 200) {
-      return result.body
+  async function findGrowthRecord(deep: boolean = false) {
+    if (deep) {
+      const result = await lifeSnippetsApi.value.getGrowthRecordDeep()
+      if (result.status === 200) {
+        return result.body
+      }
+    }
+    else {
+      const result = await lifeSnippetsApi.value.getGrowthRecord()
+      if (result.status === 200) {
+        return result.body
+      }
     }
   }
 
-  async function findLeisureTime() {
-    const result = await lifeSnippetsApi.value.getLeisureTime()
-    if (result.status === 200) {
-      return result.body
+  async function findLeisureTime(deep: boolean = false) {
+    if (deep) {
+      const result = await lifeSnippetsApi.value.getLeisureTimeDeep()
+      if (result.status === 200) {
+        return result.body
+      }
+    }
+    else {
+      const result = await lifeSnippetsApi.value.getLeisureTime()
+      if (result.status === 200) {
+        return result.body
+      }
     }
   }
 
-  async function findAcademicLecture() {
-    const result = await lifeSnippetsApi.value.getAcademicLecture()
-    if (result.status === 200) {
-      return result.body
+  async function findAcademicLecture(deep: boolean = false) {
+    if (deep) {
+      const result = await lifeSnippetsApi.value.getAcademicLectureDeep()
+      if (result.status === 200) {
+        return result.body
+      }
+    }
+    else {
+      const result = await lifeSnippetsApi.value.getAcademicLecture()
+      if (result.status === 200) {
+        return result.body
+      }
     }
   }
 
-  async function findPrimeOfLife() {
-    const result = await lifeSnippetsApi.value.getPrimeOfLife()
-    if (result.status === 200) {
-      return result.body
+  async function findPrimeOfLife(deep: boolean = false) {
+    if (deep) {
+      const result = await lifeSnippetsApi.value.getPrimeOfLifeDeep()
+      if (result.status === 200) {
+        return result.body
+      }
+    }
+    else {
+      const result = await lifeSnippetsApi.value.getPrimeOfLife()
+      if (result.status === 200) {
+        return result.body
+      }
     }
   }
 
-  async function findAdministrativeYears() {
-    const result = await lifeSnippetsApi.value.getAdministrativeYears()
-    if (result.status === 200) {
-      return result.body
+  async function findAdministrativeYears(deep: boolean = false) {
+    if (deep) {
+      const result = await lifeSnippetsApi.value.getAdministrativeYearsDeep()
+      if (result.status === 200) {
+        return result.body
+      }
+    }
+    else {
+      const result = await lifeSnippetsApi.value.getAdministrativeYears()
+      if (result.status === 200) {
+        return result.body
+      }
     }
   }
 

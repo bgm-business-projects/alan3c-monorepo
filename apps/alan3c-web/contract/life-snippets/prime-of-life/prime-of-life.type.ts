@@ -1,13 +1,14 @@
 import { z } from 'zod'
+import { basicFileSchema } from '~/contract/basic-schema'
 
-const TranslationSchema = z.object({
+const translationSchema = z.object({
   id: z.number(),
   primeOfLifeMain_id: z.number(),
   primeOfLifeMainLanguages_code: z.string(),
   name: z.string(),
 })
 
-const MoreFileListSchema = z.object({
+const moreFileListSchema = z.object({
   id: z.number(),
   primeOfLife_id: z.number(),
   directus_files_id: z.string(),
@@ -20,51 +21,38 @@ const primeOfLifeTranslationsSchema = z.object({
   name: z.string(),
 })
 
-const primeOfLifeSchema = z.object({
+const primeOfLifeBasicSchema = z.object({
   primeOfLife_id: z.object({
     translations: z.array(primeOfLifeTranslationsSchema),
-    moreFileList: z.array(MoreFileListSchema),
+    file: basicFileSchema,
+    moreFileList: z.array(moreFileListSchema).default([]),
   }),
 })
 
-const MainImageSchema = z.object({
-  id: z.string(),
-  storage: z.string(),
-  filename_disk: z.string(),
-  filename_download: z.string(),
-  title: z.string(),
-  type: z.string(),
-  folder: z.string(),
-  uploaded_by: z.string(),
-  created_on: z.string(),
-  modified_by: z.string().nullable(),
-  modified_on: z.string().nullable(),
-  charset: z.string().nullable(),
-  filesize: z.string(),
-  width: z.number(),
-  height: z.number(),
-  duration: z.number().nullable(),
-  embed: z.any().nullable(),
-  description: z.string().nullable(),
-  location: z.any().nullable(),
-  tags: z.any().nullable(),
-  metadata: z.record(z.any()).optional(),
-  focal_point_x: z.number().nullable(),
-  focal_point_y: z.number().nullable(),
-  tus_id: z.any().nullable(),
-  tus_data: z.any().nullable(),
-  uploaded_on: z.string(),
+export const primeOfLifeSchema = z.object({
+  data: z.object({
+    id: z.number(),
+    key: z.string(),
+    translations: z.array(translationSchema),
+    mainImage: basicFileSchema,
+  }),
 })
 
-export const primeOfLifesSchema = z.object({
-  id: z.number(),
-  key: z.string(),
-  translations: z.array(TranslationSchema),
-  primeOfLife: z.array(primeOfLifeSchema),
-  mainImage: MainImageSchema,
+export const primeOfLifeDeepSchema = z.object({
+  data: z.object({
+    id: z.number(),
+    key: z.string(),
+    translations: z.array(translationSchema),
+    primeOfLife: z.array(primeOfLifeBasicSchema),
+    mainImage: basicFileSchema,
+  }),
 })
 
-export type PrimeOfLife = z.infer<typeof primeOfLifesSchema>
+export type PrimeOfLife = z.infer<typeof primeOfLifeSchema>
+export const isPrimeOfLife = (data: unknown): data is PrimeOfLife => primeOfLifeSchema.safeParse(data).success
+
+export type PrimeOfLifeDeep = z.infer<typeof primeOfLifeDeepSchema>
+export const isPrimeOfLifeDeep = (data: unknown): data is PrimeOfLifeDeep => primeOfLifeDeepSchema.safeParse(data).success
 
 // import { z } from 'zod'
 // import { basicFileSchema } from '../../basic-schema'

@@ -86,7 +86,7 @@
           <nuxt-link
             v-for="item in data"
             :key="item.name"
-            :to="localePath(item.route)"
+            :to="decodeURIComponent(localePath(item.route))"
             class="font-500 relative py-.15rem link"
           >
             <div
@@ -124,7 +124,26 @@ const { locale } = useI18n()
 
 const route = useRoute()
 
-const data = ref([
+const useTraineeCategory = useTraineeCategoryApi()
+const { data: traineeCategories, refresh: refreshTraineeCategories } = useLazyAsyncData('trainee-category', async () => {
+  const [err, result] = await to (useTraineeCategory.findList())
+  if (err) {
+    return Promise.reject(err)
+  }
+  return result
+}, {
+  transform: (data) => {
+    return data?.data.map((item) => {
+      return {
+        ...item,
+        translations: item.translations.filter((item) => item.traineeCategoryLanguages_code === locale.value)[0],
+      }
+    })
+  },
+  watch: [locale],
+})
+
+const data = computed(() => [
   {
     name: '老闆的家',
     route: {
@@ -135,6 +154,9 @@ const data = ref([
     name: '我的徒弟',
     route: {
       name: 'trainee',
+      query: {
+        category: traineeCategories.value?.find((item) => item.translations.traineeCategoryLanguages_code === locale.value)?.translations.name,
+      },
     },
   },
   {
@@ -190,10 +212,11 @@ const circlePosition = computed(() => {
 })
 
 function isActiveStyle(localePath: string) {
-  if (route.name === 'home' && localePath === '/') {
+  const pathWithoutQuery = localePath.split('?')[0].split('#')[0]
+  if (route.name === 'home' && pathWithoutQuery === '/') {
     return 'w-full'
   }
-  return route.name === localePath.split('/')[1] ? 'w-full' : 'w-0'
+  return route.name === pathWithoutQuery.split('/')[1] ? 'w-full' : 'w-0'
 }
 </script>
 

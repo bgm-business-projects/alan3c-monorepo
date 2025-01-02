@@ -11,6 +11,7 @@ export default defineConfig({
       secondary: '#FFD18C',
       accent: '#FFF8D6',
       dark: '#CA6A2E',
+      warning: '#CA6A2E',
     },
   },
   shortcuts: [

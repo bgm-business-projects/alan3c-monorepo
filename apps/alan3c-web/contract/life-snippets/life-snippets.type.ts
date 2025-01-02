@@ -6,7 +6,7 @@ import type { PrimeOfLife } from './prime-of-life/prime-of-life.type'
 import type { TeacherStudentSnapshots } from './teacher-student-snapshots/teacher-student-snapshots.type'
 
 export interface LifeSnippets {
-  teacherStudentSnapshots?: TeacherStudentSnapshots; // 可選屬性
+  teacherStudentSnapshots?: TeacherStudentSnapshots;
   growthRecord?: GrowthRecord;
   leisureTime?: LeisureTime;
   academicLecture?: AcademicLecture;
