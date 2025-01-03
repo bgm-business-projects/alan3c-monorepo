@@ -53,7 +53,9 @@ export const leisureTimeMoreFileSchema = z.object({
   data: z.object({
     leisureTime: z.array(z.object({
       leisureTime_id: z.object({
-        moreFileList: z.array(basicFileSchema),
+        moreFileList: z.array(z.object({
+          directus_files_id: basicFileSchema,
+        })).default([]),
       }),
     })),
   }),
@@ -66,6 +68,7 @@ export type LeisureTimeDeep = z.infer<typeof leisureTimeDeepSchema>
 export const isLeisureTimeDeep = (data: unknown): data is LeisureTimeDeep => leisureTimeDeepSchema.safeParse(data).success
 
 export type LeisureTimeMoreFile = z.infer<typeof leisureTimeMoreFileSchema>
+export const isLeisureTimeMoreFile = (data: unknown): data is LeisureTimeMoreFile => leisureTimeMoreFileSchema.safeParse(data).success
 // export const translationSchema = z.object({
 //   id: z.number(),
 //   leisureTimeMain_id: z.number(),

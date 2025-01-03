@@ -1,18 +1,58 @@
 <template>
   <div class="w-full flex flex-col gap-3rem items-center layout-padding py-3rem">
-    <div class="max-width flex flex-col gap-2rem">
+    <div class="max-width w-full flex items-center justify-between gap-2rem">
       <h1 class="text-2xl font-bold text-primary">
         生活點滴
       </h1>
-    </div>
-    <div class="w-full relative flex flex-col items-center justify-center gap-2rem">
-      <div class="flex gap-1rem w-full max-width">
-        <nuxt-link>
-          返回
+      <div class="flex gap-1rem bg-accent px-1rem py-.3rem rounded-.4rem font-medium">
+        <nuxt-link
+          :to="localePath({
+            name: 'home-life-snippets-category',
+            params: { category: route.params.category },
+          })"
+        >
+          返回 {{ route.params.category }}
         </nuxt-link>
       </div>
+    </div>
+    <div class="w-full relative flex flex-col items-center justify-center gap-2rem">
       <div class="w-full max-width">
-        {{ lifeSnippetsMoreFile }}
+        <div
+          v-if="isTeacherStudentSnapshotsMoreFile(lifeSnippetsMoreFile)"
+          class="flex gap-1rem w-full"
+        >
+          <div
+            v-for="(item, index) in lifeSnippetsMoreFile.data.teacherStudentSnapshots[0].teacherStudentSnapshots_id.moreFileList"
+            :key="index"
+            class="w-25% aspect-4/3 overflow-hidden relative"
+          >
+            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+          </div>
+        </div>
+        <div
+          v-if="isGrowthRecordMoreFile(lifeSnippetsMoreFile)"
+          class="flex gap-1rem w-full"
+        >
+          <div
+            v-for="(item, index) in lifeSnippetsMoreFile.data.growthRecord[0].growthRecord_id.moreFileList"
+            :key="index"
+            class="w-25% aspect-4/3 overflow-hidden relative"
+          >
+            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+          </div>
+        </div>
+        <div
+          v-if="isAcademicLectureMoreFile(lifeSnippetsMoreFile)"
+          class="flex gap-1rem w-full"
+        >
+          <div
+            v-for="(item, index) in lifeSnippetsMoreFile.data.academicLecture[0].academicLecture_id.moreFileList"
+            :key="index"
+            class="w-25% aspect-4/3 overflow-hidden relative"
+          >
+            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -20,10 +60,16 @@
 
 <script setup lang="ts">
 import type { LifeSnippets } from '~/contract/life-snippets/life-snippets.type'
+import { isAcademicLectureMoreFile } from '../../../../contract/life-snippets/academic-lecture/academic-lecture.type'
+import { isGrowthRecordMoreFile } from '../../../../contract/life-snippets/growth-record/growth-record.type'
+import { isTeacherStudentSnapshotsMoreFile } from '../../../../contract/life-snippets/teacher-student-snapshots/teacher-student-snapshots.type'
+import { combineImageUrl } from '../../../../utils/combine-image-url'
 
 const { locale } = useI18n()
 
 const useLifeSnippets = useLifeSnippetsApi()
+
+const localePath = useLocalePath()
 
 const route = useRoute()
 
@@ -75,10 +121,11 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
   })?.[1].data.key
 
   if (key === 'teacherStudentSnapshots') {
+    const targetId = Number(route.query.id)
     const [err, result] = await to (useLifeSnippets.findTeacherStudentSnapshotsMoreFile(
       {
         query: {
-          'filter[teacherStudentSnapshots][teacherStudentSnapshots_id][id][_eq]': 1,
+          'filter[teacherStudentSnapshots][teacherStudentSnapshots_id][id][_eq]': targetId,
         },
       },
     ))

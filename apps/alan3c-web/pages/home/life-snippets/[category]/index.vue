@@ -5,7 +5,7 @@
         生活點滴
       </h1>
     </div>
-    <div class="w-full relative flex flex-col items-center justify-center gap-2rem">
+    <div class="max-width relative flex flex-col items-center justify-center gap-2rem">
       <div class="flex gap-1rem w-full max-width">
         <nuxt-link
           v-for="(item, index) in 6"

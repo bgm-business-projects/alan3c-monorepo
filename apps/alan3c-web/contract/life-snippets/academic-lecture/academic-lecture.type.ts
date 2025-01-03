@@ -52,7 +52,9 @@ export const academicLectureMoreFileSchema = z.object({
   data: z.object({
     academicLecture: z.array(z.object({
       academicLecture_id: z.object({
-        moreFileList: z.array(basicFileSchema),
+        moreFileList: z.array(z.object({
+          directus_files_id: basicFileSchema,
+        })).default([]),
       }),
     })),
   }),
@@ -65,6 +67,7 @@ export type AcademicLectureDeep = z.infer<typeof academicLectureDeepSchema>
 export const isAcademicLectureDeep = (data: unknown): data is AcademicLectureDeep => academicLectureDeepSchema.safeParse(data).success
 
 export type AcademicLectureMoreFile = z.infer<typeof academicLectureMoreFileSchema>
+export const isAcademicLectureMoreFile = (data: unknown): data is AcademicLectureMoreFile => academicLectureMoreFileSchema.safeParse(data).success
 
 // export const translationSchema = z.object({
 //   id: z.number(),

@@ -53,7 +53,9 @@ export const primeOfLifeMoreFileSchema = z.object({
   data: z.object({
     primeOfLifeDeep: z.array(z.object({
       primeOfLifeDeep_id: z.object({
-        moreFileList: z.array(basicFileSchema),
+        moreFileList: z.array(z.object({
+          directus_files_id: basicFileSchema,
+        })).default([]),
       }),
     })),
   }),
@@ -66,6 +68,7 @@ export type PrimeOfLifeDeep = z.infer<typeof primeOfLifeDeepSchema>
 export const isPrimeOfLifeDeep = (data: unknown): data is PrimeOfLifeDeep => primeOfLifeDeepSchema.safeParse(data).success
 
 export type PrimeOfLifeMoreFile = z.infer<typeof primeOfLifeMoreFileSchema>
+export const isPrimeOfLifeMoreFile = (data: unknown): data is PrimeOfLifeMoreFile => primeOfLifeMoreFileSchema.safeParse(data).success
 // import { z } from 'zod'
 // import { basicFileSchema } from '../../basic-schema'
 

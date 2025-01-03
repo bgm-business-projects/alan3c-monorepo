@@ -53,7 +53,9 @@ export const growthRecordMoreFileSchema = z.object({
   data: z.object({
     growthRecord: z.array(z.object({
       growthRecord_id: z.object({
-        moreFileList: z.array(basicFileSchema),
+        moreFileList: z.array(z.object({
+          directus_files_id: basicFileSchema,
+        })).default([]),
       }),
     })),
   }),
@@ -66,6 +68,7 @@ export type GrowthRecordDeep = z.infer<typeof growthRecordDeepSchema>
 export const isGrowthRecordDeep = (data: unknown): data is GrowthRecordDeep => growthRecordDeepSchema.safeParse(data).success
 
 export type GrowthRecordMoreFile = z.infer<typeof growthRecordMoreFileSchema>
+export const isGrowthRecordMoreFile = (data: unknown): data is GrowthRecordMoreFile => growthRecordMoreFileSchema.safeParse(data).success
 // export const translationSchema = z.object({
 //   id: z.number(),
 //   growthRecordMain_id: z.number(),
