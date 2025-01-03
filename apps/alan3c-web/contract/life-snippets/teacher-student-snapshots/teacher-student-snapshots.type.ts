@@ -23,6 +23,7 @@ const TeacherStudentSnapshotsTranslationsSchema = z.object({
 
 const teacherStudentSnapshotsBasicSchema = z.object({
   teacherStudentSnapshots_id: z.object({
+    id: z.number(),
     translations: z.array(TeacherStudentSnapshotsTranslationsSchema),
     file: basicFileSchema,
     moreFileList: z.array(MoreFileListSchema).default([]),
@@ -52,12 +53,23 @@ export const teacherStudentSnapshotsSchema = z.object({
   ),
 })
 
+export const teacherStudentSnapshotsMoreFileSchema = z.object({
+  data: z.object({
+    teacherStudentSnapshots: z.array(z.object({
+      teacherStudentSnapshots_id: z.object({
+        moreFileList: z.array(basicFileSchema),
+      }),
+    })),
+  }),
+})
+
 export type TeacherStudentSnapshotsDeep = z.infer<typeof teacherStudentSnapshotsDeepSchema>
 export type TeacherStudentSnapshots = z.infer<typeof teacherStudentSnapshotsSchema>
 
 export const isTeacherStudentSnapshotsDeep = (data: unknown): data is TeacherStudentSnapshotsDeep => teacherStudentSnapshotsDeepSchema.safeParse(data).success
 export const isTeacherStudentSnapshots = (data: unknown): data is TeacherStudentSnapshots => teacherStudentSnapshotsSchema.safeParse(data).success
 
+export type TeacherStudentSnapshotsMoreFile = z.infer<typeof teacherStudentSnapshotsMoreFileSchema>
 // import { z } from 'zod'
 // import { basicFileSchema } from '../../basic-schema'
 

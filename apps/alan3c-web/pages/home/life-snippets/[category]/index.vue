@@ -12,9 +12,12 @@
           :key="index"
           class="bg-[#f4f4f4] px-1rem py-.2rem rounded-.5rem"
           :class="{
-            'bg-accent': getTranslation(index + 1) === route.params.id,
+            'bg-accent': getTranslation(index + 1) === route.params.category,
           }"
-          :to="localePath({ name: 'home-life-snippets-id', params: { id: getTranslation(index + 1) } })"
+          :to="localePath({
+            name: 'home-life-snippets-category',
+            params: { category: getTranslation(index + 1) },
+          })"
         >
           <h2 class="text-md font-medium leading-1.5rem tracking-.05rem">
             {{ getTranslation(index + 1) }}
@@ -27,8 +30,11 @@
           class="w-full flex"
         >
           <base-card
-            v-for="(item, index) in lifeSnippets?.target?.data.teacherStudentSnapshots" :key="index"
+            v-for="(item, index) in lifeSnippets?.target?.data.teacherStudentSnapshots"
+            :key="index"
+            :target-id="item.teacherStudentSnapshots_id.id"
             :main-image="combineImageUrl(item.teacherStudentSnapshots_id.file.filename_disk)"
+            :category="getTranslationByKey('teacherStudentSnapshots')"
             :name="item.teacherStudentSnapshots_id.translations.find(item => item.teacherStudentSnapshotsLanguages_code === locale)?.name"
           />
         </div>
@@ -37,8 +43,11 @@
           class="w-full flex"
         >
           <base-card
-            v-for="(item, index) in lifeSnippets?.target?.data.growthRecord" :key="index"
+            v-for="(item, index) in lifeSnippets?.target?.data.growthRecord"
+            :key="index"
+            :target-id="item.growthRecord_id.id"
             :main-image="combineImageUrl(item.growthRecord_id.file.filename_disk)"
+            :category="getTranslationByKey('growthRecord')"
             :name="item.growthRecord_id.translations.find(item => item.growthRecordLanguages_code === locale)?.name"
           />
         </div>
@@ -47,8 +56,11 @@
           class="w-full flex"
         >
           <base-card
-            v-for="(item, index) in lifeSnippets?.target?.data.leisureTime" :key="index"
+            v-for="(item, index) in lifeSnippets?.target?.data.leisureTime"
+            :key="index"
+            :target-id="item.leisureTime_id.id"
             :main-image="combineImageUrl(item.leisureTime_id.file.filename_disk)"
+            :category="getTranslationByKey('leisureTime')"
             :name="item.leisureTime_id.translations.find(item => item.leisureTimeLanguages_code === locale)?.name"
           />
         </div>
@@ -57,8 +69,11 @@
           class="w-full flex"
         >
           <base-card
-            v-for="(item, index) in lifeSnippets?.target?.data.academicLecture" :key="index"
+            v-for="(item, index) in lifeSnippets?.target?.data.academicLecture"
+            :key="index"
+            :target-id="item.academicLecture_id.id"
             :main-image="combineImageUrl(item.academicLecture_id.file.filename_disk)"
+            :category="getTranslationByKey('academicLecture')"
             :name="item.academicLecture_id.translations.find(item => item.academicLectureLanguages_code === locale)?.name"
           />
         </div>
@@ -67,8 +82,11 @@
           class="w-full flex"
         >
           <base-card
-            v-for="(item, index) in lifeSnippets?.target?.data.primeOfLife" :key="index"
+            v-for="(item, index) in lifeSnippets?.target?.data.primeOfLife"
+            :key="index"
+            :target-id="item.primeOfLife_id.id"
             :main-image="combineImageUrl(item.primeOfLife_id.file.filename_disk)"
+            :category="getTranslationByKey('primeOfLife')"
             :name="item.primeOfLife_id.translations.find(item => item.primeOfLifeLanguages_code === locale)?.name"
           />
         </div>
@@ -77,8 +95,11 @@
           class="w-full flex"
         >
           <base-card
-            v-for="(item, index) in lifeSnippets?.target?.data.administrativeYears" :key="index"
+            v-for="(item, index) in lifeSnippets?.target?.data.administrativeYears"
+            :key="index"
+            :target-id="item.administrativeYears_id.id"
             :main-image="combineImageUrl(item.administrativeYears_id.file.filename_disk)"
+            :category="getTranslationByKey('administrativeYears')"
             :name="item.administrativeYears_id.translations.find(item => item.administrativeYearsLanguages_code === locale)?.name"
           />
         </div>
@@ -184,9 +205,9 @@ const { data: lifeSnippets, refresh: refreshLifeSnippets } = useLazyAsyncData('l
     throw categoryListErr
   }
 
-  const routeId = decodeURIComponent(route.params.id as string).trim() // 取得路由參數
+  const routeCategory = decodeURIComponent(route.params.category as string).trim() // 取得路由參數
 
-  const apiKey = getSnippetById(categoryList, routeId)
+  const apiKey = getSnippetById(categoryList, routeCategory)
 
   if (!apiKey) {
     throw new Error('apiKey not found')
@@ -239,5 +260,17 @@ function getTranslation(index: number) {
   }
 
   return null
+}
+
+function getTranslationByKey(key: keyof LifeSnippets) {
+  const translations = lifeSnippets.value?.category?.[key]?.data.translations
+
+  if (translations) {
+    const dynamicKey = `${key}MainLanguages_code`
+    return translations
+      .filter((item) => hasLanguageCodeProperty(item, dynamicKey) && item[dynamicKey] === locale.value)
+      ?.[0]
+      ?.name
+  }
 }
 </script>

@@ -23,6 +23,7 @@ const administrativeYearsTranslationsSchema = z.object({
 
 const administrativeYearsBasicSchema = z.object({
   administrativeYears_id: z.object({
+    id: z.number(),
     translations: z.array(administrativeYearsTranslationsSchema),
     file: basicFileSchema,
     moreFileList: z.array(moreFileListSchema).default([]),
@@ -48,11 +49,23 @@ export const administrativeYearsDeepSchema = z.object({
   }),
 })
 
+export const administrativeYearsMoreFileSchema = z.object({
+  data: z.object({
+    administrativeYears: z.array(z.object({
+      administrativeYears_id: z.object({
+        moreFileList: z.array(basicFileSchema),
+      }),
+    })),
+  }),
+})
+
 export type AdministrativeYears = z.infer<typeof administrativeYearsSchema>
 export const isAdministrativeYears = (data: unknown): data is AdministrativeYears => administrativeYearsSchema.safeParse(data).success
 
 export type AdministrativeYearsDeep = z.infer<typeof administrativeYearsDeepSchema>
 export const isAdministrativeYearsDeep = (data: unknown): data is AdministrativeYearsDeep => administrativeYearsDeepSchema.safeParse(data).success
+
+export type AdministrativeYearsMoreFile = z.infer<typeof administrativeYearsMoreFileSchema>
 
 // export const translationSchema = z.object({
 //   id: z.number(),

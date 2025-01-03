@@ -15,8 +15,8 @@
         >
           <nuxt-link
             :to="localePath({
-              name: 'home-life-snippets-id',
-              params: { id: getTranslation(index + 1) },
+              name: 'home-life-snippets-category',
+              params: { category: getTranslation(index + 1) },
             })"
             class="w-full flex flex-col items-center flex-nowrap gap-10px"
           >

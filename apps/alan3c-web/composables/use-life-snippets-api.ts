@@ -1,3 +1,4 @@
+import type { ClientInferRequest } from '@ts-rest/core'
 import { computed } from 'vue'
 import { lifeSnippetsContract } from '../contract/life-snippets'
 
@@ -28,6 +29,18 @@ export function useLifeSnippetsApi(
     }
   }
 
+  type TeacherStudentSnapshotsMoreFileRequest = ClientInferRequest<typeof lifeSnippetsContract['getTeacherStudentSnapshotsMoreFile']>
+  async function findTeacherStudentSnapshotsMoreFile(params: TeacherStudentSnapshotsMoreFileRequest) {
+    const query = lifeSnippetsContract.getTeacherStudentSnapshotsMoreFile.query.parse(params.query)
+    const result = await lifeSnippetsApi.value.getTeacherStudentSnapshotsMoreFile({
+      ...params,
+      query,
+    })
+    if (result.status === 200) {
+      return result.body
+    }
+  }
+
   async function findGrowthRecord(deep: boolean = false) {
     if (deep) {
       const result = await lifeSnippetsApi.value.getGrowthRecordDeep()
@@ -40,6 +53,18 @@ export function useLifeSnippetsApi(
       if (result.status === 200) {
         return result.body
       }
+    }
+  }
+
+  type GrowthRecordMoreFileRequest = ClientInferRequest<typeof lifeSnippetsContract['getGrowthRecordMoreFile']>
+  async function findGrowthRecordMoreFile(params: GrowthRecordMoreFileRequest) {
+    const query = lifeSnippetsContract.getGrowthRecordMoreFile.query.parse(params.query)
+    const result = await lifeSnippetsApi.value.getGrowthRecordMoreFile({
+      ...params,
+      query,
+    })
+    if (result.status === 200) {
+      return result.body
     }
   }
 
@@ -58,6 +83,18 @@ export function useLifeSnippetsApi(
     }
   }
 
+  type LeisureTimeMoreFileRequest = ClientInferRequest<typeof lifeSnippetsContract['getLeisureTimeMoreFile']>
+  async function findLeisureTimeMoreFile(params: LeisureTimeMoreFileRequest) {
+    const query = lifeSnippetsContract.getLeisureTimeMoreFile.query.parse(params.query)
+    const result = await lifeSnippetsApi.value.getLeisureTimeMoreFile({
+      ...params,
+      query,
+    })
+    if (result.status === 200) {
+      return result.body
+    }
+  }
+
   async function findAcademicLecture(deep: boolean = false) {
     if (deep) {
       const result = await lifeSnippetsApi.value.getAcademicLectureDeep()
@@ -70,6 +107,18 @@ export function useLifeSnippetsApi(
       if (result.status === 200) {
         return result.body
       }
+    }
+  }
+
+  type AcademicLectureMoreFileRequest = ClientInferRequest<typeof lifeSnippetsContract['getAcademicLectureMoreFile']>
+  async function findAcademicLectureMoreFile(params: AcademicLectureMoreFileRequest) {
+    const query = lifeSnippetsContract.getAcademicLectureMoreFile.query.parse(params.query)
+    const result = await lifeSnippetsApi.value.getAcademicLectureMoreFile({
+      ...params,
+      query,
+    })
+    if (result.status === 200) {
+      return result.body
     }
   }
 
@@ -88,6 +137,18 @@ export function useLifeSnippetsApi(
     }
   }
 
+  type PrimeOfLifeMoreFileRequest = ClientInferRequest<typeof lifeSnippetsContract['getPrimeOfLifeMoreFile']>
+  async function findPrimeOfLifeMoreFile(params: PrimeOfLifeMoreFileRequest) {
+    const query = lifeSnippetsContract.getPrimeOfLifeMoreFile.query.parse(params.query)
+    const result = await lifeSnippetsApi.value.getPrimeOfLifeMoreFile({
+      ...params,
+      query,
+    })
+    if (result.status === 200) {
+      return result.body
+    }
+  }
+
   async function findAdministrativeYears(deep: boolean = false) {
     if (deep) {
       const result = await lifeSnippetsApi.value.getAdministrativeYearsDeep()
@@ -103,6 +164,18 @@ export function useLifeSnippetsApi(
     }
   }
 
+  type AdministrativeYearsMoreFileRequest = ClientInferRequest<typeof lifeSnippetsContract['getAdministrativeYearsMoreFile']>
+  async function findAdministrativeYearsMoreFile(params: AdministrativeYearsMoreFileRequest) {
+    const query = lifeSnippetsContract.getAdministrativeYearsMoreFile.query.parse(params.query)
+    const result = await lifeSnippetsApi.value.getAdministrativeYearsMoreFile({
+      ...params,
+      query,
+    })
+    if (result.status === 200) {
+      return result.body
+    }
+  }
+
   async function findLifeSnippets() {
     const result = await lifeSnippetsApi.value.getLifeSnippets()
     if (result.status === 200) {
@@ -112,11 +185,17 @@ export function useLifeSnippetsApi(
 
   return {
     findTeacherStudentSnapshots,
+    findTeacherStudentSnapshotsMoreFile,
     findGrowthRecord,
+    findGrowthRecordMoreFile,
     findLeisureTime,
+    findLeisureTimeMoreFile,
     findAcademicLecture,
+    findAcademicLectureMoreFile,
     findPrimeOfLife,
+    findPrimeOfLifeMoreFile,
     findAdministrativeYears,
+    findAdministrativeYearsMoreFile,
     findLifeSnippets,
   }
 }
