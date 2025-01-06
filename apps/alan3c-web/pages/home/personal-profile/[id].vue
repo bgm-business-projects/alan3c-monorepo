@@ -12,31 +12,6 @@
         <base-info
           :data="personalProfile?.translations?.content"
         />
-        <!-- <div
-          v-if="resume?.translations?.content"
-          class="flex-1"
-          v-html="resume.translations.content"
-        />
-        <div
-          v-if="curriculumVitae?.translations?.content"
-          class="flex-1"
-          v-html="curriculumVitae.translations.content"
-        />
-        <div
-          v-if="academicActivities?.translations?.content"
-          class="flex-1"
-          v-html="academicActivities.translations.content"
-        />
-        <div
-          v-if="academicRecognition?.translations?.content"
-          class="flex-1"
-          v-html="academicRecognition.translations.content"
-        />
-        <div
-          v-if="coursesTaught?.translations?.content"
-          class="flex-1"
-          v-html="coursesTaught.translations.content"
-        /> -->
       </div>
     </div>
   </div>
@@ -165,86 +140,6 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
         ...data?.data,
         translations: data?.data.translations.filter((item) => item.coursesTaughtLanguages_code === locale.value)[0],
       }
-    }
-  },
-  watch: [locale],
-})
-
-// const { data: resume, refresh: refreshResume } = useLazyAsyncData('resume', async () => {
-//   const [err, result] = await to (usePersonalProfile.findResume())
-//   if (err) {
-//     return Promise.reject(err)
-//   }
-//   return result
-// }, {
-//   transform: (data) => {
-//     return {
-//       ...data?.data,
-//       translations: data?.data.translations.filter((item) => item.resumeLanguages_code === locale.value)[0],
-//     }
-//   },
-//   watch: [locale],
-// })
-
-// const { data: curriculumVitae, refresh: refreshCurriculumVitae } = useLazyAsyncData('curriculum-vitae', async () => {
-//   const [err, result] = await to (usePersonalProfile.findCurriculumVitae())
-//   if (err) {
-//     return Promise.reject(err)
-//   }
-//   return result
-// }, {
-//   transform: (data) => {
-//     return {
-//       ...data?.data,
-//       translations: data?.data.translations.filter((item) => item.curriculumVitaeLanguages_code === locale.value)[0],
-//     }
-//   },
-//   watch: [locale],
-// })
-
-// const { data: academicActivities, refresh: refreshAcademicActivities } = useLazyAsyncData('academic-activities', async () => {
-//   const [err, result] = await to (usePersonalProfile.findAcademicActivities())
-//   if (err) {
-//     return Promise.reject(err)
-//   }
-//   return result
-// }, {
-//   transform: (data) => {
-//     return {
-//       ...data?.data,
-//       translations: data?.data.translations.filter((item) => item.academicActivitiesLanguages_code === locale.value)[0],
-//     }
-//   },
-//   watch: [locale],
-// })
-
-// const { data: academicRecognition, refresh: refreshAcademicRecognition } = useLazyAsyncData('academic-recognition', async () => {
-//   const [err, result] = await to (usePersonalProfile.findAcademicRecognition())
-//   if (err) {
-//     return Promise.reject(err)
-//   }
-//   return result
-// }, {
-//   transform: (data) => {
-//     return {
-//       ...data?.data,
-//       translations: data?.data.translations.filter((item) => item.academicRecognitionLanguages_code === locale.value)[0],
-//     }
-//   },
-//   watch: [locale],
-// })
-
-const { data: coursesTaught, refresh: refreshCoursesTaught } = useLazyAsyncData('courses-taught', async () => {
-  const [err, result] = await to (usePersonalProfile.findCoursesTaught())
-  if (err) {
-    return Promise.reject(err)
-  }
-  return result
-}, {
-  transform: (data) => {
-    return {
-      ...data?.data,
-      translations: data?.data.translations.filter((item) => item.coursesTaughtLanguages_code === locale.value)[0],
     }
   },
   watch: [locale],
