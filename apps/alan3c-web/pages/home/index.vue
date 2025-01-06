@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="border bg-gray-50 p-2rem flex justify-center gap-2rem">
-        <nuxt-link v-for="item in data" :key="item.name" :to="item.route">
+        <nuxt-link v-for="item in data" :key="item.name" :to="localePath(item.route)">
           {{ item.name }}
         </nuxt-link>
       </div>
@@ -76,6 +76,8 @@ const { width: imageContainerWidth, height: imageContainerHeight } = useElementS
 
 const { locale } = useI18n()
 
+const localePath = useLocalePath()
+
 const useHome = useHomeApi()
 
 const { data: home, refresh: refreshHome } = useLazyAsyncData('home', async () => {
@@ -98,7 +100,8 @@ const data = ref([
   {
     name: '個人資料',
     route: {
-      name: 'home-personal-profile',
+      name: 'home-personal-profile-id',
+      params: { id: 'resume' },
     },
   },
   {
