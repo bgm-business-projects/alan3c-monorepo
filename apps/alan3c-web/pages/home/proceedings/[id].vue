@@ -2,11 +2,11 @@
   <div class="w-full flex flex-col gap-2rem items-center layout-padding py-3rem">
     <div class="max-width flex flex-col gap-2rem">
       <h1 class="text-2xl font-bold text-primary">
-        {{ compilation?.title }}
+        {{ proceedings?.title }}
       </h1>
     </div>
     <div class="max-width flex flex-col gap-1rem">
-      <div v-html="compilation?.content" />
+      <div v-html="proceedings?.content" />
     </div>
   </div>
 </template>
@@ -16,14 +16,14 @@ const { locale } = useI18n()
 
 const localePath = useLocalePath()
 
-const useCompilation = useCompilationApi()
+const useProceedings = useProceedingsApi()
 
 const route = useRoute()
 
-const { data: compilation, refresh: refreshCompilation } = useLazyAsyncData('compilation-single', async () => {
-  const [err, result] = await to (useCompilation.findOne({
+const { data: proceedings, refresh: refreshProceedings } = useLazyAsyncData('proceedings-single', async () => {
+  const [err, result] = await to (useProceedings.findOne({
     query: {
-      'filter[translations][compilationLanguages_code][_eq]': locale.value as 'zh' | 'en',
+      'filter[translations][proceedingsLanguages_code][_eq]': locale.value as 'zh' | 'en',
       'filter[translations][title][_eq]': route.params.id as string,
     },
   }))
@@ -33,7 +33,7 @@ const { data: compilation, refresh: refreshCompilation } = useLazyAsyncData('com
   return result
 }, {
   transform: (data) => {
-    return data?.data[0].translations.find((item) => item.compilationLanguages_code === locale.value)
+    return data?.data[0].translations.find((item) => item.proceedingsLanguages_code === locale.value)
   },
   watch: [locale],
 })

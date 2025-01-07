@@ -2,15 +2,15 @@
   <div class="w-full flex flex-col gap-2rem items-center layout-padding py-3rem">
     <div class="max-width flex flex-col gap-2rem">
       <h1 class="text-2xl font-bold text-primary">
-        真誠文集
+        薪火相傳。文心薈萃文集
       </h1>
     </div>
     <div class="max-width flex flex-col gap-1rem">
       <nuxt-link
-        v-for="item in compilation?.data"
+        v-for="item in proceedings?.data"
         :key="item.id"
         :to="localePath({
-          name: 'home-compilation-id',
+          name: 'home-proceedings-id',
           params: {
             id: item.translations.title,
           },
@@ -34,10 +34,10 @@ const { locale } = useI18n()
 
 const localePath = useLocalePath()
 
-const useCompilation = useCompilationApi()
+const useProceedings = useProceedingsApi()
 
-const { data: compilation, refresh: refreshCompilation } = useLazyAsyncData('compilation', async () => {
-  const [err, result] = await to (useCompilation.findList())
+const { data: proceedings, refresh: refreshProceedings } = useLazyAsyncData('proceedings', async () => {
+  const [err, result] = await to (useProceedings.findList())
   if (err) {
     return Promise.reject(err)
   }
@@ -47,7 +47,7 @@ const { data: compilation, refresh: refreshCompilation } = useLazyAsyncData('com
     const result = data?.data.map((item) => {
       return {
         ...item,
-        translations: item.translations.filter((item) => item.compilationLanguages_code === locale.value)[0],
+        translations: item.translations.filter((item) => item.proceedingsLanguages_code === locale.value)[0],
       }
     })
     return {

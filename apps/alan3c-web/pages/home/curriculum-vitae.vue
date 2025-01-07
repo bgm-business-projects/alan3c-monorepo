@@ -56,6 +56,8 @@
 </template>
 
 <script setup lang="ts">
+import { useCurriculumVitaeDataApi } from '../../composables/use-curriculum-vitae-data-api'
+
 const localePath = useLocalePath()
 const route = useRoute()
 
