@@ -1,11 +1,13 @@
 import type { AppRoute } from '@ts-rest/core'
+import { z } from 'zod'
 import { imageProcessingSchema } from './image-processing.type'
-
-const file = 'file.*'
 
 export const getImageProcessing = {
   method: 'GET',
-  path: `/items/imageProcessing?fields=*,${file}`,
+  path: `/items/imageProcessing`,
+  query: z.object({
+    'filter[thesisTitle][_contains]': z.string().optional(),
+  }),
   responses: {
     200: imageProcessingSchema,
   },

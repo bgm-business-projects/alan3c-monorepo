@@ -16,21 +16,32 @@ export function useImageProcessingApi(
     return useClient(imageProcessingContract, clientHeader)
   })
 
-  async function findList() {
-    const result = await imageProcessingApi.value.getImageProcessing()
-    if (result.status === 200) {
-      return result.body
+  async function findList(params?: ImageProcessingRequest['getImageProcessing']) {
+    if (params) {
+      const query = imageProcessingContract.getImageProcessing.query.parse(params.query)
+      const result = await imageProcessingApi.value.getImageProcessing({
+        ...params,
+        query,
+      })
+      if (result.status === 200) {
+        return result.body
+      }
+    }
+    else {
+      const result = await imageProcessingApi.value.getImageProcessing()
+      if (result.status === 200) {
+        return result.body
+      }
     }
   }
 
   async function addDownloadCount(params: ImageProcessingRequest['addImageProcessingDownloadCount']['params']) {
-    const [err, result] = await to(imageProcessingApi.value.addImageProcessingDownloadCount({
+    const result = await imageProcessingApi.value.addImageProcessingDownloadCount({
       params,
-    }))
-    if (err) {
-      throw new Error(err.message)
+    })
+    if (result.status === 200) {
+      return result.body
     }
-    console.log('result', result)
   }
 
   return {
