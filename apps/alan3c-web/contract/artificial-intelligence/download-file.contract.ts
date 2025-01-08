@@ -1,12 +1,12 @@
 import type { AppRoute } from '@ts-rest/core'
 import { z } from 'zod'
-import { imageProcessingSchema } from './image-processing.type'
+import { artificialIntelligenceSchema } from './artificial-intelligence.type'
 
-export const downloadImageProcessingFile = {
+export const downloadArtificialIntelligenceFile = {
   method: 'GET',
   path: `/asset`,
   responses: {
-    200: imageProcessingSchema,
+    200: artificialIntelligenceSchema,
   },
   pathParams: z.object({
     id: z.string(),

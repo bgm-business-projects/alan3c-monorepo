@@ -1,12 +1,12 @@
 import type { AppRoute } from '@ts-rest/core'
 import { z } from 'zod'
-import { imageProcessingSchema } from './image-processing.type'
+import { referenceDocumentSchema } from './reference-document.type'
 
-export const downloadImageProcessingFile = {
+export const downloadReferenceDocumentFile = {
   method: 'GET',
   path: `/asset`,
   responses: {
-    200: imageProcessingSchema,
+    200: referenceDocumentSchema,
   },
   pathParams: z.object({
     id: z.string(),

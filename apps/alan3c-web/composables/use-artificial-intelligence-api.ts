@@ -1,0 +1,51 @@
+import type { ClientInferRequest } from '@ts-rest/core'
+import { computed } from 'vue'
+import { artificialIntelligenceContract } from '../contract/artificial-intelligence'
+
+type ArtificialIntelligenceRequest = ClientInferRequest<typeof artificialIntelligenceContract>
+
+export function useArtificialIntelligenceApi(
+  accessToken?: MaybeRefOrGetter<string | undefined>,
+) {
+  // const baseUrl = process.env.NUXT_API_BASE_URL;
+
+  const artificialIntelligenceApi = computed(() => {
+    const clientHeader = accessToken
+      ? { authorization: `Bearer ${toValue(accessToken)}` }
+      : {}
+    return useClient(artificialIntelligenceContract, clientHeader)
+  })
+
+  async function findList(params?: ArtificialIntelligenceRequest['getArtificialIntelligence']) {
+    if (params) {
+      const query = artificialIntelligenceContract.getArtificialIntelligence.query.parse(params.query)
+      const result = await artificialIntelligenceApi.value.getArtificialIntelligence({
+        ...params,
+        query,
+      })
+      if (result.status === 200) {
+        return result.body
+      }
+    }
+    else {
+      const result = await artificialIntelligenceApi.value.getArtificialIntelligence()
+      if (result.status === 200) {
+        return result.body
+      }
+    }
+  }
+
+  async function addDownloadCount(params: ArtificialIntelligenceRequest['addArtificialIntelligenceDownloadCount']['params']) {
+    const result = await artificialIntelligenceApi.value.addArtificialIntelligenceDownloadCount({
+      params,
+    })
+    if (result.status === 200) {
+      return result.body
+    }
+  }
+
+  return {
+    findList,
+    addDownloadCount,
+  }
+}

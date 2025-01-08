@@ -53,7 +53,7 @@
           </div>
         </div>
       </div>
-      <div class="w-full">
+      <div class="w-full flex flex-col gap-1.5rem">
         <template v-if="imageProcessing?.data.length && imageProcessing?.data.length > 0">
           <div
             v-for="item in imageProcessing?.data"

@@ -1,21 +1,167 @@
 <template>
-  <div class="w-full flex flex-col">
-    home
-    <!-- <div>test</div> -->
+  <div class="w-full flex flex-col gap-2rem items-center layout-padding">
+    <div class="max-width flex flex-col gap-1.5rem pt-3rem">
+      <div class="w-full flex flex-col gap-2rem">
+        <h1 class="text-2xl font-bold text-primary">
+          人工智慧 Seminar
+        </h1>
+      </div>
+      <div class="flex">
+        <q-input v-model="keyword" outlined placeholder="搜尋" dense @keyup.enter="refreshArtificialIntelligence()">
+          <template #prepend>
+            <q-icon name="search" class="text-16px" />
+          </template>
+        </q-input>
+      </div>
+    </div>
+    <div class="max-width flex flex-col gap-1.2rem">
+      <div class="flex w-full gap-1rem text-lg font-semibold">
+        <div class="w-10rem flex items-center gap-.5rem">
+          <div class="w-6px h-6px bg-primary rounded-full" />
+          <div class="tracking-1px">
+            報告日期
+          </div>
+        </div>
+        <div class="w-15rem flex items-center gap-.5rem">
+          <div class="w-6px h-6px bg-primary rounded-full" />
+          <div class="tracking-1px">
+            論文標題
+          </div>
+        </div>
+        <div class="w-13rem flex items-center gap-.5rem">
+          <div class="w-6px h-6px bg-primary rounded-full" />
+          <div class="tracking-1px">
+            論文期刊
+          </div>
+        </div>
+        <div class="w-12rem flex items-center gap-.5rem">
+          <div class="w-6px h-6px bg-primary rounded-full" />
+          <div class="tracking-1px">
+            論文作者
+          </div>
+        </div>
+        <div class="w-10rem flex items-center gap-.5rem">
+          <div class="w-6px h-6px bg-primary rounded-full" />
+          <div class="tracking-1px">
+            報告者
+          </div>
+        </div>
+        <div class="w-10rem flex items-center gap-.5rem">
+          <div class="w-6px h-6px bg-primary rounded-full" />
+          <div class="tracking-1px">
+            下載次數
+          </div>
+        </div>
+      </div>
+      <div class="w-full flex flex-col gap-1.5rem">
+        <template v-if="artificialIntelligence?.data.length && artificialIntelligence?.data.length > 0">
+          <div
+            v-for="item in artificialIntelligence?.data"
+            :key="item.id"
+            class="flex w-full gap-1rem font-medium"
+          >
+            <div class="w-10rem">
+              {{ item.reportDate }}
+            </div>
+            <div class="w-15rem underline cursor-pointer" @click="addDownloadCount('artificialIntelligence', item.id.toString())">
+              {{ item.thesisTitle }}
+            </div>
+            <div class="w-13rem">
+              {{ item.academicJournal }}
+            </div>
+            <div class="w-12rem">
+              {{ item.paperAuthor }}
+            </div>
+            <div class="w-10rem">
+              {{ item.reporter }}
+            </div>
+            <div class="w-10rem">
+              {{ item.downloadCount }}
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <div class="w-full bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem">
+            查無結果
+          </div>
+        </template>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+const { locale } = useI18n()
+
+const keyword = ref('')
+
+const localePath = useLocalePath()
+const route = useRoute()
+
+const useArtificialIntelligence = useArtificialIntelligenceApi()
+
+const { data: artificialIntelligence, refresh: refreshArtificialIntelligence } = useLazyAsyncData('artificial-intelligence', async () => {
+  if (keyword.value.length > 0) {
+    const [err, result] = await to (useArtificialIntelligence.findList({
+      query: {
+        'filter[thesisTitle][_contains]': keyword.value,
+      },
+    }))
+    if (err) {
+      return Promise.reject(err)
+    }
+    return result
+  }
+  else {
+    const [err, result] = await to (useArtificialIntelligence.findList())
+    if (err) {
+      return Promise.reject(err)
+    }
+    return result
+  }
+}, {
+  watch: [locale],
+})
+
+async function addDownloadCount(collection: string, id: string) {
+  const [err, result] = await to (useArtificialIntelligence.addDownloadCount({
+    collection,
+    id,
+  }))
+  if (err) {
+    throw new Error(err.message)
+  }
+  if (result?.downloadFileId) {
+    // console.log('result?.downloadFileId', result?.downloadFileId)
+    downloadFile(result?.downloadFileId)
+  }
+}
+
+const config = useRuntimeConfig()
+
+function downloadFile(fileId: string) {
+  const fileUrl = `${config.public.apiBaseUrl}/assets/${fileId}`
+  // 建立一個隱藏的 a 標籤，觸發下載
+  const a = document.createElement('a')
+  a.href = `${fileUrl}?download`
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+};
+
 useSeoMeta({
-  title: 'home',
-  description: 'home',
-  keywords: 'home',
-  ogTitle: 'home',
-  ogDescription: 'home',
+  title: '人工智慧 Seminar',
+  description: '人工智慧 Seminar',
+  keywords: '人工智慧 Seminar',
+  ogTitle: '人工智慧 Seminar',
+  ogDescription: '人工智慧 Seminar',
 })
 </script>
 
 <style scoped lang="sass">
+.q-field--outlined
+  :deep() .q-field__control
+    border-radius: .6rem
 .test
   background: #000
 </style>
