@@ -1,5 +1,8 @@
+import type { ClientInferRequest } from '@ts-rest/core'
 import { computed } from 'vue'
 import { imageProcessingContract } from '../contract/image-processing'
+
+type ImageProcessingRequest = ClientInferRequest<typeof imageProcessingContract>
 
 export function useImageProcessingApi(
   accessToken?: MaybeRefOrGetter<string | undefined>,
@@ -20,7 +23,18 @@ export function useImageProcessingApi(
     }
   }
 
+  async function addDownloadCount(params: ImageProcessingRequest['addImageProcessingDownloadCount']['params']) {
+    const [err, result] = await to(imageProcessingApi.value.addImageProcessingDownloadCount({
+      params,
+    }))
+    if (err) {
+      throw new Error(err.message)
+    }
+    console.log('result', result)
+  }
+
   return {
     findList,
+    addDownloadCount,
   }
 }

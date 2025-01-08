@@ -58,6 +58,7 @@ const { locale } = useI18n()
 interface Props {
   data: NormalizeTranslations<TraineeList['data'][number]>;
 }
+
 const config = useRuntimeConfig()
 const downloadHref = computed(() => `${config.public.apiBaseUrl}/assets/${props.data.file.id}?download`)
 
