@@ -1,19 +1,17 @@
 <template>
-  <div class="w-full flex flex-col gap-2rem items-center layout-padding">
-    <div class="max-width flex flex-col gap-1.5rem bg-white fixed pt-3rem">
+  <div class="w-full flex flex-col gap-2rem items-center layout-padding py-3rem border-solid">
+    <div class="flex flex-col gap-1.5rem bg-white max-width">
       <div class="w-full flex flex-col gap-2rem">
         <h1 class="text-2xl font-bold text-primary">
           Curriculum Vitae
         </h1>
       </div>
       <div class="w-full flex flex-col gap-2rem">
-        <div class="flex gap-.5rem">
+        <div class="hidden lg:!flex gap-.5rem">
           <div
             v-for="category in categories" :key="category.name"
             class="bg-[#f4f4f4] px-1rem py-.2rem rounded-.5rem"
-            :class="{
-              'bg-accent': category.route.hash.slice(1) === currentCategory,
-            }"
+            :class="checkActiveStyle(category.route.hash)"
           >
             <nuxt-link
               :to="localePath(category.route)"
@@ -24,32 +22,37 @@
             </nuxt-link>
           </div>
         </div>
+        <div class="flex lg:hidden">
+          <q-select v-model="targetCategory" :options="options" outlined dense class="flex lg:hidden" />
+        </div>
       </div>
     </div>
-    <div class="max-width flex flex-col gap-4rem pt-10rem pb-1rem">
-      <div id="information">
-        <div v-html="curriculumVitaeData?.data.curriculumVitae" />
+    <div class="max-width flex flex-col pb-1rem overflow-hidden w-full">
+      <div id="information" class="w-full">
+        <div class="w-full" v-html="curriculumVitaeData?.data.curriculumVitae" />
       </div>
-      <div id="activities-society">
-        <div v-html="curriculumVitaeData?.data.activitiesSociety" />
+      <div id="activities-society" class="w-full">
+        <div class="w-full" v-html="curriculumVitaeData?.data.activitiesSociety" />
       </div>
-      <div id="activities-other">
-        <div v-html="curriculumVitaeData?.data.activitiesOther" />
+      <div id="activities-other" class="w-full">
+        <div class="w-full" v-html="curriculumVitaeData?.data.activitiesOther" />
       </div>
-      <div id="technical-reviewer">
-        <div v-html="curriculumVitaeData?.data.technicalReviewer" />
+      <div id="technical-reviewer" class="w-full">
+        <div class="w-full" v-html="curriculumVitaeData?.data.technicalReviewer" />
       </div>
-      <div id="consulting">
-        <div v-html="curriculumVitaeData?.data.consulting" />
+      <div id="consulting" class="w-full">
+        <div class="w-full" v-html="curriculumVitaeData?.data.consulting" />
       </div>
-      <div id="projects">
-        <div v-html="curriculumVitaeData?.data.projects" />
+
+      <div id="projects" class="w-full">
+        <div class="w-full overflow-scroll" v-html="curriculumVitaeData?.data.projects" />
       </div>
-      <div id="theses-master">
-        <div v-html="curriculumVitaeData?.data.thesesMaster" />
+      <div id="theses-master" class="max-width">
+        <div class="w-full" v-html="curriculumVitaeData?.data.thesesMaster" />
       </div>
-      <div id="awards">
-        <div v-html="curriculumVitaeData?.data.awards" />
+
+      <div id="awards" class="w-full">
+        <div class="w-full" v-html="curriculumVitaeData?.data.awards" />
       </div>
     </div>
   </div>
@@ -139,9 +142,39 @@ useSeoMeta({
   ogTitle: 'curriculum-vitae',
   ogDescription: 'curriculum-vitae',
 })
+
+const targetCategory = ref<string>()
+
+const options = computed(() => {
+  return categories.value.map((item) => item.route.hash.split('#')[1])
+})
+
+const router = useRouter()
+watch(targetCategory, (newValue) => {
+  router.push(localePath({
+    name: 'home-curriculum-vitae',
+    hash: categories.value.find((item) => item.route.hash.split('#')[1] === targetCategory.value)?.route.hash,
+  }))
+})
+
+onMounted(() => {
+  targetCategory.value = currentCategory.value
+})
+
+watch(currentCategory, (newValue) => {
+  targetCategory.value = newValue
+})
+
+function checkActiveStyle(category: string) {
+  if (targetCategory.value === category.replace('#', '')) {
+    return 'bg-accent'
+  }
+  return ''
+}
 </script>
 
 <style scoped lang="sass">
-.test
-  background: #000
+:deep()
+  table
+    max-width: 100%
 </style>

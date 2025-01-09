@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-2rem w-full">
+  <div class="flex gap-2rem w-full flex-col lg:flex-row">
     <div class="w-150px aspect-3/4 overflow-hidden flex justify-center items-center">
       <nuxt-img class="min-w-full min-h-full object-cover" :src="combineImageUrl(props.data.mainImage.filename_disk)" />
     </div>
@@ -29,8 +29,9 @@
       <a
         :href="downloadHref"
         :style="writingModeStyle"
-        class="bg-accent rounded-.5rem"
-        :class="locale === 'zh' ? ['tracking-.5rem', 'pt-1.1rem', 'pb-.7rem', 'px-.4rem']
+        class="bg-accent rounded-.5rem text-direction"
+        :class="
+          locale === 'zh' ? ['tracking-.5rem', 'pt-1.1rem', 'pb-.7rem', 'px-.4rem']
           : locale === 'en' ? ['tracking-.2rem', 'py-.3rem', 'px-1rem']
             : []"
       >
@@ -44,6 +45,7 @@
 import type { CSSProperties } from 'vue'
 import type { TraineeList } from '../../contract/trainee/trainee.type'
 import type { NormalizeTranslations } from '../../contract/utils/translation.type'
+import { useWindowSize } from '@vueuse/core'
 import { combineImageUrl } from '../../utils/combine-image-url'
 
 const props = withDefaults(defineProps<Props>(), {
@@ -58,6 +60,8 @@ const { locale } = useI18n()
 interface Props {
   data: NormalizeTranslations<TraineeList['data'][number]>;
 }
+
+const { width: windowWidth } = useWindowSize()
 
 const config = useRuntimeConfig()
 const downloadHref = computed(() => `${config.public.apiBaseUrl}/assets/${props.data.file.id}?download`)
@@ -91,4 +95,9 @@ const writingModeStyle = computed(() => {
 </script>
 
 <style scoped lang="sass">
+@media (max-width: 1024px)
+  .text-direction
+    writing-mode: horizontal-tb !important
+    padding: 6px 15px !important
+    letter-spacing: 3px
 </style>

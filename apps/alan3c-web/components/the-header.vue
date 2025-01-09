@@ -1,8 +1,8 @@
 <template>
   <div class="fixed py-1rem flex justify-center layout-padding w-full z-9999">
-    <div class="flex items-center max-width border rounded-1rem lg:border-none lg:rounded-0 overflow-hidden ">
-      <div class="backdrop-blur-lg lg:backdrop-blur-none w-full lg:w-auto flex flex-col">
-        <div class="flex items-center bg-white px-2rem py-.5rem rounded-.5rem lg:border">
+    <div class="flex items-center max-width border rounded-.7rem lg:rounded-1rem lg:border-none lg:rounded-0 overflow-hidden ">
+      <div class="w-full lg:w-auto flex flex-col">
+        <div class="flex items-center bg-[#f4f4f4] px-1rem lg:px-2rem py-.5rem rounded-.5rem lg:border gap-1rem">
           <div class="flex flex-row items-center gap-.5rem">
             <nuxt-img
               src="/logo.png"
@@ -46,7 +46,7 @@
         </div>
         <!-- 手機版選單 -->
         <div
-          class="overflow-hidden lg:hidden duration-500"
+          class="overflow-hidden lg:hidden duration-500 bg-[#f4f4f4]"
           :class="showMenu ? 'h-[calc(100dvh-6rem)]' : 'h-0'"
         >
           <div class="justify-center p-1rem">
@@ -67,7 +67,11 @@
               :key="item"
             >
               <div class="px-1rem border-b-1px border-[#E1E1E1] border-solid py-.7rem">
-                <nuxt-link class="flex w-full gap-1rem">
+                <nuxt-link
+                  :to="decodeURIComponent(localePath(item.route))"
+                  class="flex w-full gap-1rem"
+                  @click="showMenu = false"
+                >
                   <div class="flex-1">
                     {{ item.name }}
                   </div>
@@ -81,7 +85,7 @@
         </div>
       </div>
       <!-- 電腦版選單 -->
-      <div class="hidden lg:!flex items-center border rounded-.5rem px-2rem py-.5rem gap-x-1.5rem flex-1 lg:!backdrop-blur-lg">
+      <div class="hidden lg:!flex items-center border rounded-.5rem px-2rem py-.5rem gap-x-1.5rem flex-1 bg-[#f4f4f4]">
         <div class="flex gap-x-1.5rem gap-y-.5rem  flex-1">
           <nuxt-link
             v-for="item in data"

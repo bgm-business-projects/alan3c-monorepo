@@ -4,10 +4,10 @@
       <h1 class="text-2xl font-bold text-primary">
         我的徒弟
       </h1>
-      <div class="flex gap-1rem">
+      <div class="lg:!flex gap-1rem hidden">
         <div
           v-for="category in traineeCategories" :key="category.id"
-          class="bg-[#f4f4f4] px-1rem py-.2rem rounded-.5rem"
+          class="bg-[#f4f4f4] px-1rem py-.2rem rounded-.5rem hover:bg-accent duration-500 flex items-center"
           :class="{
             'bg-accent': category.translations.name === currentCategory,
           }"
@@ -27,8 +27,9 @@
           <div />
         </div>
       </div>
-      <div class="flex">
-        <q-input v-model="keyword" outlined placeholder="搜尋" dense>
+      <div class="flex w-full gap-1rem justify-between">
+        <q-select v-model="targetCategory" :options="options" outlined dense class="flex lg:hidden" />
+        <q-input v-model="keyword" outlined placeholder="搜尋" dense class="w-10rem">
           <template #prepend>
             <q-icon name="search" class="text-16px" />
           </template>
@@ -69,9 +70,29 @@ const { data: traineeCategories, refresh: refreshTraineeCategories } = useLazyAs
   watch: [locale],
 })
 
+const options = computed(() => {
+  if (!traineeCategories.value)
+    return undefined
+  return traineeCategories.value.map((item) => {
+    return item.translations.name
+  })
+})
+
 const isLoading = ref(false)
 
 const route = useRoute()
+const router = useRouter()
+const targetCategory = ref<string>(route.query.category as string)
+
+watch(targetCategory, (newValue) => {
+  router.push(localePath({
+    name: 'trainee',
+    query: {
+      category: newValue,
+    },
+  }))
+})
+
 const currentCategory = computed(() => {
   return route.query.category
 })

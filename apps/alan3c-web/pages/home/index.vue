@@ -1,19 +1,24 @@
 <template>
   <div class="layout-padding flex justify-center w-full py-3rem">
-    <div class="w-full flex flex-col max-width">
-      <div class="flex flex-row gap-3rem w-full">
-        <div class="flex flex-col gap-1rem items-center justify-center flex-1">
-          <h1 class="font-bold text-xl">
+    <div class="w-full flex flex-col max-width gap-2rem">
+      <div class="flex gap-1.5rem lg:gap-3rem w-full flex-col lg:flex-row">
+        <div class="flex flex-col gap-1rem items-center justify-center flex-1 w-full">
+          <h1 class="font-bold text-xl w-full">
             老闆的家
           </h1>
           <div ref="imageContainerRef" class="w-full aspect-4/3 relative">
-            <base-polygon class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" :container-width="imageContainerWidth" :container-height="imageContainerHeight" />
-            <div class="absolute top-50% left-50% w-75% aspect-4/3 translate-x-[-50%] translate-y-[-50%] overflow-hidden">
+            <base-polygon
+              class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]"
+              :container-width="imageContainerWidth" :container-height="imageContainerHeight"
+            />
+            <div
+              class="absolute top-50% left-50% w-75% aspect-4/3 translate-x-[-50%] translate-y-[-50%] overflow-hidden"
+            >
               <nuxt-img :src="combineImageUrl(home?.mainImage?.filename_disk)" />
             </div>
           </div>
         </div>
-        <div class="flex flex-col gap-4rem justify-center flex-1">
+        <div class="flex flex-col gap-3rem lg:gap-4rem justify-center flex-1">
           <div class="flex flex-col gap-1rem">
             <h2 class="font-bold text-xl">
               現任
@@ -36,14 +41,14 @@
           </div>
         </div>
       </div>
-      <div class="border bg-gray-50 p-2rem flex justify-center gap-2rem">
+      <div class="border bg-gray-50 p-2rem flex justify-center gap-2rem font-medium">
         <nuxt-link v-for="item in data" :key="item.name" :to="localePath(item.route)">
           {{ item.name }}
         </nuxt-link>
       </div>
     </div>
   </div>
-  <nuxt-marquee class="my-3rem py-.7rem border-t-1px border-b-1px border-solid border-gray-200">
+  <nuxt-marquee class="my-0 lg:my-3rem py-.7rem border-t-1px border-b-1px border-solid border-gray-200">
     <div
       v-for="item in 10"
       :key="item"

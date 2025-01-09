@@ -1,6 +1,6 @@
 <template>
   <nuxt-link
-    class="flex flex-col items-center gap-1.3rem w-25%"
+    class="flex flex-col items-center gap-1.3rem"
     :to="localePath({
       name: 'home-life-snippets-category-more',
       params: {

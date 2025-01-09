@@ -26,13 +26,13 @@ const pathRef = ref<SVGPathElement>()
 // 動態生成初始路徑
 function generateInitialPath(width: number, height: number): string {
   const points = [
-    { x: width * 0.9, y: height * 0.3 },
+    { x: width * 1, y: height * 0.3 },
     { x: width * 0.8, y: height * 0.1 },
-    { x: width * 0.5, y: 0 },
-    { x: width * 0.3, y: height * 0.4 },
-    { x: 0, y: height * 0.5 },
-    { x: width * 0.1, y: height * 0.9 },
-    { x: width * 0.7, y: height * 0.8 },
+    { x: width * 0.5, y: height * 0.05 },
+    { x: width * 0.1, y: height * 0.3 },
+    { x: width * 0, y: height * 0.6 },
+    { x: width * 0.3, y: height * 0.9 },
+    { x: width * 0.8, y: height * 1 },
   ]
 
   const pathCommands = points.map((point, index) => `${index === 0 ? 'M' : 'L'}${point.x} ${point.y}`)

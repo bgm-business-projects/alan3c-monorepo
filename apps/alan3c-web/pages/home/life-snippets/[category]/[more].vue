@@ -24,7 +24,7 @@
           <div
             v-for="(item, index) in lifeSnippetsMoreFile.data.teacherStudentSnapshots[0].teacherStudentSnapshots_id.moreFileList"
             :key="index"
-            class="w-25% aspect-4/3 overflow-hidden relative"
+            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
           </div>
@@ -36,7 +36,7 @@
           <div
             v-for="(item, index) in lifeSnippetsMoreFile.data.growthRecord[0].growthRecord_id.moreFileList"
             :key="index"
-            class="w-25% aspect-4/3 overflow-hidden relative"
+            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
           </div>
@@ -48,7 +48,55 @@
           <div
             v-for="(item, index) in lifeSnippetsMoreFile.data.academicLecture[0].academicLecture_id.moreFileList"
             :key="index"
-            class="w-25% aspect-4/3 overflow-hidden relative"
+            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
+          >
+            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+          </div>
+        </div>
+        <div
+          v-if="isAdministrativeYearsMoreFile(lifeSnippetsMoreFile)"
+          class="flex gap-1rem w-full"
+        >
+          <div
+            v-for="(item, index) in lifeSnippetsMoreFile.data.administrativeYears[0].administrativeYears_id.moreFileList"
+            :key="index"
+            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
+          >
+            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+          </div>
+        </div>
+        <div
+          v-if="isAdministrativeYearsMoreFile(lifeSnippetsMoreFile)"
+          class="flex gap-1rem w-full"
+        >
+          <div
+            v-for="(item, index) in lifeSnippetsMoreFile.data.administrativeYears[0].administrativeYears_id.moreFileList"
+            :key="index"
+            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
+          >
+            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+          </div>
+        </div>
+        <div
+          v-if="isPrimeOfLifeMoreFile(lifeSnippetsMoreFile)"
+          class="flex gap-1rem w-full"
+        >
+          <div
+            v-for="(item, index) in lifeSnippetsMoreFile.data.primeOfLifeDeep[0].primeOfLifeDeep_id.moreFileList"
+            :key="index"
+            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
+          >
+            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+          </div>
+        </div>
+        <div
+          v-if="isLeisureTimeMoreFile(lifeSnippetsMoreFile)"
+          class="flex gap-1rem w-full"
+        >
+          <div
+            v-for="(item, index) in lifeSnippetsMoreFile.data.leisureTime[0].leisureTime_id.moreFileList"
+            :key="index"
+            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
           </div>
@@ -61,7 +109,10 @@
 <script setup lang="ts">
 import type { LifeSnippets } from '~/contract/life-snippets/life-snippets.type'
 import { isAcademicLectureMoreFile } from '../../../../contract/life-snippets/academic-lecture/academic-lecture.type'
+import { isAdministrativeYearsMoreFile } from '../../../../contract/life-snippets/administrative-years/administrative-years.type'
 import { isGrowthRecordMoreFile } from '../../../../contract/life-snippets/growth-record/growth-record.type'
+import { isLeisureTimeMoreFile } from '../../../../contract/life-snippets/leisure-time/leisure-time.type'
+import { isPrimeOfLifeMoreFile } from '../../../../contract/life-snippets/prime-of-life/prime-of-life.type'
 import { isTeacherStudentSnapshotsMoreFile } from '../../../../contract/life-snippets/teacher-student-snapshots/teacher-student-snapshots.type'
 import { combineImageUrl } from '../../../../utils/combine-image-url'
 

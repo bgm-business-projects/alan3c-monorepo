@@ -1,14 +1,7 @@
 <template>
-  <div class="w-full flex flex-col items-center gap-3rem layout-padding py-3rem">
-    <div class="max-width flex gap-3rem">
-      <ul class="flex flex-col gap-.5rem">
-        <li v-for="(category, index) in data" :key="index">
-          <nuxt-link :to="category.route" class="font-semibold tracking-.05rem">
-            {{ category.name }}
-          </nuxt-link>
-        </li>
-      </ul>
-      <div class="flex flex-col gap-5rem flex-1">
+  <div class="flex-1 flex flex-col items-center gap-3rem max-w-full">
+    <div class="w-full flex flex-col lg:flex-row gap-3rem">
+      <div class="flex flex-col gap-5rem flex-1 w-full">
         <base-info
           :data="personalProfile?.translations?.content"
         />
@@ -26,48 +19,10 @@ import { isCoursesTaught } from '~/contract/personal-profile/courses-taught/cour
 import { isCurriculumVitae } from '~/contract/personal-profile/curriculum-vitae/curriculum-vitae.type'
 import { isResume } from '~/contract/personal-profile/resume/resume.type'
 
+const route = useRoute()
 const { locale } = useI18n()
-const data = ref([
-  {
-    name: '簡歷',
-    route: {
-      name: 'home-personal-profile-id',
-      params: { id: 'resume' },
-    },
-  },
-  {
-    name: '履歷',
-    route: {
-      name: 'home-personal-profile-id',
-      params: { id: 'curriculumVitae' },
-    },
-  },
-  {
-    name: '學術活動',
-    route: {
-      name: 'home-personal-profile-id',
-      params: { id: 'academicActivities' },
-    },
-  },
-  {
-    name: '學術榮譽',
-    route: {
-      name: 'home-personal-profile-id',
-      params: { id: 'academicRecognition' },
-    },
-  },
-  {
-    name: '曾任教科目',
-    route: {
-      name: 'home-personal-profile-id',
-      params: { id: 'coursesTaught' },
-    },
-  },
-])
 
 const usePersonalProfile = usePersonalProfileApi()
-
-const route = useRoute()
 
 const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncData('personal-profile', async () => {
   if (route.params.id === 'resume') {
@@ -152,9 +107,11 @@ useSeoMeta({
   ogTitle: '個人資料',
   ogDescription: '個人資料',
 })
+
+definePageMeta({
+  layout: 'home-personal-profile',
+})
 </script>
 
 <style scoped lang="sass">
-.test
-  background: #000
 </style>

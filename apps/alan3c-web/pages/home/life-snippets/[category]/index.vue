@@ -6,11 +6,11 @@
       </h1>
     </div>
     <div class="max-width relative flex flex-col items-center justify-center gap-2rem">
-      <div class="flex gap-1rem w-full max-width">
+      <div class="hidden gap-1rem w-full max-width lg:!flex">
         <nuxt-link
           v-for="(item, index) in 6"
           :key="index"
-          class="bg-[#f4f4f4] px-1rem py-.2rem rounded-.5rem"
+          class="bg-[#f4f4f4] px-1rem py-.2rem rounded-.5rem hover:bg-accent duration-500"
           :class="{
             'bg-accent': getTranslation(index + 1) === route.params.category,
           }"
@@ -24,85 +24,101 @@
           </h2>
         </nuxt-link>
       </div>
+      <div class="flex lg:hidden w-full">
+        <q-select v-model="targetCategory" :options="options" outlined dense class="flex lg:hidden" />
+      </div>
       <div class="w-full max-width">
-        <div
-          v-if="isTeacherStudentSnapshotsDeep(lifeSnippets?.target)"
-          class="w-full flex"
-        >
-          <base-card
-            v-for="(item, index) in lifeSnippets?.target?.data.teacherStudentSnapshots"
-            :key="index"
-            :target-id="item.teacherStudentSnapshots_id.id"
-            :main-image="combineImageUrl(item.teacherStudentSnapshots_id.file.filename_disk)"
-            :category="getTranslationByKey('teacherStudentSnapshots')"
-            :name="item.teacherStudentSnapshots_id.translations.find(item => item.teacherStudentSnapshotsLanguages_code === locale)?.name"
-          />
-        </div>
-        <div
-          v-if="isGrowthRecordDeep(lifeSnippets?.target)"
-          class="w-full flex"
-        >
-          <base-card
-            v-for="(item, index) in lifeSnippets?.target?.data.growthRecord"
-            :key="index"
-            :target-id="item.growthRecord_id.id"
-            :main-image="combineImageUrl(item.growthRecord_id.file.filename_disk)"
-            :category="getTranslationByKey('growthRecord')"
-            :name="item.growthRecord_id.translations.find(item => item.growthRecordLanguages_code === locale)?.name"
-          />
-        </div>
-        <div
-          v-if="isLeisureTimeDeep(lifeSnippets?.target)"
-          class="w-full flex"
-        >
-          <base-card
-            v-for="(item, index) in lifeSnippets?.target?.data.leisureTime"
-            :key="index"
-            :target-id="item.leisureTime_id.id"
-            :main-image="combineImageUrl(item.leisureTime_id.file.filename_disk)"
-            :category="getTranslationByKey('leisureTime')"
-            :name="item.leisureTime_id.translations.find(item => item.leisureTimeLanguages_code === locale)?.name"
-          />
-        </div>
-        <div
-          v-if="isAcademicLectureDeep(lifeSnippets?.target)"
-          class="w-full flex"
-        >
-          <base-card
-            v-for="(item, index) in lifeSnippets?.target?.data.academicLecture"
-            :key="index"
-            :target-id="item.academicLecture_id.id"
-            :main-image="combineImageUrl(item.academicLecture_id.file.filename_disk)"
-            :category="getTranslationByKey('academicLecture')"
-            :name="item.academicLecture_id.translations.find(item => item.academicLectureLanguages_code === locale)?.name"
-          />
-        </div>
-        <div
-          v-if="isPrimeOfLifeDeep(lifeSnippets?.target)"
-          class="w-full flex"
-        >
-          <base-card
-            v-for="(item, index) in lifeSnippets?.target?.data.primeOfLife"
-            :key="index"
-            :target-id="item.primeOfLife_id.id"
-            :main-image="combineImageUrl(item.primeOfLife_id.file.filename_disk)"
-            :category="getTranslationByKey('primeOfLife')"
-            :name="item.primeOfLife_id.translations.find(item => item.primeOfLifeLanguages_code === locale)?.name"
-          />
-        </div>
-        <div
-          v-if="isAdministrativeYearsDeep(lifeSnippets?.target)"
-          class="w-full flex"
-        >
-          <base-card
-            v-for="(item, index) in lifeSnippets?.target?.data.administrativeYears"
-            :key="index"
-            :target-id="item.administrativeYears_id.id"
-            :main-image="combineImageUrl(item.administrativeYears_id.file.filename_disk)"
-            :category="getTranslationByKey('administrativeYears')"
-            :name="item.administrativeYears_id.translations.find(item => item.administrativeYearsLanguages_code === locale)?.name"
-          />
-        </div>
+        <template v-if="isLoading">
+          <div class="relative w-full aspect-2/1">
+            <q-inner-loading :showing="isLoading" />
+          </div>
+        </template>
+        <template v-else>
+          <div
+            v-if="isTeacherStudentSnapshotsDeep(lifeSnippets?.target)"
+            class="w-full flex gap-1rem"
+          >
+            <base-card
+              v-for="(item, index) in lifeSnippets?.target?.data.teacherStudentSnapshots"
+              :key="index"
+              :target-id="item.teacherStudentSnapshots_id.id"
+              :main-image="combineImageUrl(item.teacherStudentSnapshots_id.file.filename_disk)"
+              :category="getTranslationByKey('teacherStudentSnapshots')"
+              :name="item.teacherStudentSnapshots_id.translations.find(item => item.teacherStudentSnapshotsLanguages_code === locale)?.name"
+              class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
+            />
+          </div>
+          <div
+            v-if="isGrowthRecordDeep(lifeSnippets?.target)"
+            class="w-full flex"
+          >
+            <base-card
+              v-for="(item, index) in lifeSnippets?.target?.data.growthRecord"
+              :key="index"
+              :target-id="item.growthRecord_id.id"
+              :main-image="combineImageUrl(item.growthRecord_id.file.filename_disk)"
+              :category="getTranslationByKey('growthRecord')"
+              :name="item.growthRecord_id.translations.find(item => item.growthRecordLanguages_code === locale)?.name"
+              class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
+            />
+          </div>
+          <div
+            v-if="isLeisureTimeDeep(lifeSnippets?.target)"
+            class="w-full flex"
+          >
+            <base-card
+              v-for="(item, index) in lifeSnippets?.target?.data.leisureTime"
+              :key="index"
+              :target-id="item.leisureTime_id.id"
+              :main-image="combineImageUrl(item.leisureTime_id.file.filename_disk)"
+              :category="getTranslationByKey('leisureTime')"
+              :name="item.leisureTime_id.translations.find(item => item.leisureTimeLanguages_code === locale)?.name"
+              class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
+            />
+          </div>
+          <div
+            v-if="isAcademicLectureDeep(lifeSnippets?.target)"
+            class="w-full flex"
+          >
+            <base-card
+              v-for="(item, index) in lifeSnippets?.target?.data.academicLecture"
+              :key="index"
+              :target-id="item.academicLecture_id.id"
+              :main-image="combineImageUrl(item.academicLecture_id.file.filename_disk)"
+              :category="getTranslationByKey('academicLecture')"
+              :name="item.academicLecture_id.translations.find(item => item.academicLectureLanguages_code === locale)?.name"
+              class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
+            />
+          </div>
+          <div
+            v-if="isPrimeOfLifeDeep(lifeSnippets?.target)"
+            class="w-full flex"
+          >
+            <base-card
+              v-for="(item, index) in lifeSnippets?.target?.data.primeOfLife"
+              :key="index"
+              :target-id="item.primeOfLife_id.id"
+              :main-image="combineImageUrl(item.primeOfLife_id.file.filename_disk)"
+              :category="getTranslationByKey('primeOfLife')"
+              :name="item.primeOfLife_id.translations.find(item => item.primeOfLifeLanguages_code === locale)?.name"
+              class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
+            />
+          </div>
+          <div
+            v-if="isAdministrativeYearsDeep(lifeSnippets?.target)"
+            class="w-full flex"
+          >
+            <base-card
+              v-for="(item, index) in lifeSnippets?.target?.data.administrativeYears"
+              :key="index"
+              :target-id="item.administrativeYears_id.id"
+              :main-image="combineImageUrl(item.administrativeYears_id.file.filename_disk)"
+              :category="getTranslationByKey('administrativeYears')"
+              :name="item.administrativeYears_id.translations.find(item => item.administrativeYearsLanguages_code === locale)?.name"
+              class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
+            />
+          </div>
+        </template>
       </div>
     </div>
   </div>
@@ -158,7 +174,10 @@ function getSnippetById(data: LifeSnippets, id: string): string | null {
   return null // 若沒有匹配則返回 null
 }
 
+const isLoading = ref(false)
+
 const { data: lifeSnippets, refresh: refreshLifeSnippets } = useLazyAsyncData('life-snippets', async () => {
+  isLoading.value = true
   const categoryList: LifeSnippets = {
     teacherStudentSnapshots: undefined,
     growthRecord: undefined,
@@ -202,6 +221,7 @@ const { data: lifeSnippets, refresh: refreshLifeSnippets } = useLazyAsyncData('l
   ]))
 
   if (categoryListErr) {
+    isLoading.value = false
     throw categoryListErr
   }
 
@@ -210,6 +230,7 @@ const { data: lifeSnippets, refresh: refreshLifeSnippets } = useLazyAsyncData('l
   const apiKey = getSnippetById(categoryList, routeCategory)
 
   if (!apiKey) {
+    isLoading.value = false
     throw new Error('apiKey not found')
   }
   const apiMethod = apiMapping[apiKey as keyof ApiMapping]
@@ -217,9 +238,11 @@ const { data: lifeSnippets, refresh: refreshLifeSnippets } = useLazyAsyncData('l
   let result
   try {
     result = await apiMethod(true)
+    isLoading.value = false
   }
   catch (error) {
     console.error('Error fetching snippets:', error)
+    isLoading.value = false
     throw error
   }
 
@@ -273,4 +296,22 @@ function getTranslationByKey(key: keyof LifeSnippets) {
       ?.name
   }
 }
+
+const options = computed(() => {
+  const list = []
+  for (let i = 0; i <= 5; i++) {
+    list.push(getTranslation(i + 1))
+  }
+  return list
+})
+const targetCategory = ref<string>(route.params.category as string)
+
+const router = useRouter()
+
+watch(targetCategory, (newValue) => {
+  router.push(localePath({
+    name: 'home-life-snippets-category',
+    params: { category: targetCategory.value },
+  }))
+})
 </script>

@@ -5,7 +5,38 @@
         研究計畫
       </h1>
     </div>
-    <div class="max-width flex flex-col gap-1rem">
+    <div class="w-full custom-grid">
+      <div>
+        計畫名稱
+      </div>
+      <div>
+        期間
+      </div>
+      <div>
+        贊助單位
+      </div>
+      <div>
+        編號
+      </div>
+      <template
+        v-for="(item, index) in researchPlan?.transformData"
+        :key="index"
+      >
+        <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
+          {{ item.translations.name }}
+        </div>
+        <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
+          {{ item.startDate }} - {{ item.endDate }}
+        </div>
+        <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
+          {{ item.translations.sponsor }}
+        </div>
+        <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
+          {{ item.referenceNumber }}
+        </div>
+      </template>
+    </div>
+    <!-- <div class="max-width flex-col gap-1rem lg:!flex hidden">
       <div class="flex py-.4rem font-medium tracking-.05rem">
         <div class="w-250px">
           計畫名稱
@@ -22,9 +53,9 @@
       </div>
       <div class="flex flex-col gap-.8rem tracking-.02rem">
         <div
-          v-for="(item, index) in researchPlan?.data"
+          v-for="(item, index) in researchPlan?.transformData"
           :key="index"
-          class="flex"
+          class="flex border"
         >
           <div class="w-250px flex">
             <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
@@ -48,11 +79,19 @@
           </div>
         </div>
       </div>
+    </div> -->
+    <div class="flex lg:hidden">
+      <research-plan-mobile-card
+        v-for="(item, index) in researchPlan?.originData?.data"
+        :key="index"
+        :data="item"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import ResearchPlanMobileCard from '~/components/research-plan/research-plan-mobile-card.vue'
 import { useResearchPlanApi } from '../../composables/use-research-plan-api'
 
 const useResearchPlan = useResearchPlanApi()
@@ -73,7 +112,8 @@ const { data: researchPlan, refresh: refreshResearchPlan } = useLazyAsyncData('r
       }
     })
     return {
-      data: result,
+      originData: data,
+      transformData: result,
     }
   },
   watch: [locale],
@@ -89,6 +129,13 @@ useSeoMeta({
 </script>
 
 <style scoped lang="sass">
-.test
-  background: #000
+.custom-grid
+  display: grid
+  align-items: center
+  grid-template-columns: repeat(4, auto)
+  gap: .4rem 1rem
+
+@media (max-width: 1024px)
+  .custom-grid
+    display: none
 </style>
