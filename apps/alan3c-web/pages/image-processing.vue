@@ -14,78 +14,148 @@
         </q-input>
       </div>
     </div>
-    <div class="max-width flex flex-col gap-1.2rem">
-      <div class="flex w-full gap-1rem text-lg font-semibold">
-        <div class="w-10rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            報告日期
-          </div>
-        </div>
-        <div class="w-15rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            論文標題
-          </div>
-        </div>
-        <div class="w-13rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            論文期刊
-          </div>
-        </div>
-        <div class="w-12rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            論文作者
-          </div>
-        </div>
-        <div class="w-10rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            報告者
-          </div>
-        </div>
-        <div class="w-10rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            下載次數
-          </div>
+
+    <div class="max-width custom-grid">
+      <div class="w-10rem flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px">
+          報告日期
         </div>
       </div>
-      <div class="w-full flex flex-col gap-1.5rem">
-        <template v-if="imageProcessing?.data.length && imageProcessing?.data.length > 0">
-          <div
-            v-for="item in imageProcessing?.data"
-            :key="item.id"
-            class="flex w-full gap-1rem font-medium"
-          >
-            <div class="w-10rem">
-              {{ item.reportDate }}
-            </div>
-            <div class="w-15rem underline cursor-pointer" @click="addDownloadCount('imageProcessing', item.id.toString())">
-              {{ item.thesisTitle }}
-            </div>
-            <div class="w-13rem">
-              {{ item.academicJournal }}
-            </div>
-            <div class="w-12rem">
-              {{ item.paperAuthor }}
-            </div>
-            <div class="w-10rem">
-              {{ item.reporter }}
-            </div>
-            <div class="w-10rem">
-              {{ item.downloadCount }}
-            </div>
-          </div>
-        </template>
-        <template v-else>
-          <div class="w-full bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem">
-            查無結果
-          </div>
-        </template>
+      <div class="w-15rem flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px">
+          論文標題
+        </div>
       </div>
+      <div class="w-13rem flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px">
+          論文期刊
+        </div>
+      </div>
+      <div class="w-12rem flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px">
+          論文作者
+        </div>
+      </div>
+      <div class="w-10rem flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px">
+          報告者
+        </div>
+      </div>
+      <div class="w-10rem flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px">
+          下載次數
+        </div>
+      </div>
+      <template v-if="imageProcessing?.data.length && imageProcessing?.data.length > 0">
+        <template
+          v-for="item in imageProcessing?.data"
+          :key="item.id"
+        >
+          <div class="w-10rem">
+            {{ item.reportDate }}
+          </div>
+          <div class="w-15rem underline cursor-pointer" @click="addDownloadCount('imageProcessing', item.id.toString())">
+            {{ item.thesisTitle }}
+          </div>
+          <div class="w-13rem">
+            {{ item.academicJournal }}
+          </div>
+          <div class="w-12rem">
+            {{ item.paperAuthor }}
+          </div>
+          <div class="w-10rem">
+            {{ item.reporter }}
+          </div>
+          <div class="w-10rem">
+            {{ item.downloadCount }}
+          </div>
+        </template>
+      </template>
+      <template v-else>
+        <div class="w-full bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem">
+          查無結果
+        </div>
+      </template>
+
+      <!-- <div class="max-width flex flex-col gap-1.2rem">
+        <div class="flex w-full gap-1rem text-lg font-semibold">
+          <div class="w-10rem flex items-center gap-.5rem">
+            <div class="w-6px h-6px bg-primary rounded-full" />
+            <div class="tracking-1px">
+              報告日期
+            </div>
+          </div>
+          <div class="w-15rem flex items-center gap-.5rem">
+            <div class="w-6px h-6px bg-primary rounded-full" />
+            <div class="tracking-1px">
+              論文標題
+            </div>
+          </div>
+          <div class="w-13rem flex items-center gap-.5rem">
+            <div class="w-6px h-6px bg-primary rounded-full" />
+            <div class="tracking-1px">
+              論文期刊
+            </div>
+          </div>
+          <div class="w-12rem flex items-center gap-.5rem">
+            <div class="w-6px h-6px bg-primary rounded-full" />
+            <div class="tracking-1px">
+              論文作者
+            </div>
+          </div>
+          <div class="w-10rem flex items-center gap-.5rem">
+            <div class="w-6px h-6px bg-primary rounded-full" />
+            <div class="tracking-1px">
+              報告者
+            </div>
+          </div>
+          <div class="w-10rem flex items-center gap-.5rem">
+            <div class="w-6px h-6px bg-primary rounded-full" />
+            <div class="tracking-1px">
+              下載次數
+            </div>
+          </div>
+        </div>
+        <div class="w-full flex flex-col gap-1.5rem">
+          <template v-if="imageProcessing?.data.length && imageProcessing?.data.length > 0">
+            <div
+              v-for="item in imageProcessing?.data"
+              :key="item.id"
+              class="flex w-full gap-1rem font-medium"
+            >
+              <div class="w-10rem">
+                {{ item.reportDate }}
+              </div>
+              <div class="w-15rem underline cursor-pointer" @click="addDownloadCount('imageProcessing', item.id.toString())">
+                {{ item.thesisTitle }}
+              </div>
+              <div class="w-13rem">
+                {{ item.academicJournal }}
+              </div>
+              <div class="w-12rem">
+                {{ item.paperAuthor }}
+              </div>
+              <div class="w-10rem">
+                {{ item.reporter }}
+              </div>
+              <div class="w-10rem">
+                {{ item.downloadCount }}
+              </div>
+            </div>
+          </template>
+          <template v-else>
+            <div class="w-full bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem">
+              查無結果
+            </div>
+          </template>
+        </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -162,6 +232,14 @@ useSeoMeta({
 .q-field--outlined
   :deep() .q-field__control
     border-radius: .6rem
-.test
-  background: #000
+
+.custom-grid
+  display: grid
+  align-items: center
+  grid-template-columns: repeat(6, auto)
+  gap: 1rem 1rem
+
+@media (max-width: 1024px)
+  .custom-grid
+    display: none
 </style>

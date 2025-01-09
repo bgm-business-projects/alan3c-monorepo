@@ -15,7 +15,7 @@
             id: item.translations.title,
           },
         })"
-        class="border bg-#FDFDFD rounded-.5rem px-2rem py-1rem tracking-.1rem flex items-center"
+        class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
       >
         <div class="flex-1 font-semibold text-lg">
           {{ item.translations.title }}

@@ -5,84 +5,40 @@
         研究計畫
       </h1>
     </div>
-    <div class="w-full custom-grid">
-      <div>
+    <div class="max-width custom-grid">
+      <div class="font-medium text-md">
         計畫名稱
       </div>
-      <div>
+      <div class="font-medium text-md">
         期間
       </div>
-      <div>
+      <div class="font-medium text-md">
         贊助單位
       </div>
-      <div>
+      <div class="font-medium text-md">
         編號
       </div>
       <template
-        v-for="(item, index) in researchPlan?.transformData"
+        v-for="(item, index) in researchPlan?.transformedData"
         :key="index"
       >
-        <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
+        <div class="bg-accent px-1rem py-.4rem rounded-.4rem">
           {{ item.translations.name }}
         </div>
-        <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
+        <div class="bg-accent px-1rem py-.4rem rounded-.4rem">
           {{ item.startDate }} - {{ item.endDate }}
         </div>
-        <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
+        <div class="bg-accent px-1rem py-.4rem rounded-.4rem">
           {{ item.translations.sponsor }}
         </div>
-        <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
+        <div class="bg-accent px-1rem py-.4rem rounded-.4rem">
           {{ item.referenceNumber }}
         </div>
       </template>
     </div>
-    <!-- <div class="max-width flex-col gap-1rem lg:!flex hidden">
-      <div class="flex py-.4rem font-medium tracking-.05rem">
-        <div class="w-250px">
-          計畫名稱
-        </div>
-        <div class="w-250px">
-          期間
-        </div>
-        <div class="w-250px">
-          贊助單位
-        </div>
-        <div class="w-200px">
-          編號
-        </div>
-      </div>
-      <div class="flex flex-col gap-.8rem tracking-.02rem">
-        <div
-          v-for="(item, index) in researchPlan?.transformData"
-          :key="index"
-          class="flex border"
-        >
-          <div class="w-250px flex">
-            <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
-              {{ item.translations.name }}
-            </div>
-          </div>
-          <div class="w-250px flex">
-            <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
-              {{ item.startDate }} - {{ item.endDate }}
-            </div>
-          </div>
-          <div class="w-250px flex">
-            <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
-              {{ item.translations.sponsor }}
-            </div>
-          </div>
-          <div class="w-200px flex">
-            <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
-              {{ item.referenceNumber }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <div class="flex lg:hidden">
       <research-plan-mobile-card
-        v-for="(item, index) in researchPlan?.originData?.data"
+        v-for="(item, index) in researchPlan?.originalData?.data"
         :key="index"
         :data="item"
       />
@@ -112,8 +68,8 @@ const { data: researchPlan, refresh: refreshResearchPlan } = useLazyAsyncData('r
       }
     })
     return {
-      originData: data,
-      transformData: result,
+      originalData: data,
+      transformedData: result,
     }
   },
   watch: [locale],
@@ -133,7 +89,7 @@ useSeoMeta({
   display: grid
   align-items: center
   grid-template-columns: repeat(4, auto)
-  gap: .4rem 1rem
+  gap: 1rem 1rem
 
 @media (max-width: 1024px)
   .custom-grid

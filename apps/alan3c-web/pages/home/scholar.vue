@@ -1,14 +1,18 @@
 <template>
   <div class="w-full flex flex-col gap-2rem items-center layout-padding">
-    <div class="max-width flex flex-col gap-1.5rem bg-white fixed pt-3rem">
+    <div class="max-width flex flex-col gap-1.5rem bg-white pt-3rem">
       <div class="w-full flex flex-col gap-2rem">
         <h1 class="text-2xl font-bold text-primary">
           訪問學者-博士後研究員
         </h1>
       </div>
     </div>
-    <div class="max-width flex flex-col gap-2rem pt-10rem pb-1rem">
-      <div
+    <div class="max-width flex flex-col gap-2rem py-1rem">
+      <scholar-card
+        v-for="(item) in scholarList?.originalData?.data" :key="item.id"
+        :data="item"
+      />
+      <!-- <div
         v-for="scholar in scholarList" :key="scholar.id"
         class="flex gap-1rem"
       >
@@ -42,13 +46,13 @@
             E-Mail | {{ scholar.email }}
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { combineImageUrl } from '../../utils/combine-image-url'
+import ScholarCard from '../../components/scholar/scholar-card.vue'
 
 const { locale } = useI18n()
 
@@ -65,12 +69,15 @@ const { data: scholarList, refresh: refreshScholar } = useLazyAsyncData('scholar
   return result
 }, {
   transform: (data) => {
-    return data?.data.map((scholar) => {
-      return {
-        ...scholar,
-        translations: scholar.translations.find((item) => item.scholarLanguages_code === locale.value),
-      }
-    })
+    return {
+      transformedData: data?.data.map((scholar) => {
+        return {
+          ...scholar,
+          translations: scholar.translations.find((item) => item.scholarLanguages_code === locale.value),
+        }
+      }),
+      originalData: data,
+    }
   },
   watch: [locale],
 })
