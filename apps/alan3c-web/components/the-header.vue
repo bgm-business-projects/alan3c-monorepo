@@ -1,8 +1,17 @@
 <template>
   <div class="fixed py-1rem flex justify-center layout-padding w-full z-9999">
-    <div class="flex items-center max-width border rounded-.7rem lg:rounded-1rem lg:border-none lg:rounded-0 overflow-hidden ">
-      <div class="w-full lg:w-auto flex flex-col">
-        <div class="flex items-center bg-[#f4f4f4] px-1rem lg:px-2rem py-.5rem rounded-.5rem lg:border gap-1rem">
+    <div
+      class="flex items-center max-width border rounded-.7rem xl:border-none xl:rounded-0 overflow-hidden"
+      :class="locale === 'en' ? 'flex-col' : ''"
+    >
+      <div
+        class="w-full xl:w-auto flex flex-col"
+        :class="locale === 'en' ? '!w-full' : ''"
+      >
+        <div
+          class="flex items-center justify-center bg-[#f4f4f4] px-1rem py-.5rem rounded-.5rem xl:border gap-1rem"
+          :class="locale === 'en' ? 'xl:bg-white w-full border-0' : ''"
+        >
           <div class="flex flex-row items-center gap-.5rem">
             <nuxt-img
               src="/logo.png"
@@ -13,10 +22,9 @@
             </div>
           </div>
           <div
-            class="flex-1 flex justify-end lg:hidden"
-            @click="showMenu = !showMenu"
+            class="flex-1 flex justify-end xl:hidden"
           >
-            <div class="relative w-1.5rem h-1rem">
+            <div class="relative w-1.5rem h-1rem" @click="showMenu = !showMenu">
               <div
                 class="absolute top-0% w-full h-full flex items-start origin-c duration-500"
                 :class="showMenu ? '!top-50% !h-2px rotate-45' : ''"
@@ -46,16 +54,16 @@
         </div>
         <!-- 手機版選單 -->
         <div
-          class="overflow-hidden lg:hidden duration-500 bg-[#f4f4f4]"
+          class="overflow-hidden xl:hidden duration-500 bg-[#f4f4f4]"
           :class="showMenu ? 'h-[calc(100dvh-6rem)]' : 'h-0'"
         >
           <div class="justify-center p-1rem">
-            <div class="flex gap-.5rem font-500 border rounded-.5rem w-full py-.5rem flex justify-center">
-              <div @click="setLocale('zh')">
+            <div class="flex gap-.5rem font-500 border rounded-.5rem w-full py-.5rem flex justify-center bg-white">
+              <div @click="handleLocale('zh')">
                 中
               </div>
               <div>/</div>
-              <div @click="setLocale('en')">
+              <div @click="handleLocale('en')">
                 英
               </div>
             </div>
@@ -85,8 +93,14 @@
         </div>
       </div>
       <!-- 電腦版選單 -->
-      <div class="hidden lg:!flex items-center border rounded-.5rem px-2rem py-.5rem gap-x-1.5rem flex-1 bg-[#f4f4f4]">
-        <div class="flex gap-x-1.5rem gap-y-.5rem  flex-1">
+      <div
+        class="hidden xl:!flex items-center border rounded-.5rem px-1.5rem py-.5rem gap-x-1rem flex-1 bg-[#f4f4f4] overflow-hidden"
+        :class="locale === 'en' ? 'w-full' : ''"
+      >
+        <div
+          class="flex gap-x-1.3rem gap-y-.5rem flex-1"
+          :class="locale === 'en' ? '!gap-x-1rem' : ''"
+        >
           <nuxt-link
             v-for="item in data"
             :key="item.name"
@@ -220,6 +234,11 @@ function isActiveStyle(localePath: string) {
     return 'w-full'
   }
   return route.name === pathWithoutQuery.split('/')[1] ? 'w-full' : 'w-0'
+}
+
+function handleLocale(locale: string) {
+  setLocale(locale)
+  showMenu.value = false
 }
 </script>
 
