@@ -92,6 +92,4 @@ useSeoMeta({
 </script>
 
 <style scoped lang="sass">
-.test
-  background: #000
 </style>

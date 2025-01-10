@@ -9,7 +9,7 @@
               class="w-1.7rem mt-.2rem"
             />
             <div class="font-600">
-              多媒體暨網路安全實驗室
+              {{ t('webName') }}
             </div>
           </div>
           <div
@@ -106,13 +106,13 @@
             :class="circlePosition"
           />
           <div class="relative px-.2rem cursor-pointer" @click="setLocale('zh')">
-            中
+            {{ t('navbar.languageZh') }}
           </div>
           <div class="relative px-.3rem">
             /
           </div>
           <div class="relative px-.2rem cursor-pointer" @click="setLocale('en')">
-            英
+            {{ t('navbar.languageEn') }}
           </div>
         </div>
       </div>
@@ -123,8 +123,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const { setLocale } = useI18n()
-const { locale } = useI18n()
+const { setLocale, locale, t } = useI18n()
 
 const route = useRoute()
 
@@ -149,13 +148,13 @@ const { data: traineeCategories, refresh: refreshTraineeCategories } = useLazyAs
 
 const data = computed(() => [
   {
-    name: '老闆的家',
+    name: t('navbar.home'),
     route: {
       name: 'home',
     },
   },
   {
-    name: '我的徒弟',
+    name: t('navbar.trainee'),
     route: {
       name: 'trainee',
       query: {
@@ -164,37 +163,37 @@ const data = computed(() => [
     },
   },
   {
-    name: '研究重點',
+    name: t('navbar.researchFocus'),
     route: {
       name: 'research-focus',
     },
   },
   {
-    name: '圖像處理 Seminar',
+    name: t('navbar.imageProcessingSeminar'),
     route: {
       name: 'image-processing',
     },
   },
   {
-    name: '人工智慧 Seminar',
+    name: t('navbar.artificialIntelligenceSeminar'),
     route: {
       name: 'artificial-intelligence',
     },
   },
   {
-    name: '參考文件',
+    name: t('navbar.referenceDocuments'),
     route: {
       name: 'reference-document',
     },
   },
   {
-    name: '課程教材',
+    name: t('navbar.courseMaterials'),
     route: {
       name: 'course-materials',
     },
   },
   {
-    name: '演講 PPT',
+    name: t('navbar.lecturePPT'),
     route: {
       name: 'lecture-ppt',
     },

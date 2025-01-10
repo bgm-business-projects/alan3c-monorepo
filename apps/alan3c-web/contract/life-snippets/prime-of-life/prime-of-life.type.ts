@@ -51,8 +51,8 @@ export const primeOfLifeDeepSchema = z.object({
 
 export const primeOfLifeMoreFileSchema = z.object({
   data: z.object({
-    primeOfLifeDeep: z.array(z.object({
-      primeOfLifeDeep_id: z.object({
+    primeOfLife: z.array(z.object({
+      primeOfLife_id: z.object({
         moreFileList: z.array(z.object({
           directus_files_id: basicFileSchema,
         })).default([]),

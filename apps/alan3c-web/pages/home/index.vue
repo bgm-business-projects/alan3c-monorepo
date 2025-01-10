@@ -12,7 +12,7 @@
               :container-width="imageContainerWidth" :container-height="imageContainerHeight"
             />
             <div
-              class="absolute top-50% left-50% w-75% aspect-4/3 translate-x-[-50%] translate-y-[-50%] overflow-hidden"
+              class="absolute top-50% left-50% w-75% aspect-4/3 translate-x-[-50%] translate-y-[-50%] overflow-hidden bg-#f4f4f4"
             >
               <nuxt-img :src="combineImageUrl(home?.mainImage?.filename_disk)" />
             </div>
@@ -113,6 +113,7 @@ const data = ref([
     name: 'Curriculum Vitae',
     route: {
       name: 'home-curriculum-vitae',
+      hash: '#information',
     },
   },
   {
@@ -169,6 +170,4 @@ useSeoMeta({
 </script>
 
 <style scoped lang="sass">
-.test
-  background: #000
 </style>

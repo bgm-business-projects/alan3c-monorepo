@@ -16,7 +16,12 @@
       </div>
     </div>
     <div class="w-full relative flex flex-col items-center justify-center gap-2rem">
-      <div class="w-full max-width">
+      <div v-if="isLoading" class="w-full">
+        <div class="relative w-full aspect-2/1">
+          <q-inner-loading :showing="isLoading" />
+        </div>
+      </div>
+      <div v-else class="w-full max-width">
         <div
           v-if="isTeacherStudentSnapshotsMoreFile(lifeSnippetsMoreFile)"
           class="flex gap-1rem w-full"
@@ -27,6 +32,12 @@
             class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+          </div>
+          <div
+            v-if="lifeSnippetsMoreFile.data.teacherStudentSnapshots[0].teacherStudentSnapshots_id.moreFileList.length === 0"
+            class="bg-#f4f4f4 w-full min-h-[calc(100dvh-517px)] rounded-1rem flex justify-center items-center text-lg font-medium text-#868686"
+          >
+            無更多圖片
           </div>
         </div>
         <div
@@ -40,6 +51,12 @@
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
           </div>
+          <div
+            v-if="lifeSnippetsMoreFile.data.growthRecord[0].growthRecord_id.moreFileList.length === 0"
+            class="bg-#f4f4f4 w-full min-h-[calc(100dvh-517px)] rounded-1rem flex justify-center items-center text-lg font-medium text-#868686"
+          >
+            無更多圖片
+          </div>
         </div>
         <div
           v-if="isAcademicLectureMoreFile(lifeSnippetsMoreFile)"
@@ -52,17 +69,11 @@
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
           </div>
-        </div>
-        <div
-          v-if="isAdministrativeYearsMoreFile(lifeSnippetsMoreFile)"
-          class="flex gap-1rem w-full"
-        >
           <div
-            v-for="(item, index) in lifeSnippetsMoreFile.data.administrativeYears[0].administrativeYears_id.moreFileList"
-            :key="index"
-            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
+            v-if="lifeSnippetsMoreFile.data.academicLecture[0].academicLecture_id.moreFileList.length === 0"
+            class="bg-#f4f4f4 w-full min-h-[calc(100dvh-517px)] rounded-1rem flex justify-center items-center text-lg font-medium text-#868686"
           >
-            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+            無更多圖片
           </div>
         </div>
         <div
@@ -75,6 +86,12 @@
             class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+          </div>
+          <div
+            v-if="lifeSnippetsMoreFile.data.administrativeYears[0].administrativeYears_id.moreFileList.length === 0"
+            class="bg-#f4f4f4 w-full min-h-[calc(100dvh-517px)] rounded-1rem flex justify-center items-center text-lg font-medium text-#868686"
+          >
+            無更多圖片
           </div>
         </div>
         <div
@@ -82,11 +99,17 @@
           class="flex gap-1rem w-full"
         >
           <div
-            v-for="(item, index) in lifeSnippetsMoreFile.data.primeOfLifeDeep[0].primeOfLifeDeep_id.moreFileList"
+            v-for="(item, index) in lifeSnippetsMoreFile.data.primeOfLife[0].primeOfLife_id.moreFileList"
             :key="index"
             class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+          </div>
+          <div
+            v-if="lifeSnippetsMoreFile.data.primeOfLife[0].primeOfLife_id.moreFileList.length === 0"
+            class="bg-#f4f4f4 w-full min-h-[calc(100dvh-517px)] rounded-1rem flex justify-center items-center text-lg font-medium text-#868686"
+          >
+            無更多圖片
           </div>
         </div>
         <div
@@ -99,6 +122,12 @@
             class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+          </div>
+          <div
+            v-if="lifeSnippetsMoreFile.data.leisureTime[0].leisureTime_id.moreFileList.length === 0"
+            class="bg-#f4f4f4 w-full min-h-[calc(100dvh-517px)] rounded-1rem flex justify-center items-center text-lg font-medium text-#868686"
+          >
+            無更多圖片
           </div>
         </div>
       </div>
@@ -124,7 +153,10 @@ const localePath = useLocalePath()
 
 const route = useRoute()
 
+const isLoading = ref(false)
+
 const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLazyAsyncData('life-snippets-more-file', async () => {
+  isLoading.value = true
   const categoryList: LifeSnippets = {
     teacherStudentSnapshots: undefined,
     growthRecord: undefined,
@@ -167,6 +199,11 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
     }),
   ]))
 
+  if (categoryListErr) {
+    isLoading.value = false
+    throw new Error(categoryListErr.message)
+  }
+
   const key = Object.entries(categoryList).find(([key, value]) => {
     return value.data.translations.some((translation: any) => translation.name === route.params.category)
   })?.[1].data.key
@@ -181,8 +218,10 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
       },
     ))
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 
@@ -195,8 +234,10 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
       },
     ))
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 
@@ -209,8 +250,10 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
       },
     ))
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 
@@ -223,8 +266,10 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
       },
     ))
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 
@@ -237,8 +282,10 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
       },
     ))
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 
@@ -251,8 +298,10 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
       },
     ))
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 }, {

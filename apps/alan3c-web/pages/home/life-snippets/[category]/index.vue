@@ -44,7 +44,7 @@
               :target-id="item.teacherStudentSnapshots_id.id"
               :main-image="combineImageUrl(item.teacherStudentSnapshots_id.file.filename_disk)"
               :category="getTranslationByKey('teacherStudentSnapshots')"
-              :name="item.teacherStudentSnapshots_id.translations.find(item => item.teacherStudentSnapshotsLanguages_code === locale)?.name"
+              :name="item.teacherStudentSnapshots_id.translations.find(item => item.teacherStudentSnapshotsLanguages_code === locale)?.name ?? '無標題'"
               class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
             />
           </div>
@@ -58,7 +58,7 @@
               :target-id="item.growthRecord_id.id"
               :main-image="combineImageUrl(item.growthRecord_id.file.filename_disk)"
               :category="getTranslationByKey('growthRecord')"
-              :name="item.growthRecord_id.translations.find(item => item.growthRecordLanguages_code === locale)?.name"
+              :name="item.growthRecord_id.translations.find(item => item.growthRecordLanguages_code === locale)?.name ?? '無標題'"
               class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
             />
           </div>
@@ -72,7 +72,7 @@
               :target-id="item.leisureTime_id.id"
               :main-image="combineImageUrl(item.leisureTime_id.file.filename_disk)"
               :category="getTranslationByKey('leisureTime')"
-              :name="item.leisureTime_id.translations.find(item => item.leisureTimeLanguages_code === locale)?.name"
+              :name="item.leisureTime_id.translations.find(item => item.leisureTimeLanguages_code === locale)?.name ?? '無標題'"
               class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
             />
           </div>
@@ -86,7 +86,7 @@
               :target-id="item.academicLecture_id.id"
               :main-image="combineImageUrl(item.academicLecture_id.file.filename_disk)"
               :category="getTranslationByKey('academicLecture')"
-              :name="item.academicLecture_id.translations.find(item => item.academicLectureLanguages_code === locale)?.name"
+              :name="item.academicLecture_id.translations.find(item => item.academicLectureLanguages_code === locale)?.name ?? '無標題'"
               class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
             />
           </div>
@@ -100,9 +100,10 @@
               :target-id="item.primeOfLife_id.id"
               :main-image="combineImageUrl(item.primeOfLife_id.file.filename_disk)"
               :category="getTranslationByKey('primeOfLife')"
-              :name="item.primeOfLife_id.translations.find(item => item.primeOfLifeLanguages_code === locale)?.name"
+              :name="item.primeOfLife_id.translations.find(item => item.primeOfLifeLanguages_code === locale)?.name ?? '無標題'"
               class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
             />
+            {{ lifeSnippets?.target?.data.primeOfLife[0].primeOfLife_id.translations.find(item => item.primeOfLifeLanguages_code === locale)?.name }}
           </div>
           <div
             v-if="isAdministrativeYearsDeep(lifeSnippets?.target)"
@@ -114,7 +115,7 @@
               :target-id="item.administrativeYears_id.id"
               :main-image="combineImageUrl(item.administrativeYears_id.file.filename_disk)"
               :category="getTranslationByKey('administrativeYears')"
-              :name="item.administrativeYears_id.translations.find(item => item.administrativeYearsLanguages_code === locale)?.name"
+              :name="item.administrativeYears_id.translations.find(item => item.administrativeYearsLanguages_code === locale)?.name ?? '無標題'"
               class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
             />
           </div>

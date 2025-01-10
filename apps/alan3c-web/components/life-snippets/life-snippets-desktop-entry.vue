@@ -1,6 +1,6 @@
 <template>
   <div class="w-full max-w-600px relative aspect-1/1 flex items-center justify-center">
-    <div ref="circle" class="max-width absolute border-primary border-2px border-solid border-opacity-40 aspect-1/1 rounded-full circle-animation flex justify-center items-center">
+    <div ref="circle" class="max-width absolute border-primary border-2px border-dashed border-opacity-40 aspect-1/1 rounded-full circle-animation flex justify-center items-center">
       <div
         v-for="(rotation, index) in divRotations"
         :key="index"
@@ -14,22 +14,26 @@
           })"
           class="w-full flex flex-col items-center flex-nowrap gap-10px"
         >
-          <nuxt-img
-            v-if="getImage(index + 1)"
-            :src="getImage(index + 1)"
-            class="w-full"
-          />
-          <h2 class="text-lg font-semibold">
+          <div class="w-full aspect-1/1 bg-#f4f4f4 relative overflow-hidden">
+            <nuxt-img
+              v-if="getImage(index + 1)"
+              :src="getImage(index + 1)"
+              class="min-w-full hover:min-w-120% absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] duration-500"
+            />
+          </div>
+          <h2 class="text-lg font-medium">
             {{ getTranslation(index + 1) }}
           </h2>
         </nuxt-link>
       </div>
     </div>
     <div class="flex flex-col justify-center items-center gap-10px">
-      <nuxt-img
-        class="w-200px"
-        :src="combineImageUrl(lifeSnippetsMain?.data.mainImage.filename_disk)"
-      />
+      <div class="w-200px bg-#f4f4f4">
+        <nuxt-img
+          class="w-full"
+          :src="combineImageUrl(lifeSnippetsMain?.data.mainImage.filename_disk)"
+        />
+      </div>
       <h2 class="text-lg font-semibold">
         {{ lifeSnippetsMain?.data.translations.filter((item) => item.lifeSnippetsLanguages_code === locale)[0].name }}
       </h2>

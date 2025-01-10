@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full border rounded-.5rem">
-    <div class="bg-[#f4f4f4] flex justify-center w-full py-.4rem px-1rem font-medium w-full">
+    <div class="bg-[#f4f4f4] flex justify-center py-.4rem px-1rem font-medium w-full">
       {{ transformedData.translations.name }}
     </div>
     <div class="py-.6rem px-1rem">

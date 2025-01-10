@@ -14,89 +14,91 @@
         </q-input>
       </div>
     </div>
-    <div class="max-width flex flex-col gap-1.2rem">
-      <div class="flex w-full gap-1rem text-lg font-semibold">
-        <div class="w-10rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            報告日期
-          </div>
-        </div>
-        <div class="w-15rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            論文標題
-          </div>
-        </div>
-        <div class="w-13rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            論文期刊
-          </div>
-        </div>
-        <div class="w-12rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            論文作者
-          </div>
-        </div>
-        <div class="w-10rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            報告者
-          </div>
-        </div>
-        <div class="w-10rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            下載次數
-          </div>
+
+    <div class="max-width custom-grid">
+      <div class="flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px text-lg font-medium">
+          報告日期
         </div>
       </div>
-      <div class="w-full flex flex-col gap-1.5rem">
-        <template v-if="artificialIntelligence?.data.length && artificialIntelligence?.data.length > 0">
-          <div
-            v-for="item in artificialIntelligence?.data"
-            :key="item.id"
-            class="flex w-full gap-1rem font-medium"
-          >
-            <div class="w-10rem">
-              {{ item.reportDate }}
-            </div>
-            <div class="w-15rem underline cursor-pointer" @click="addDownloadCount('artificialIntelligence', item.id.toString())">
-              {{ item.thesisTitle }}
-            </div>
-            <div class="w-13rem">
-              {{ item.academicJournal }}
-            </div>
-            <div class="w-12rem">
-              {{ item.paperAuthor }}
-            </div>
-            <div class="w-10rem">
-              {{ item.reporter }}
-            </div>
-            <div class="w-10rem">
-              {{ item.downloadCount }}
-            </div>
-          </div>
-        </template>
-        <template v-else>
-          <div class="w-full bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem">
-            查無結果
-          </div>
-        </template>
+      <div class="flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px text-lg font-medium">
+          論文標題
+        </div>
       </div>
+      <div class="flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px text-lg font-medium">
+          論文期刊
+        </div>
+      </div>
+      <div class="flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px text-lg font-medium">
+          論文作者
+        </div>
+      </div>
+      <div class="flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px text-lg font-medium">
+          報告者
+        </div>
+      </div>
+      <div class="flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px text-lg font-medium">
+          下載次數
+        </div>
+      </div>
+      <template v-if="artificialIntelligence?.data.length && artificialIntelligence?.data.length > 0">
+        <template
+          v-for="item in artificialIntelligence?.data"
+          :key="item.id"
+        >
+          <div>
+            {{ item.reportDate }}
+          </div>
+          <div class="underline cursor-pointer" @click="addDownloadCount('artificialIntelligence', item.id.toString())">
+            {{ item.thesisTitle }}
+          </div>
+          <div>
+            {{ item.academicJournal }}
+          </div>
+          <div>
+            {{ item.paperAuthor }}
+          </div>
+          <div>
+            {{ item.reporter }}
+          </div>
+          <div>
+            {{ item.downloadCount }}
+          </div>
+        </template>
+      </template>
+      <template v-else>
+        <div class="w-full bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem">
+          查無結果
+        </div>
+      </template>
+    </div>
+    <div class="w-full flex flex-col gap-1.5rem xl:hidden">
+      <artificial-intelligence-mobile-card
+        v-for="item in artificialIntelligence?.data"
+        :key="item.id"
+        :data="item"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import ArtificialIntelligenceMobileCard from '~/components/artificial-intelligence/artificial-intelligence-mobile-card.vue'
+
 const { locale } = useI18n()
 
 const keyword = ref('')
-
-const localePath = useLocalePath()
-const route = useRoute()
 
 const useArtificialIntelligence = useArtificialIntelligenceApi()
 
@@ -162,6 +164,16 @@ useSeoMeta({
 .q-field--outlined
   :deep() .q-field__control
     border-radius: .6rem
-.test
-  background: #000
+
+.custom-grid
+  display: grid
+  align-items: center
+  justify-self: start
+  grid-template-columns: auto 1fr 1fr 1fr auto auto
+  gap: 1rem 2.5rem
+  align-items: start
+
+@media (max-width: 1279px)
+  .custom-grid
+    display: none
 </style>

@@ -6,37 +6,45 @@
       </h1>
     </div>
     <div class="max-width custom-grid">
-      <div class="font-medium text-md">
+      <div class="font-medium text-lg">
         計畫名稱
       </div>
-      <div class="font-medium text-md">
+      <div class="font-medium text-lg">
         期間
       </div>
-      <div class="font-medium text-md">
+      <div class="font-medium text-lg">
         贊助單位
       </div>
-      <div class="font-medium text-md">
+      <div class="font-medium text-lg">
         編號
       </div>
       <template
         v-for="(item, index) in researchPlan?.transformedData"
         :key="index"
       >
-        <div class="bg-accent px-1rem py-.4rem rounded-.4rem">
-          {{ item.translations.name }}
+        <div class="flex">
+          <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
+            {{ item.translations.name }}
+          </div>
         </div>
-        <div class="bg-accent px-1rem py-.4rem rounded-.4rem">
-          {{ item.startDate }} - {{ item.endDate }}
+        <div class="flex">
+          <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
+            {{ item.startDate }} - {{ item.endDate }}
+          </div>
         </div>
-        <div class="bg-accent px-1rem py-.4rem rounded-.4rem">
-          {{ item.translations.sponsor }}
+        <div class="flex">
+          <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
+            {{ item.translations.sponsor }}
+          </div>
         </div>
-        <div class="bg-accent px-1rem py-.4rem rounded-.4rem">
-          {{ item.referenceNumber }}
+        <div class="flex">
+          <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
+            {{ item.referenceNumber }}
+          </div>
         </div>
       </template>
     </div>
-    <div class="flex lg:hidden">
+    <div class="flex lg:hidden w-full">
       <research-plan-mobile-card
         v-for="(item, index) in researchPlan?.originalData?.data"
         :key="index"
@@ -88,7 +96,8 @@ useSeoMeta({
 .custom-grid
   display: grid
   align-items: center
-  grid-template-columns: repeat(4, auto)
+  justify-content: start
+  grid-template-columns: auto auto auto auto
   gap: 1rem 1rem
 
 @media (max-width: 1024px)

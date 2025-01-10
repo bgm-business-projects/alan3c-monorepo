@@ -30,7 +30,7 @@ export const getLeisureTimeMoreFile = {
   path: `/items/leisureTimeMain`,
   query: z.object({
     'filter[leisureTime][leisureTime_id][id][_eq]': z.number(),
-    'fields': z.string().default('leisureTime.v_id.moreFileList.directus_files_id.*'),
+    'fields': z.string().default('leisureTime.leisureTime_id.moreFileList.directus_files_id.*'),
   }),
   responses: {
     200: leisureTimeMoreFileSchema,

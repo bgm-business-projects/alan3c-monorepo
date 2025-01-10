@@ -82,12 +82,7 @@ const data = ref([
 const categoryElements = ref<HTMLElement[]>([])
 const categoryElementsWidth = ref<number[]>([])
 
-onMounted(() => {
-  console.log('test1')
-})
-
 watch(categoryElements, async (newValue) => {
-  console.log('test')
   await nextTick()
   categoryElementsWidth.value = newValue.map((el) => {
     if (el) {
