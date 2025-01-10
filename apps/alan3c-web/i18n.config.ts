@@ -4,7 +4,10 @@ export default defineI18nConfig(() => ({
   messages: {
     en: {
       webName: 'Multimedia and Secure Networking Laboratory',
+      universityDepartments: 'Room 702, Science and Aerospace Building',
       download: 'Download',
+      search: 'Search',
+      notFound: 'Data Not Found',
       navbar: {
         home: 'Boss\'s Home',
         trainee: 'My Students',
@@ -38,10 +41,44 @@ export default defineI18nConfig(() => ({
         masterStudentsGraduated: 'Master Students (graduated)',
         masterStudentsInSchool: 'Master Students (in school)',
       },
+      imageProcessingSeminar: {
+        date: 'Date',
+        titleOfPaper: 'Title of paper',
+        journalOfPaper: 'Journal of Paper',
+        authorOfThePaper: 'Author of the paper',
+        reporter: 'Reporter',
+        downloads: 'Downloads',
+      },
+      artificialIntelligenceSeminar: {
+        date: 'Date',
+        titleOfPaper: 'Title of paper',
+        journalOfPaper: 'Journal of Paper',
+        authorOfThePaper: 'Author of the paper',
+        reporter: 'Reporter',
+        downloads: 'Downloads',
+      },
+      referenceDocuments: {
+        date: 'Date',
+        title: 'Title',
+        downloads: 'Downloads',
+      },
+      courseMaterials: {
+        date: 'Date',
+        title: 'Title',
+        downloads: 'Downloads',
+      },
+      lecturePPT: {
+        date: 'Date',
+        title: 'Project Title',
+        downloads: 'Downloads',
+      },
     },
     zh: {
       webName: '多媒體暨網路安全實驗室',
+      universityDepartments: '逢甲大學資訊工程學系 ( 科航702室 )',
       download: '下載檔案',
+      search: '搜尋',
+      notFound: '查無結果',
       navbar: {
         home: '老闆的家',
         trainee: '我的徒弟',
@@ -74,6 +111,37 @@ export default defineI18nConfig(() => ({
         exchangeStudent: '交換學生',
         masterStudentsGraduated: '碩士班 (藝成下山/畢)',
         masterStudentsInSchool: '碩士班 (練功中/在學)',
+      },
+      imageProcessingSeminar: {
+        date: '報告日期',
+        titleOfPaper: '論文標題',
+        journalOfPaper: '論文期刊',
+        authorOfThePaper: '論文作者',
+        reporter: '報告者',
+        downloads: '下載次數',
+      },
+      artificialIntelligenceSeminar: {
+        date: '報告日期',
+        titleOfPaper: '論文標題',
+        journalOfPaper: '論文期刊',
+        authorOfThePaper: '論文作者',
+        reporter: '報告者',
+        downloads: '下載次數',
+      },
+      referenceDocuments: {
+        date: '上傳日期',
+        title: '文件標題',
+        downloads: '下載次數',
+      },
+      courseMaterials: {
+        date: '上傳日期',
+        title: '文件標題',
+        downloads: '下載次數',
+      },
+      lecturePPT: {
+        date: '上傳日期',
+        title: '演講題目',
+        downloads: '下載次數',
       },
     },
   },

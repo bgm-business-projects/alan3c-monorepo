@@ -2,7 +2,7 @@
   <div class="w-full flex flex-col gap-1rem items-center layout-padding py-3rem">
     <div class="max-width flex flex-col gap-2rem">
       <h1 class="text-2xl font-bold text-primary">
-        研究重點
+        {{ t('navbar.researchFocus') }}
       </h1>
     </div>
     <div class="max-width">
@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 const useResearchFocus = useResearchFocusApi()
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const { data: researchFocus, refresh: refreshResearchFocus } = useLazyAsyncData('research-focus', async () => {
   const [err, result] = await to (useResearchFocus.findOne())

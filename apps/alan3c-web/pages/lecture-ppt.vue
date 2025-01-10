@@ -3,7 +3,7 @@
     <div class="max-width flex flex-col gap-1.5rem pt-3rem">
       <div class="w-full flex flex-col gap-2rem">
         <h1 class="text-2xl font-bold text-primary">
-          演講PPT
+          {{ t('navbar.lecturePPT') }}
         </h1>
       </div>
       <div class="flex">
@@ -18,19 +18,19 @@
       <div class="flex items-center gap-.5rem">
         <div class="w-6px h-6px bg-primary rounded-full" />
         <div class="tracking-1px text-lg font-medium">
-          上傳日期
+          {{ t('lecturePPT.date') }}
         </div>
       </div>
       <div class="flex items-center gap-.5rem">
         <div class="w-6px h-6px bg-primary rounded-full" />
         <div class="tracking-1px text-lg font-medium">
-          演講題目
+          {{ t('lecturePPT.title') }}
         </div>
       </div>
       <div class="flex items-center gap-.5rem">
         <div class="w-6px h-6px bg-primary rounded-full" />
         <div class="tracking-1px text-lg font-medium">
-          下載次數
+          {{ t('lecturePPT.downloads') }}
         </div>
       </div>
       <template v-if="lecturePpt?.data.length && lecturePpt?.data.length > 0">
@@ -114,7 +114,7 @@
 <script setup lang="ts">
 import LecturePptMobileCard from '~/components/lecture-ppt/lecture-ppt-mobile-card.vue'
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const keyword = ref('')
 

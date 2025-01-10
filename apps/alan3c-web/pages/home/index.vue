@@ -4,7 +4,7 @@
       <div class="flex gap-1.5rem lg:gap-3rem w-full flex-col lg:flex-row">
         <div class="flex flex-col gap-1rem items-center justify-center flex-1 w-full">
           <h1 class="font-bold text-xl w-full">
-            老闆的家
+            {{ t('navbar.home') }}
           </h1>
           <div ref="imageContainerRef" class="w-full aspect-4/3 relative">
             <base-polygon
@@ -21,7 +21,7 @@
         <div class="flex flex-col gap-3rem lg:gap-4rem justify-center flex-1">
           <div class="flex flex-col gap-1rem">
             <h2 class="font-bold text-xl">
-              現任
+              {{ t('home.current') }}
             </h2>
             <ul class="flex flex-col gap-.5rem font-medium">
               <li v-for="item in home?.translations?.incumbent" :key="item.title">
@@ -31,7 +31,7 @@
           </div>
           <div class="flex flex-col gap-1rem">
             <h2 class="font-bold text-xl">
-              研究領域
+              {{ t('home.researchArea') }}
             </h2>
             <ul class="flex flex-col gap-.5rem font-medium">
               <li v-for="item in home?.translations?.incumbent" :key="item.title">
@@ -60,11 +60,7 @@
         <path d="M4.75073 6.16615L8.10843 8.83271C8.519 9.15877 9.15593 9.01778 9.45406 8.5865C9.74365 8.1676 9.58451 7.62946 9.1368 7.38677L5.3388 5.32796C5.2821 5.29723 5.2285 5.26108 5.17877 5.22002L1.87047 2.48916C1.4652 2.15462 0.859843 2.24219 0.565985 2.67786C0.275871 3.10798 0.41364 3.69406 0.864995 3.94989L4.62192 6.07927C4.66704 6.10484 4.71011 6.13389 4.75073 6.16615Z" fill="black" />
       </svg>
       <div class="text-md">
-        千教萬教，教人求真
-      </div>
-      <div class="w-5px h-5px bg-black rounded-full" />
-      <div class="text-md">
-        千學萬學，學做真人
+        {{ t('home.marqueeText') }}
       </div>
     </div>
   </nuxt-marquee>
@@ -79,7 +75,7 @@ const imageContainerRef = ref<HTMLDivElement>()
 
 const { width: imageContainerWidth, height: imageContainerHeight } = useElementSize(imageContainerRef)
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const localePath = useLocalePath()
 
@@ -101,59 +97,59 @@ const { data: home, refresh: refreshHome } = useLazyAsyncData('home', async () =
   watch: [locale],
 })
 
-const data = ref([
+const data = computed(() => [
   {
-    name: '個人資料',
+    name: t('home.biography'),
     route: {
       name: 'home-personal-profile-id',
       params: { id: 'resume' },
     },
   },
   {
-    name: 'Curriculum Vitae',
+    name: t('home.curriculumVitae'),
     route: {
       name: 'home-curriculum-vitae',
       hash: '#information',
     },
   },
   {
-    name: '我的徒弟',
+    name: t('navbar.trainee'),
     route: {
       name: 'trainee',
     },
   },
   {
-    name: '研究計畫',
+    name: t('home.research'),
     route: {
       name: 'home-research-plan',
     },
   },
   {
-    name: '生活點滴',
+    name: t('home.album'),
     route: {
       name: 'home-life-snippets',
     },
   },
   {
-    name: '薪火相傳。文心薈萃文集',
+    name: t('home.passingTheTorchACollectionOfLiteraryMinds'),
     route: {
       name: 'home-proceedings',
     },
   },
   {
-    name: '訪問學者/博士後研究員',
+    name: t('home.visitingScholarsPostdoctoralFellow'),
     route: {
       name: 'home-scholar',
     },
   },
   {
-    name: '真誠文集',
+    name: t('home.theCollectedWorksOfChinChen'),
     route: {
       name: 'home-compilation',
     },
   },
   {
-    name: '學術演講',
+    name: t('home.scholarlyTalks'),
     route: {
       name: 'home-academic-lecture-record',
     },

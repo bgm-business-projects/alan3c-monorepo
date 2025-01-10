@@ -3,11 +3,11 @@
     <div class="max-width flex flex-col gap-1.5rem pt-3rem">
       <div class="w-full flex flex-col gap-2rem">
         <h1 class="text-2xl font-bold text-primary">
-          人工智慧 Seminar
+          {{ t('navbar.artificialIntelligenceSeminar') }}
         </h1>
       </div>
       <div class="flex">
-        <q-input v-model="keyword" outlined placeholder="搜尋" dense @keyup.enter="refreshArtificialIntelligence()">
+        <q-input v-model="keyword" outlined :placeholder="t('search')" dense @keyup.enter="refreshArtificialIntelligence()">
           <template #prepend>
             <q-icon name="search" class="text-16px" />
           </template>
@@ -19,37 +19,37 @@
       <div class="flex items-center gap-.5rem">
         <div class="w-6px h-6px bg-primary rounded-full" />
         <div class="tracking-1px text-lg font-medium">
-          報告日期
+          {{ t('artificialIntelligenceSeminar.date') }}
         </div>
       </div>
       <div class="flex items-center gap-.5rem">
         <div class="w-6px h-6px bg-primary rounded-full" />
         <div class="tracking-1px text-lg font-medium">
-          論文標題
+          {{ t('artificialIntelligenceSeminar.titleOfPaper') }}
         </div>
       </div>
       <div class="flex items-center gap-.5rem">
         <div class="w-6px h-6px bg-primary rounded-full" />
         <div class="tracking-1px text-lg font-medium">
-          論文期刊
+          {{ t('artificialIntelligenceSeminar.journalOfPaper') }}
         </div>
       </div>
       <div class="flex items-center gap-.5rem">
         <div class="w-6px h-6px bg-primary rounded-full" />
         <div class="tracking-1px text-lg font-medium">
-          論文作者
+          {{ t('artificialIntelligenceSeminar.authorOfThePaper') }}
         </div>
       </div>
       <div class="flex items-center gap-.5rem">
         <div class="w-6px h-6px bg-primary rounded-full" />
         <div class="tracking-1px text-lg font-medium">
-          報告者
+          {{ t('artificialIntelligenceSeminar.reporter') }}
         </div>
       </div>
       <div class="flex items-center gap-.5rem">
         <div class="w-6px h-6px bg-primary rounded-full" />
         <div class="tracking-1px text-lg font-medium">
-          下載次數
+          {{ t('artificialIntelligenceSeminar.downloads') }}
         </div>
       </div>
       <template v-if="artificialIntelligence?.data.length && artificialIntelligence?.data.length > 0">
@@ -96,7 +96,7 @@
 <script setup lang="ts">
 import ArtificialIntelligenceMobileCard from '~/components/artificial-intelligence/artificial-intelligence-mobile-card.vue'
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const keyword = ref('')
 

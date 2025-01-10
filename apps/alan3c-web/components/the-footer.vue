@@ -8,11 +8,11 @@
             class="w-1.7rem mt-.2rem"
           />
           <div class="font-semibold">
-            多媒體暨網路安全實驗室
+            {{ t('webName') }}
           </div>
         </div>
         <div class="font-medium">
-          逢甲大學資訊工程學系 ( 科航702室 )
+          {{ t('universityDepartments') }}
         </div>
       </div>
       <div class="flex gap-2rem font-medium">
@@ -30,3 +30,7 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const { t } = useI18n()
+</script>
