@@ -1,55 +1,87 @@
 <template>
   <div class="w-full flex flex-col gap-2rem items-center layout-padding py-3rem">
+    <div class="flex max-width">
+      <base-breadcrumbs
+        :bread-list="[
+          {
+            name: t('navbar.home'),
+            route: {
+              name: 'home',
+            },
+          },
+          {
+            name: t('home.researchPlan'),
+            route: {
+              name: 'home-research-plan',
+            },
+          },
+        ]"
+      />
+    </div>
     <div class="max-width flex flex-col gap-2rem">
       <h1 class="text-2xl font-bold text-primary">
-        研究計畫
+        {{ t('home.researchPlan') }}
       </h1>
     </div>
     <div class="max-width custom-grid">
       <div class="font-medium text-lg">
-        計畫名稱
+        {{ t('researchPlan.planeName') }}
       </div>
       <div class="font-medium text-lg">
-        期間
+        {{ t('researchPlan.timePeriod') }}
       </div>
       <div class="font-medium text-lg">
-        贊助單位
+        {{ t('researchPlan.sponsor') }}
       </div>
       <div class="font-medium text-lg">
-        編號
+        {{ t('researchPlan.grantNumber') }}
       </div>
-      <template
-        v-for="(item, index) in researchPlan?.transformedData"
-        :key="index"
-      >
-        <div class="flex">
-          <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
-            {{ item.translations.name }}
+      <template v-if="researchPlan?.transformedData && researchPlan?.transformedData.length > 0 && !researchPlan?.transformedData.every(item => !item.translations?.name)">
+        <template
+          v-for="(item, index) in researchPlan?.transformedData"
+          :key="index"
+        >
+          <div class="flex">
+            <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
+              {{ item.translations?.name }}
+            </div>
           </div>
-        </div>
-        <div class="flex">
-          <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
-            {{ item.startDate }} - {{ item.endDate }}
+          <div class="flex">
+            <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
+              {{ item?.startDate }} - {{ item?.endDate }}
+            </div>
           </div>
-        </div>
-        <div class="flex">
-          <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
-            {{ item.translations.sponsor }}
+          <div class="flex">
+            <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
+              {{ item.translations?.sponsor }}
+            </div>
           </div>
-        </div>
-        <div class="flex">
-          <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
-            {{ item.referenceNumber }}
+          <div class="flex">
+            <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
+              {{ item?.referenceNumber }}
+            </div>
           </div>
-        </div>
+        </template>
       </template>
     </div>
+    <template v-if="!researchPlan?.transformedData || researchPlan?.transformedData.length === 0 || researchPlan?.transformedData.every(item => !item.translations?.name)">
+      <div
+        class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+        :class="locale === 'zh' ? ['tracking-.1rem']
+          : locale === 'en' ? ['tracking-.05rem']
+            : []"
+      >
+        {{ t('notFound') }}
+      </div>
+    </template>
     <div class="flex lg:hidden w-full">
-      <research-plan-mobile-card
-        v-for="(item, index) in researchPlan?.originalData?.data"
-        :key="index"
-        :data="item"
-      />
+      <template v-if="researchPlan?.transformedData && researchPlan?.transformedData.length > 0 && !researchPlan?.transformedData.every(item => !item.translations?.name)">
+        <research-plan-mobile-card
+          v-for="(item, index) in researchPlan?.originalData?.data"
+          :key="index"
+          :data="item"
+        />
+      </template>
     </div>
   </div>
 </template>
@@ -59,7 +91,7 @@ import ResearchPlanMobileCard from '~/components/research-plan/research-plan-mob
 import { useResearchPlanApi } from '../../composables/use-research-plan-api'
 
 const useResearchPlan = useResearchPlanApi()
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const { data: researchPlan, refresh: refreshResearchPlan } = useLazyAsyncData('research-plan', async () => {
   const [err, result] = await to (useResearchPlan.findList())

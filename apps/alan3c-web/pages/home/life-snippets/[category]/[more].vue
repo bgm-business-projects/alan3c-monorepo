@@ -1,8 +1,44 @@
 <template>
   <div class="w-full flex flex-col gap-3rem items-center layout-padding py-3rem">
+    <div class="max-width flex">
+      <base-breadcrumbs
+        :bread-list="[
+          {
+            name: t('navbar.home'),
+            route: {
+              name: 'home',
+            },
+          },
+          {
+            name: t('home.album'),
+            route: {
+              name: 'home-life-snippets-category',
+            },
+          },
+          {
+            name: route.params.category as string,
+            route: {
+              name: 'home-life-snippets-category',
+              params: {
+                category: route.params.category as string,
+              },
+            },
+          },
+          {
+            name: route.params.more as string,
+            route: {
+              name: 'home-life-snippets-category-more',
+              params: {
+                category: route.params.category as string,
+              },
+            },
+          },
+        ]"
+      />
+    </div>
     <div class="max-width w-full flex items-center justify-between gap-2rem">
       <h1 class="text-2xl font-bold text-primary">
-        生活點滴
+        {{ t('home.album') }}
       </h1>
       <div class="flex gap-1rem bg-accent px-1rem py-.3rem rounded-.4rem font-medium">
         <nuxt-link
@@ -11,7 +47,7 @@
             params: { category: route.params.category },
           })"
         >
-          返回 {{ route.params.category }}
+          {{ t('back') }} {{ route.params.category }}
         </nuxt-link>
       </div>
     </div>
@@ -145,7 +181,7 @@ import { isPrimeOfLifeMoreFile } from '../../../../contract/life-snippets/prime-
 import { isTeacherStudentSnapshotsMoreFile } from '../../../../contract/life-snippets/teacher-student-snapshots/teacher-student-snapshots.type'
 import { combineImageUrl } from '../../../../utils/combine-image-url'
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const useLifeSnippets = useLifeSnippetsApi()
 

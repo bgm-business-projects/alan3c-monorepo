@@ -49,12 +49,17 @@
           </div>
         </template>
       </template>
-      <template v-else>
-        <div class="w-full bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem">
-          查無結果
-        </div>
-      </template>
     </div>
+    <template v-if="!referenceDocument?.data.length || referenceDocument?.data.length === 0">
+      <div
+        class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+        :class="locale === 'zh' ? ['tracking-.1rem']
+          : locale === 'en' ? ['tracking-.05rem']
+            : []"
+      >
+        {{ t('notFound') }}
+      </div>
+    </template>
     <div class="w-full flex flex-col gap-1.5rem xl:hidden">
       <reference-document-mobile-card
         v-for="item in referenceDocument?.data"

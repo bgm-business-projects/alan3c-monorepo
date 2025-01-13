@@ -1,7 +1,7 @@
 <template>
   <div class="w-full layout-padding flex justify-center">
-    <div class="bg-primary w-full max-width py-2.5rem px-3rem rounded-tl-2rem rounded-tr-2rem flex flex-col gap-1rem">
-      <div class="flex items-center gap-2rem justify-between">
+    <div class="bg-primary w-full max-width py-1.5rem lg:py-2.5rem px-1.5rem lg:px-3rem rounded-tl-2rem rounded-tr-2rem flex flex-col gap-1rem">
+      <div class="flex items-center gap-2rem justify-between w-full">
         <div class="flex flex-row items-center gap-.5rem">
           <nuxt-img
             src="/logo.png"

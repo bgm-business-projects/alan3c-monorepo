@@ -1,12 +1,38 @@
 <template>
-  <div class="w-full flex flex-col gap-3rem lg:gap-8rem items-center layout-padding py-3rem">
+  <div class="w-full flex flex-col gap-3rem items-center layout-padding py-3rem">
+    <div class="flex max-width">
+      <base-breadcrumbs
+        :bread-list="[
+          {
+            name: t('navbar.home'),
+            route: {
+              name: 'home',
+            },
+          },
+          {
+            name: t('home.album'),
+            route: {
+              name: 'home-life-snippets',
+            },
+          },
+        ]"
+      />
+    </div>
     <div class="max-width flex flex-col gap-2rem">
       <h1 class="text-2xl font-bold text-primary">
-        生活點滴
+        {{ t('home.album') }}
       </h1>
     </div>
-    <life-snippets-desktop-entry class="hidden lg:!flex" :life-snippets="lifeSnippets" :life-snippets-main="lifeSnippetsMain" />
-    <life-snippets-mobile-entry class="flex lg:!hidden" :life-snippets="lifeSnippets" :life-snippets-main="lifeSnippetsMain" />
+    <life-snippets-desktop-entry
+      class="hidden lg:!flex"
+      :life-snippets="lifeSnippets"
+      :life-snippets-main="lifeSnippetsMain"
+    />
+    <life-snippets-mobile-entry
+      class="flex lg:!hidden"
+      :life-snippets="lifeSnippets"
+      :life-snippets-main="lifeSnippetsMain"
+    />
   </div>
 </template>
 
@@ -15,8 +41,7 @@ import type { LifeSnippets } from '~/contract/life-snippets/life-snippets.type'
 import LifeSnippetsDesktopEntry from '~/components/life-snippets/life-snippets-desktop-entry.vue'
 import LifeSnippetsMobileEntry from '~/components/life-snippets/life-snippets-mobile-entry.vue'
 
-const { locale } = useI18n()
-const localePath = useLocalePath()
+const { locale, t } = useI18n()
 
 const useLifeSnippets = useLifeSnippetsApi()
 const { data: lifeSnippets, refresh: refreshLifeSnippets } = useLazyAsyncData('life-snippets', async () => {

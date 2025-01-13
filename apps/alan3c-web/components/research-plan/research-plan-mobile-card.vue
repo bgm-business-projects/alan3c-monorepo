@@ -1,7 +1,7 @@
 <template>
   <div class="flex w-full border rounded-.5rem">
     <div class="bg-[#f4f4f4] flex justify-center py-.4rem px-1rem font-medium w-full">
-      {{ transformedData.translations.name }}
+      {{ transformedData.translations?.name }}
     </div>
     <div class="py-.6rem px-1rem">
       <div class="custom-grid">
@@ -10,21 +10,21 @@
         </div>
         <div class="border-r-1px border-solid border-#DBDBDB h-13px" />
         <div>
-          {{ transformedData.startDate }} - {{ transformedData.endDate }}
+          {{ transformedData?.startDate }} - {{ transformedData?.endDate }}
         </div>
         <div>
           贊助單位
         </div>
         <div class="border-r-1px border-solid border-#DBDBDB h-13px" />
         <div>
-          {{ transformedData.translations.sponsor }}
+          {{ transformedData.translations?.sponsor }}
         </div>
         <div>
           編號
         </div>
         <div class="border-r-1px border-solid border-#DBDBDB h-13px" />
         <div>
-          {{ transformedData.referenceNumber }}
+          {{ transformedData?.referenceNumber }}
         </div>
       </div>
     </div>

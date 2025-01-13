@@ -1,8 +1,29 @@
 <template>
   <div class="flex flex-col items-center layout-padding">
     <slot name="header" />
-    <div class="max-width py-4.5rem">
-      <div class="w-full flex flex-col lg:flex-row items-start gap-1rem lg:gap-3rem py-3rem">
+    <div class="max-width py-4.5rem min-h-[calc(100dvh-197px)]">
+      <div class="flex max-width py-3rem">
+        <base-breadcrumbs
+          :bread-list="[
+            {
+              name: t('navbar.home'),
+              route: {
+                name: 'home',
+              },
+            },
+            {
+              name: t('home.biography'),
+              route: {
+                name: 'home-personal-profile-id',
+                params: {
+                  id: route.params.id as string,
+                },
+              },
+            },
+          ]"
+        />
+      </div>
+      <div class="w-full flex flex-col lg:flex-row items-start gap-1rem lg:gap-3rem">
         <div class="flex lg:hidden overflow-scroll max-w-full">
           <div class="bg-accent relative flex flex-nowrap">
             <nuxt-link
@@ -39,38 +60,38 @@
 const route = useRoute()
 const localePath = useLocalePath()
 
-const { locale } = useI18n()
-const data = ref([
+const { t } = useI18n()
+const data = computed(() => [
   {
-    name: '簡歷',
+    name: t('biography.resume'),
     route: {
       name: 'home-personal-profile-id',
       params: { id: 'resume' },
     },
   },
   {
-    name: '履歷',
+    name: t('biography.curriculumVitae'),
     route: {
       name: 'home-personal-profile-id',
       params: { id: 'curriculumVitae' },
     },
   },
   {
-    name: '學術活動',
+    name: t('biography.academicActivities'),
     route: {
       name: 'home-personal-profile-id',
       params: { id: 'academicActivities' },
     },
   },
   {
-    name: '學術榮譽',
+    name: t('biography.academicRecognition'),
     route: {
       name: 'home-personal-profile-id',
       params: { id: 'academicRecognition' },
     },
   },
   {
-    name: '曾任教科目',
+    name: t('biography.coursesTaught'),
     route: {
       name: 'home-personal-profile-id',
       params: { id: 'coursesTaught' },

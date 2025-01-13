@@ -1,50 +1,82 @@
 <template>
   <div class="w-full flex flex-col gap-2rem items-center layout-padding py-3rem">
+    <div class="flex max-width">
+      <base-breadcrumbs
+        :bread-list="[
+          {
+            name: t('navbar.home'),
+            route: {
+              name: 'home',
+            },
+          },
+          {
+            name: t('home.scholarlyTalks'),
+            route: {
+              name: 'home-academic-lecture-record',
+            },
+          },
+        ]"
+      />
+    </div>
     <div class="max-width flex flex-col gap-2rem">
       <h1 class="text-2xl font-bold text-primary">
-        學術演講
+        {{ t('home.scholarlyTalks') }}
       </h1>
     </div>
 
     <div class="max-width custom-grid">
       <div class="text-lg font-medium">
-        編號
+        {{ t('scholarlyTalks.grantNumber') }}
       </div>
       <div class="text-lg font-medium">
-        演講題目
+        {{ t('scholarlyTalks.projectTitle') }}
       </div>
       <div class="text-lg font-medium">
-        日期
+        {{ t('scholarlyTalks.date') }}
       </div>
       <div class="text-lg font-medium">
-        地點
+        {{ t('scholarlyTalks.location') }}
       </div>
       <template
         v-for="(item, index) in academicLectureRecord?.data.transformedData"
         :key="index"
       >
-        <div class="flex">
-          <div>
-            {{ Number(index) + 1 }}
+        <template v-if="item.translations.name && item.translations.location">
+          <div class="flex">
+            <div>
+              {{ Number(index) + 1 }}
+            </div>
           </div>
-        </div>
-        <div class="flex">
-          <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
-            {{ item.translations.name }}
+          <div class="flex">
+            <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
+              {{ item.translations.name }}
+            </div>
           </div>
-        </div>
-        <div class="flex">
-          <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
-            {{ item.lectureDate }}
+          <div class="flex">
+            <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
+              {{ item.lectureDate }}
+            </div>
           </div>
-        </div>
-        <div class="flex">
-          <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
-            {{ item.translations.location }}
+          <div class="flex">
+            <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
+              {{ item.translations.location }}
+            </div>
           </div>
-        </div>
+        </template>
       </template>
     </div>
+    <template
+      v-if="!academicLectureRecord?.data.transformedData || !academicLectureRecord?.data.transformedData?.every(item => item.translations.name && item.translations.location)"
+    >
+      <div
+        class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+        :class="locale === 'zh' ? ['tracking-.1rem']
+          : locale === 'en' ? ['tracking-.05rem']
+            : []"
+      >
+        {{ t('notFound') }}
+      </div>
+    </template>
 
     <div class="w-full flex flex-col gap-1.5rem xl:hidden">
       <academic-lecture-record-mobile-card
@@ -107,7 +139,7 @@ import AcademicLectureRecordMobileCard from '~/components/academic-lecture-recor
 import { useAcademicLectureRecordApi } from '../../composables/use-academic-lecture-record-api'
 
 const useAcademicLectureRecord = useAcademicLectureRecordApi()
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const { data: academicLectureRecord, refresh: refreshAcademicLectureRecord } = useLazyAsyncData('academic-lecture-record', async () => {
   const [err, result] = await to (useAcademicLectureRecord.findList())

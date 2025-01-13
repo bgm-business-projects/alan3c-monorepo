@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@unocss/nuxt',
     '@vueuse/nuxt',
+    'nuxt-anchorscroll',
     'nuxt-swiper',
     'nuxt-marquee',
   ],

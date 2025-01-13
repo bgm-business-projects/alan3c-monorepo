@@ -1,6 +1,24 @@
 <template>
   <div class="w-full flex flex-col gap-2rem items-center layout-padding py-3rem border-solid">
-    <div class="flex flex-col gap-1.5rem bg-white max-width">
+    <div class="flex max-width">
+      <base-breadcrumbs
+        :bread-list="[
+          {
+            name: t('navbar.home'),
+            route: {
+              name: 'home',
+            },
+          },
+          {
+            name: t('home.curriculumVitae'),
+            route: {
+              name: 'home-curriculum-vitae',
+            },
+          },
+        ]"
+      />
+    </div>
+    <div class="flex flex-col gap-1.5rem max-width">
       <div class="w-full flex flex-col gap-2rem">
         <h1 class="text-2xl font-bold text-primary">
           Curriculum Vitae
@@ -27,42 +45,90 @@
         </div>
       </div>
     </div>
-    <div class="max-width flex flex-col pb-1rem overflow-hidden w-full">
-      <div id="information" class="w-full">
+    <div class="max-width flex flex-col pb-1rem w-full overflow-x-scroll">
+      <div id="information" class="text-2xl font-semibold">
+        Information
+      </div>
+      <div class="w-full">
         <div class="w-full" v-html="curriculumVitaeData?.data.curriculumVitae" />
       </div>
-      <div id="activities-society" class="w-full">
+
+      <div id="activities-society" class="text-2xl font-semibold mt-3rem">
+        Activities (Society)
+      </div>
+      <div class="w-full">
         <div class="w-full" v-html="curriculumVitaeData?.data.activitiesSociety" />
       </div>
-      <div id="activities-other" class="w-full">
+
+      <div id="activities-other" class="text-2xl font-semibold mt-3rem">
+        Activities (Other)
+      </div>
+      <div class="w-full">
         <div class="w-full" v-html="curriculumVitaeData?.data.activitiesOther" />
       </div>
-      <div id="technical-reviewer" class="w-full">
+
+      <div id="technical-reviewer" class="text-2xl font-semibold mt-3rem">
+        Technical Reviewer
+      </div>
+      <div class="w-full">
         <div class="w-full" v-html="curriculumVitaeData?.data.technicalReviewer" />
       </div>
-      <div id="consulting" class="w-full">
+
+      <div id="consulting" class="text-2xl font-semibold mt-3rem">
+        Consulting
+      </div>
+      <div class="w-full">
         <div class="w-full" v-html="curriculumVitaeData?.data.consulting" />
       </div>
 
-      <div id="projects" class="w-full">
-        <div class="w-full overflow-scroll" v-html="curriculumVitaeData?.data.projects" />
+      <div id="projects" class="text-2xl font-semibold mt-3rem">
+        Projects
       </div>
-      <div id="theses-master" class="max-width">
+      <div class="w-full">
+        <div class="w-full" v-html="curriculumVitaeData?.data.projects" />
+      </div>
+
+      <div id="theses-master" class="text-2xl font-semibold mt-3rem">
+        Theses (Master)
+      </div>
+      <div class="w-full">
         <div class="w-full" v-html="curriculumVitaeData?.data.thesesMaster" />
       </div>
 
-      <div id="awards" class="w-full">
+      <div id="awards" class="text-2xl font-semibold mt-3rem">
+        Awards
+      </div>
+      <div class="w-full">
         <div class="w-full" v-html="curriculumVitaeData?.data.awards" />
+      </div>
+    </div>
+    <div class="fixed bottom-200px max-width flex justify-end layout-padding lg:px-0">
+      <div
+        class="bg-primary w-3rem aspect-1/1 rounded-full flex justify-center items-center pb-.2rem border-white border-2px border-solid text-white font-semibold cursor-pointer"
+        @click="scrollToTop()"
+      >
+        Top
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useAnchorScroll } from '~/.nuxt/imports'
 import { useCurriculumVitaeDataApi } from '../../composables/use-curriculum-vitae-data-api'
+
+const { scrollToAnchor, scrollToTop } = useAnchorScroll({
+  toTop: {
+    scrollOptions: {
+      behavior: 'smooth',
+      offsetTop: 0,
+    },
+  },
+})
 
 const localePath = useLocalePath()
 const route = useRoute()
+const { t } = useI18n()
 
 const currentCategory = computed(() => route.hash.slice(1))
 
@@ -177,4 +243,10 @@ function checkActiveStyle(category: string) {
 :deep()
   table
     max-width: 100%
+  ul
+    list-style-type: disc !important
+    padding-left: 1rem
+  ol
+    list-style-type: decimal-leading-zero
+    padding-left: 1rem
 </style>

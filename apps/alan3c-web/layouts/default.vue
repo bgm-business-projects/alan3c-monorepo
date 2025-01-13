@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center">
     <slot name="header" />
-    <div class="w-full py-4.5rem">
+    <div class="w-full py-4.5rem min-h-[calc(100dvh-197px)]">
       <slot />
     </div>
     <slot name="footer" />

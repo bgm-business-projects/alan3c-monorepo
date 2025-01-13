@@ -2,15 +2,12 @@
   <div class="fixed py-1rem flex justify-center layout-padding w-full z-9999">
     <div
       class="flex items-center max-width border rounded-.7rem xl:border-none xl:rounded-0 overflow-hidden"
-      :class="locale === 'en' ? 'flex-col' : ''"
     >
       <div
         class="w-full xl:w-auto flex flex-col"
-        :class="locale === 'en' ? '!w-full' : ''"
       >
         <div
           class="flex items-center justify-center bg-[#f4f4f4] px-1rem py-.5rem rounded-.5rem xl:border gap-1rem"
-          :class="locale === 'en' ? 'xl:bg-white w-full border-0' : ''"
         >
           <div class="flex flex-row items-center gap-.5rem">
             <nuxt-img
@@ -58,13 +55,21 @@
           :class="showMenu ? 'h-[calc(100dvh-6rem)]' : 'h-0'"
         >
           <div class="justify-center p-1rem">
-            <div class="flex gap-.5rem font-500 border rounded-.5rem w-full py-.5rem flex justify-center bg-white">
-              <div @click="handleLocale('zh')">
-                中
-              </div>
-              <div>/</div>
-              <div @click="handleLocale('en')">
-                英
+            <div class="flex gap-.5rem font-500 border rounded-.5rem w-full py-.5rem flex justify-center bg-white ">
+              <div class="flex font-500 relative">
+                <div
+                  class="h-100% aspect-1/1 absolute bg-primary rounded-full duration-300"
+                  :class="circlePosition"
+                />
+                <div class="relative px-.2rem cursor-pointer" @click="setLocale('zh')">
+                  {{ t('navbar.languageZh') }}
+                </div>
+                <div class="relative px-.3rem">
+                  /
+                </div>
+                <div class="relative px-.2rem cursor-pointer" @click="setLocale('en')">
+                  {{ t('navbar.languageEn') }}
+                </div>
               </div>
             </div>
           </div>

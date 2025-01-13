@@ -32,10 +32,10 @@
         class="bg-accent rounded-.5rem text-direction"
         :class="
           locale === 'zh' ? ['tracking-.5rem', 'pt-1.1rem', 'pb-.7rem', 'px-.4rem']
-          : locale === 'en' ? ['tracking-.2rem', 'py-.3rem', 'px-1rem']
+          : locale === 'en' ? ['tracking-.05rem', 'py-.3rem', 'px-1rem']
             : []"
       >
-        下載檔案
+        {{ t('download') }}
       </a>
     </div>
   </div>
@@ -54,6 +54,8 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>()
+
+const { t } = useI18n()
 
 const { locale } = useI18n()
 

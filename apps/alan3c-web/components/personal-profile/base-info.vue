@@ -7,6 +7,15 @@
       class="w-full"
       v-html="props.data"
     />
+    <div
+      v-else
+      class="bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+      :class="locale === 'zh' ? ['tracking-.1rem']
+        : locale === 'en' ? ['tracking-.05rem']
+          : []"
+    >
+      {{ t('notFound') }}
+    </div>
   </div>
 </template>
 
@@ -20,6 +29,8 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>()
+
+const { t, locale } = useI18n()
 </script>
 
 <style scoped lang="sass">

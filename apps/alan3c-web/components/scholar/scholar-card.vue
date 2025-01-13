@@ -14,7 +14,7 @@
           <div class="font-semibold text-lg">
             {{ transformedData.translations?.name }}
           </div>
-          <div class="flex flex-col gap-.4rem items-start">
+          <div class="flex flex-col gap-.6rem items-start">
             <div class="bg-accent px-1rem py-.2rem rounded-.5rem font-medium">
               來自 | {{ transformedData.translations?.comeFrom }}
             </div>

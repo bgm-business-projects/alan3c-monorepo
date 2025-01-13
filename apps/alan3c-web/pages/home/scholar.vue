@@ -1,13 +1,31 @@
 <template>
-  <div class="w-full flex flex-col gap-2rem items-center layout-padding">
-    <div class="max-width flex flex-col gap-1.5rem bg-white pt-3rem">
+  <div class="w-full flex flex-col gap-2rem items-center layout-padding py-3rem">
+    <div class="flex max-width">
+      <base-breadcrumbs
+        :bread-list="[
+          {
+            name: t('navbar.home'),
+            route: {
+              name: 'home',
+            },
+          },
+          {
+            name: t('home.visitingScholarsPostdoctoralFellow'),
+            route: {
+              name: 'home-scholar',
+            },
+          },
+        ]"
+      />
+    </div>
+    <div class="max-width flex flex-col gap-1.5rem bg-white">
       <div class="w-full flex flex-col gap-2rem">
         <h1 class="text-2xl font-bold text-primary">
-          訪問學者-博士後研究員
+          {{ t('home.visitingScholarsPostdoctoralFellow') }}
         </h1>
       </div>
     </div>
-    <div class="max-width flex flex-col gap-2rem py-1rem">
+    <div class="max-width flex flex-col gap-2rem">
       <scholar-card
         v-for="(item) in scholarList?.originalData?.data" :key="item.id"
         :data="item"
@@ -54,10 +72,7 @@
 <script setup lang="ts">
 import ScholarCard from '../../components/scholar/scholar-card.vue'
 
-const { locale } = useI18n()
-
-const localePath = useLocalePath()
-const route = useRoute()
+const { locale, t } = useI18n()
 
 const useScholar = useScholarApi()
 

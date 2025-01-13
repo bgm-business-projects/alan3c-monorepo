@@ -119,7 +119,7 @@ const data = computed(() => [
     },
   },
   {
-    name: t('home.research'),
+    name: t('home.researchPlan'),
     route: {
       name: 'home-research-plan',
     },

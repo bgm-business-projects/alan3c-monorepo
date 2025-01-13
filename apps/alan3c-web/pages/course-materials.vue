@@ -49,12 +49,17 @@
           </div>
         </template>
       </template>
-      <template v-else>
-        <div class="w-full bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem">
-          查無結果
-        </div>
-      </template>
     </div>
+    <template v-if="!courseMaterials?.data.length || courseMaterials?.data.length === 0">
+      <div
+        class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+        :class="locale === 'zh' ? ['tracking-.1rem']
+          : locale === 'en' ? ['tracking-.05rem']
+            : []"
+      >
+        {{ t('notFound') }}
+      </div>
+    </template>
     <div class="w-full flex flex-col gap-1.5rem xl:hidden">
       <course-materials-mobile-card
         v-for="item in courseMaterials?.data"
@@ -62,52 +67,6 @@
         :data="item"
       />
     </div>
-    <!-- <div class="max-width flex flex-col gap-1.2rem">
-      <div class="flex w-full gap-1rem text-lg font-semibold">
-        <div class="w-10rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            上傳日期
-          </div>
-        </div>
-        <div class="w-15rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            文件標題
-          </div>
-        </div>
-        <div class="w-10rem flex items-center gap-.5rem">
-          <div class="w-6px h-6px bg-primary rounded-full" />
-          <div class="tracking-1px">
-            下載次數
-          </div>
-        </div>
-      </div>
-      <div class="w-full flex flex-col gap-1.5rem">
-        <template v-if="courseMaterials?.data.length && courseMaterials?.data.length > 0">
-          <div
-            v-for="item in courseMaterials?.data"
-            :key="item.id"
-            class="flex w-full gap-1rem font-medium"
-          >
-            <div class="w-10rem">
-              {{ item.uploadDate }}
-            </div>
-            <div class="w-15rem underline cursor-pointer" @click="addDownloadCount('courseMaterials', item.id.toString())">
-              {{ item.documentTitle }}
-            </div>
-            <div class="w-10rem">
-              {{ item.downloadCount }}
-            </div>
-          </div>
-        </template>
-        <template v-else>
-          <div class="w-full bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem">
-            查無結果
-          </div>
-        </template>
-      </div>
-    </div> -->
   </div>
 </template>
 

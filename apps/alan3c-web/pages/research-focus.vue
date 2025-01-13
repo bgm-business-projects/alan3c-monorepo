@@ -6,7 +6,19 @@
       </h1>
     </div>
     <div class="max-width">
-      <div v-html="researchFocus?.translations?.content" />
+      <div
+        v-if="researchFocus?.translations?.content"
+        v-html="researchFocus?.translations?.content"
+      />
+      <div
+        v-else
+        class="w-full bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+        :class="locale === 'zh' ? ['tracking-.1rem']
+          : locale === 'en' ? ['tracking-.05rem']
+            : []"
+      >
+        {{ t('notFound') }}
+      </div>
     </div>
   </div>
 </template>

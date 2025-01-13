@@ -1,5 +1,23 @@
 <template>
   <div class="w-full flex flex-col gap-3rem items-center layout-padding py-3rem">
+    <div class="flex max-width">
+      <base-breadcrumbs
+        :bread-list="[
+          {
+            name: t('navbar.home'),
+            route: {
+              name: 'home',
+            },
+          },
+          {
+            name: t('navbar.trainee'),
+            route: {
+              name: 'trainee',
+            },
+          },
+        ]"
+      />
+    </div>
     <div class="max-width flex flex-col gap-2rem">
       <h1 class="text-2xl font-bold text-primary">
         {{ t('navbar.trainee') }}
@@ -29,7 +47,7 @@
       </div>
       <div class="flex w-full gap-1rem justify-between">
         <q-select v-model="targetCategory" :options="options" outlined dense class="flex lg:hidden" />
-        <q-input v-model="keyword" outlined placeholder="搜尋" dense class="w-10rem">
+        <q-input v-model="keyword" outlined :placeholder="t('search')" dense class="w-10rem" @keyup.enter="refreshTrainee()">
           <template #prepend>
             <q-icon name="search" class="text-16px" />
           </template>
@@ -37,7 +55,19 @@
       </div>
     </div>
     <div class="max-width">
-      <list-card v-for="item in trainee" :key="item.id" :data="item" />
+      <template v-if="trainee && trainee.length > 0">
+        <list-card v-for="item in trainee" :key="item.id" :data="item" />
+      </template>
+      <template v-else>
+        <div
+          class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+          :class="locale === 'zh' ? ['tracking-.1rem']
+            : locale === 'en' ? ['tracking-.05rem']
+              : []"
+        >
+          {{ t('notFound') }}
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -110,16 +140,31 @@ const { data: trainee, refresh: refreshTrainee } = useLazyAsyncData('trainee', a
     category = currentCategory.value ?? undefined // 確保 category 是 string | undefined，過濾掉 null
   }
 
-  const [err, result] = await to (useTrainee.findList({
-    query: {
-      'filter[_and][0][traineeCategory][translations][name][_eq]': category,
-    },
-  }))
-  if (err) {
-    return Promise.reject(err)
+  if (keyword.value.length > 0) {
+    const [err, result] = await to (useTrainee.findList({
+      query: {
+        'filter[_and][0][traineeCategory][translations][name][_eq]': category,
+        'filter[_and][0][translations][name][_contains]': keyword.value,
+      },
+    }))
+    if (err) {
+      return Promise.reject(err)
+    }
+    isLoading.value = false
+    return result
   }
-  isLoading.value = false
-  return result
+  else {
+    const [err, result] = await to (useTrainee.findList({
+      query: {
+        'filter[_and][0][traineeCategory][translations][name][_eq]': category,
+      },
+    }))
+    if (err) {
+      return Promise.reject(err)
+    }
+    isLoading.value = false
+    return result
+  }
 }, {
   transform: (data) => {
     return data?.data.map((item) => {

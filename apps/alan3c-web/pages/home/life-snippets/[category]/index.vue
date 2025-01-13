@@ -1,12 +1,30 @@
 <template>
-  <div class="w-full flex flex-col gap-3rem items-center layout-padding py-3rem">
+  <div class="w-full flex flex-col gap-2rem items-center layout-padding py-3rem">
+    <div class="flex max-width">
+      <base-breadcrumbs
+        :bread-list="[
+          {
+            name: t('navbar.home'),
+            route: {
+              name: 'home',
+            },
+          },
+          {
+            name: t('home.album'),
+            route: {
+              name: 'home-life-snippets-category',
+            },
+          },
+        ]"
+      />
+    </div>
     <div class="max-width flex flex-col gap-2rem">
       <h1 class="text-2xl font-bold text-primary">
-        生活點滴
+        {{ t('home.album') }}
       </h1>
     </div>
     <div class="max-width relative flex flex-col items-center justify-center gap-2rem">
-      <div class="hidden gap-1rem w-full max-width lg:!flex">
+      <div class="hidden gap-1rem w-full max-width lg:!flex flex-wrap">
         <nuxt-link
           v-for="(item, index) in 6"
           :key="index"
@@ -19,7 +37,7 @@
             params: { category: getTranslation(index + 1) },
           })"
         >
-          <h2 class="text-md font-medium leading-1.5rem tracking-.05rem">
+          <h2 class="text-md font-medium leading-1.5rem tracking-.05rem whitespace-nowrap">
             {{ getTranslation(index + 1) }}
           </h2>
         </nuxt-link>
@@ -127,6 +145,7 @@
 
 <script lang="ts" setup>
 import type { LifeSnippets } from '~/contract/life-snippets/life-snippets.type'
+import BaseBreadcrumbs from '~/components/base-breadcrumbs.vue'
 import BaseCard from '~/components/life-snippets/base-card.vue'
 import { isAcademicLectureDeep } from '~/contract/life-snippets/academic-lecture/academic-lecture.type'
 import { isAdministrativeYearsDeep } from '~/contract/life-snippets/administrative-years/administrative-years.type'
@@ -145,7 +164,8 @@ interface ApiMapping {
   administrativeYears: (deep: boolean) => ReturnType<typeof useLifeSnippets.findAdministrativeYears>;
 }
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
+
 const localePath = useLocalePath()
 const route = useRoute()
 const useLifeSnippets = useLifeSnippetsApi()

@@ -35,7 +35,7 @@
         />
       </div>
       <h2 class="text-lg font-semibold">
-        {{ lifeSnippetsMain?.data.translations.filter((item) => item.lifeSnippetsLanguages_code === locale)[0].name }}
+        {{ lifeSnippetsMain?.data.translations.filter((item) => item.lifeSnippetsLanguages_code === locale)[0]?.name }}
       </h2>
     </div>
   </div>
