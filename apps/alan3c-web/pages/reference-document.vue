@@ -50,23 +50,30 @@
         </template>
       </template>
     </div>
-    <template v-if="!referenceDocument?.data.length || referenceDocument?.data.length === 0">
-      <div
-        class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
-        :class="locale === 'zh' ? ['tracking-.1rem']
-          : locale === 'en' ? ['tracking-.05rem']
-            : []"
-      >
-        {{ t('notFound') }}
+    <template v-if="isLoading">
+      <div class="max-width flex items-center justify-center h-300px relative">
+        <q-inner-loading :showing="isLoading" />
       </div>
     </template>
-    <div class="w-full flex flex-col gap-1.5rem xl:hidden">
-      <reference-document-mobile-card
-        v-for="item in referenceDocument?.data"
-        :key="item.id"
-        :data="item"
-      />
-    </div>
+    <template v-else>
+      <template v-if="!referenceDocument?.data.length || referenceDocument?.data.length === 0">
+        <div
+          class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+          :class="locale === 'zh' ? ['tracking-.1rem']
+            : locale === 'en' ? ['tracking-.05rem']
+              : []"
+        >
+          {{ t('notFound') }}
+        </div>
+      </template>
+      <div class="w-full flex flex-col gap-1.5rem xl:hidden">
+        <reference-document-mobile-card
+          v-for="item in referenceDocument?.data"
+          :key="item.id"
+          :data="item"
+        />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -79,7 +86,10 @@ const keyword = ref('')
 
 const useReferenceDocument = useReferenceDocumentApi()
 
+const isLoading = ref(false)
+
 const { data: referenceDocument, refresh: refreshReferenceDocument } = useLazyAsyncData('reference-document', async () => {
+  isLoading.value = true
   if (keyword.value.length > 0) {
     const [err, result] = await to (useReferenceDocument.findList({
       query: {
@@ -87,15 +97,19 @@ const { data: referenceDocument, refresh: refreshReferenceDocument } = useLazyAs
       },
     }))
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
   else {
     const [err, result] = await to (useReferenceDocument.findList())
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 }, {

@@ -6,19 +6,26 @@
       </h1>
     </div>
     <div class="max-width">
-      <div
-        v-if="researchFocus?.translations?.content"
-        v-html="researchFocus?.translations?.content"
-      />
-      <div
-        v-else
-        class="w-full bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
-        :class="locale === 'zh' ? ['tracking-.1rem']
-          : locale === 'en' ? ['tracking-.05rem']
-            : []"
-      >
-        {{ t('notFound') }}
-      </div>
+      <template v-if="!isLoading">
+        <div
+          v-if="researchFocus?.translations?.content"
+          v-html="researchFocus?.translations?.content"
+        />
+        <div
+          v-else
+          class="w-full bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+          :class="locale === 'zh' ? ['tracking-.1rem']
+            : locale === 'en' ? ['tracking-.05rem']
+              : []"
+        >
+          {{ t('notFound') }}
+        </div>
+      </template>
+      <template v-else>
+        <div class="w-full h-300px">
+          <q-inner-loading :showing="isLoading" />
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -27,11 +34,16 @@
 const useResearchFocus = useResearchFocusApi()
 const { locale, t } = useI18n()
 
+const isLoading = ref(false)
+
 const { data: researchFocus, refresh: refreshResearchFocus } = useLazyAsyncData('research-focus', async () => {
+  isLoading.value = true
   const [err, result] = await to (useResearchFocus.findOne())
   if (err) {
+    isLoading.value = false
     return Promise.reject(err)
   }
+  isLoading.value = false
   return result
 }, {
   transform: (data) => {

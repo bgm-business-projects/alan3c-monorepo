@@ -33,40 +33,49 @@
           {{ t('courseMaterials.downloads') }}
         </div>
       </div>
-      <template v-if="courseMaterials?.data.length && courseMaterials?.data.length > 0">
-        <template
-          v-for="item in courseMaterials?.data"
-          :key="item.id"
-        >
-          <div>
-            {{ item.uploadDate }}
-          </div>
-          <div class="underline cursor-pointer" @click="addDownloadCount('courseMaterials', item.id.toString())">
-            {{ item.documentTitle }}
-          </div>
-          <div>
-            {{ item.downloadCount }}
-          </div>
+      <template v-if="!isLoading">
+        <template v-if="courseMaterials?.data.length && courseMaterials?.data.length > 0">
+          <template
+            v-for="item in courseMaterials?.data"
+            :key="item.id"
+          >
+            <div>
+              {{ item.uploadDate }}
+            </div>
+            <div class="underline cursor-pointer" @click="addDownloadCount('courseMaterials', item.id.toString())">
+              {{ item.documentTitle }}
+            </div>
+            <div>
+              {{ item.downloadCount }}
+            </div>
+          </template>
         </template>
       </template>
     </div>
-    <template v-if="!courseMaterials?.data.length || courseMaterials?.data.length === 0">
-      <div
-        class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
-        :class="locale === 'zh' ? ['tracking-.1rem']
-          : locale === 'en' ? ['tracking-.05rem']
-            : []"
-      >
-        {{ t('notFound') }}
+    <template v-if="isLoading">
+      <div class="max-width flex items-center justify-center h-300px relative">
+        <q-inner-loading :showing="isLoading" />
       </div>
     </template>
-    <div class="w-full flex flex-col gap-1.5rem xl:hidden">
-      <course-materials-mobile-card
-        v-for="item in courseMaterials?.data"
-        :key="item.id"
-        :data="item"
-      />
-    </div>
+    <template v-else>
+      <template v-if="!courseMaterials?.data.length || courseMaterials?.data.length === 0">
+        <div
+          class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+          :class="locale === 'zh' ? ['tracking-.1rem']
+            : locale === 'en' ? ['tracking-.05rem']
+              : []"
+        >
+          {{ t('notFound') }}
+        </div>
+      </template>
+      <div class="w-full flex flex-col gap-1.5rem xl:hidden">
+        <course-materials-mobile-card
+          v-for="item in courseMaterials?.data"
+          :key="item.id"
+          :data="item"
+        />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -77,12 +86,11 @@ const { locale, t } = useI18n()
 
 const keyword = ref('')
 
-const localePath = useLocalePath()
-const route = useRoute()
-
 const useCourseMaterials = useCourseMaterialsApi()
 
+const isLoading = ref(false)
 const { data: courseMaterials, refresh: refreshCourseMaterials } = useLazyAsyncData('course-materials', async () => {
+  isLoading.value = true
   if (keyword.value.length > 0) {
     const [err, result] = await to (useCourseMaterials.findList({
       query: {
@@ -90,15 +98,19 @@ const { data: courseMaterials, refresh: refreshCourseMaterials } = useLazyAsyncD
       },
     }))
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
   else {
     const [err, result] = await to (useCourseMaterials.findList())
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 }, {

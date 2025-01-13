@@ -52,49 +52,58 @@
           {{ t('imageProcessingSeminar.downloads') }}
         </div>
       </div>
-      <template v-if="imageProcessing?.data.length && imageProcessing?.data.length > 0">
-        <template
-          v-for="item in imageProcessing?.data"
-          :key="item.id"
-        >
-          <div>
-            {{ item.reportDate }}
-          </div>
-          <div class="underline cursor-pointer" @click="addDownloadCount('imageProcessing', item.id.toString())">
-            {{ item.thesisTitle }}
-          </div>
-          <div>
-            {{ item.academicJournal }}
-          </div>
-          <div>
-            {{ item.paperAuthor }}
-          </div>
-          <div>
-            {{ item.reporter }}
-          </div>
-          <div>
-            {{ item.downloadCount }}
-          </div>
+      <template v-if="!isLoading">
+        <template v-if="imageProcessing?.data.length && imageProcessing?.data.length > 0">
+          <template
+            v-for="item in imageProcessing?.data"
+            :key="item.id"
+          >
+            <div>
+              {{ item.reportDate }}
+            </div>
+            <div class="underline cursor-pointer" @click="addDownloadCount('imageProcessing', item.id.toString())">
+              {{ item.thesisTitle }}
+            </div>
+            <div>
+              {{ item.academicJournal }}
+            </div>
+            <div>
+              {{ item.paperAuthor }}
+            </div>
+            <div>
+              {{ item.reporter }}
+            </div>
+            <div>
+              {{ item.downloadCount }}
+            </div>
+          </template>
         </template>
       </template>
     </div>
-    <template v-if="!imageProcessing?.data.length || imageProcessing?.data.length === 0">
-      <div
-        class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
-        :class="locale === 'zh' ? ['tracking-.1rem']
-          : locale === 'en' ? ['tracking-.05rem']
-            : []"
-      >
-        {{ t('notFound') }}
+    <template v-if="isLoading">
+      <div class="max-width flex items-center justify-center h-300px relative">
+        <q-inner-loading :showing="isLoading" />
       </div>
     </template>
-    <div class="w-full flex flex-col gap-1.5rem xl:hidden">
-      <image-processing-mobile-card
-        v-for="item in imageProcessing?.data"
-        :key="item.id"
-        :data="item"
-      />
-    </div>
+    <template v-else>
+      <template v-if="!imageProcessing?.data.length || imageProcessing?.data.length === 0">
+        <div
+          class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+          :class="locale === 'zh' ? ['tracking-.1rem']
+            : locale === 'en' ? ['tracking-.05rem']
+              : []"
+        >
+          {{ t('notFound') }}
+        </div>
+      </template>
+      <div class="w-full flex flex-col gap-1.5rem xl:hidden">
+        <image-processing-mobile-card
+          v-for="item in imageProcessing?.data"
+          :key="item.id"
+          :data="item"
+        />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -107,7 +116,10 @@ const keyword = ref('')
 
 const useImageProcessing = useImageProcessingApi()
 
+const isLoading = ref(false)
+
 const { data: imageProcessing, refresh: refreshImageProcessing } = useLazyAsyncData('image-processing', async () => {
+  isLoading.value = true
   if (keyword.value.length > 0) {
     const [err, result] = await to (useImageProcessing.findList({
       query: {
@@ -115,15 +127,19 @@ const { data: imageProcessing, refresh: refreshImageProcessing } = useLazyAsyncD
       },
     }))
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
   else {
     const [err, result] = await to (useImageProcessing.findList())
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 }, {

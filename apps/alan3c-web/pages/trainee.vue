@@ -55,17 +55,24 @@
       </div>
     </div>
     <div class="max-width">
-      <template v-if="trainee && trainee.length > 0">
-        <list-card v-for="item in trainee" :key="item.id" :data="item" />
+      <template v-if="!isLoading">
+        <template v-if="trainee && trainee.length > 0">
+          <list-card v-for="item in trainee" :key="item.id" :data="item" />
+        </template>
+        <template v-else>
+          <div
+            class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+            :class="locale === 'zh' ? ['tracking-.1rem']
+              : locale === 'en' ? ['tracking-.05rem']
+                : []"
+          >
+            {{ t('notFound') }}
+          </div>
+        </template>
       </template>
       <template v-else>
-        <div
-          class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
-          :class="locale === 'zh' ? ['tracking-.1rem']
-            : locale === 'en' ? ['tracking-.05rem']
-              : []"
-        >
-          {{ t('notFound') }}
+        <div class="relative w-full h-300px">
+          <q-inner-loading :showing="isLoading" />
         </div>
       </template>
     </div>

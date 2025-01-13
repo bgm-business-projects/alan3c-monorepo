@@ -33,40 +33,49 @@
           {{ t('lecturePPT.downloads') }}
         </div>
       </div>
-      <template v-if="lecturePpt?.data.length && lecturePpt?.data.length > 0">
-        <template
-          v-for="item in lecturePpt?.data"
-          :key="item.id"
-        >
-          <div>
-            {{ item.uploadDate }}
-          </div>
-          <div class="underline cursor-pointer" @click="addDownloadCount('lecturePPT', item.id.toString())">
-            {{ item.lectureTitle }}
-          </div>
-          <div>
-            {{ item.downloadCount }}
-          </div>
+      <template v-if="!isLoading">
+        <template v-if="lecturePpt?.data.length && lecturePpt?.data.length > 0">
+          <template
+            v-for="item in lecturePpt?.data"
+            :key="item.id"
+          >
+            <div>
+              {{ item.uploadDate }}
+            </div>
+            <div class="underline cursor-pointer" @click="addDownloadCount('lecturePPT', item.id.toString())">
+              {{ item.lectureTitle }}
+            </div>
+            <div>
+              {{ item.downloadCount }}
+            </div>
+          </template>
         </template>
       </template>
     </div>
-    <template v-if="!lecturePpt?.data.length || lecturePpt?.data.length === 0">
-      <div
-        class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
-        :class="locale === 'zh' ? ['tracking-.1rem']
-          : locale === 'en' ? ['tracking-.05rem']
-            : []"
-      >
-        {{ t('notFound') }}
+    <template v-if="isLoading">
+      <div class="max-width flex items-center justify-center h-300px relative">
+        <q-inner-loading :showing="isLoading" />
       </div>
     </template>
-    <div class="w-full flex flex-col gap-1.5rem xl:hidden">
-      <lecture-ppt-mobile-card
-        v-for="item in lecturePpt?.data"
-        :key="item.id"
-        :data="item"
-      />
-    </div>
+    <template v-else>
+      <template v-if="!lecturePpt?.data.length || lecturePpt?.data.length === 0">
+        <div
+          class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+          :class="locale === 'zh' ? ['tracking-.1rem']
+            : locale === 'en' ? ['tracking-.05rem']
+              : []"
+        >
+          {{ t('notFound') }}
+        </div>
+      </template>
+      <div class="w-full flex flex-col gap-1.5rem xl:hidden">
+        <lecture-ppt-mobile-card
+          v-for="item in lecturePpt?.data"
+          :key="item.id"
+          :data="item"
+        />
+      </div>
+    </template>
     <!-- <div class="max-width flex flex-col gap-1.2rem">
       <div class="flex w-full gap-1rem text-lg font-semibold">
         <div class="w-10rem flex items-center gap-.5rem">
@@ -123,12 +132,11 @@ const { locale, t } = useI18n()
 
 const keyword = ref('')
 
-const localePath = useLocalePath()
-const route = useRoute()
-
 const useLecturePpt = useLecturePptApi()
 
+const isLoading = ref(false)
 const { data: lecturePpt, refresh: refreshLecturePpt } = useLazyAsyncData('lecture-ppt', async () => {
+  isLoading.value = true
   if (keyword.value.length > 0) {
     const [err, result] = await to (useLecturePpt.findList({
       query: {
@@ -136,15 +144,19 @@ const { data: lecturePpt, refresh: refreshLecturePpt } = useLazyAsyncData('lectu
       },
     }))
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
   else {
     const [err, result] = await to (useLecturePpt.findList())
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 }, {
