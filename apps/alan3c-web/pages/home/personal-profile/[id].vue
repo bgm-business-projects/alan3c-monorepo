@@ -1,8 +1,12 @@
 <template>
   <div class="flex-1 flex flex-col items-center gap-3rem max-w-full">
     <div class="w-full flex flex-col lg:flex-row gap-3rem">
-      <div class="flex flex-col gap-5rem flex-1 w-full">
+      <div class="flex flex-col gap-5rem flex-1 w-full relative">
+        <div v-if="isLoading" class="w-full h-300px">
+          <q-inner-loading :showing="isLoading" />
+        </div>
         <base-info
+          v-else
           :data="personalProfile?.translations?.content"
         />
       </div>
@@ -24,44 +28,57 @@ const { locale } = useI18n()
 
 const usePersonalProfile = usePersonalProfileApi()
 
+const isLoading = ref(false)
+
 const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncData('personal-profile', async () => {
+  isLoading.value = true
   if (route.params.id === 'resume') {
     const [err, result] = await to (usePersonalProfile.findResume())
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 
   if (route.params.id === 'curriculumVitae') {
     const [err, result] = await to (usePersonalProfile.findCurriculumVitae())
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 
   if (route.params.id === 'academicActivities') {
     const [err, result] = await to (usePersonalProfile.findAcademicActivities())
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 
   if (route.params.id === 'academicRecognition') {
     const [err, result] = await to (usePersonalProfile.findAcademicRecognition())
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 
   if (route.params.id === 'coursesTaught') {
     const [err, result] = await to (usePersonalProfile.findCoursesTaught())
     if (err) {
+      isLoading.value = false
       return Promise.reject(err)
     }
+    isLoading.value = false
     return result
   }
 }, {

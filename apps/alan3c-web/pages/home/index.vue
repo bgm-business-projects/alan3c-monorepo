@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-padding flex justify-center w-full py-3rem">
+  <div class="layout-padding flex justify-center w-full py-1.5rem lg:py-3rem">
     <div class="w-full flex flex-col max-width gap-2rem">
       <div class="flex gap-1.5rem lg:gap-3rem w-full flex-col lg:flex-row">
         <div class="flex flex-col gap-1rem items-center justify-center flex-1 w-full">
@@ -97,6 +97,25 @@ const { data: home, refresh: refreshHome } = useLazyAsyncData('home', async () =
   watch: [locale],
 })
 
+const useTraineeCategory = useTraineeCategoryApi()
+const { data: traineeCategories, refresh: refreshTraineeCategories } = useLazyAsyncData('trainee-category', async () => {
+  const [err, result] = await to (useTraineeCategory.findList())
+  if (err) {
+    return Promise.reject(err)
+  }
+  return result
+}, {
+  transform: (data) => {
+    return data?.data.map((item) => {
+      return {
+        ...item,
+        translations: item.translations.filter((item) => item.traineeCategoryLanguages_code === locale.value)[0],
+      }
+    })
+  },
+  watch: [locale],
+})
+
 const data = computed(() => [
   {
     name: t('home.biography'),
@@ -116,6 +135,9 @@ const data = computed(() => [
     name: t('navbar.trainee'),
     route: {
       name: 'trainee',
+      query: {
+        category: traineeCategories.value?.find((item) => item.translations.traineeCategoryLanguages_code === locale.value)?.translations.name,
+      },
     },
   },
   {

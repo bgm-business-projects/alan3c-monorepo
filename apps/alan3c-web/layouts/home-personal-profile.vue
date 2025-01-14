@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center layout-padding">
     <slot name="header" />
     <div class="max-width py-4.5rem min-h-[calc(100dvh-197px)]">
-      <div class="flex max-width py-3rem">
+      <div class="flex max-width py-1.5rem lg:py-3rem">
         <base-breadcrumbs
           :bread-list="[
             {

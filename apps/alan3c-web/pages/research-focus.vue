@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-col gap-1rem items-center layout-padding py-3rem">
+  <div class="w-full flex flex-col gap-1rem items-center layout-padding py-1.5rem lg:py-3rem">
     <div class="max-width flex flex-col gap-2rem">
       <h1 class="text-2xl font-bold text-primary">
         {{ t('navbar.researchFocus') }}

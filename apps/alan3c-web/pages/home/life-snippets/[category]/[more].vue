@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-col gap-3rem items-center layout-padding py-3rem">
+  <div class="w-full flex flex-col gap-2rem lg:gap-3rem items-center layout-padding py-1.5rem lg:py-3rem">
     <div class="max-width flex">
       <base-breadcrumbs
         :bread-list="[

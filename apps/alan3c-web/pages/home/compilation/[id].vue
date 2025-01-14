@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-col gap-2rem items-center layout-padding py-3rem">
+  <div class="w-full flex flex-col gap-2rem items-center layout-padding py-1.5rem lg:py-3rem">
     <div class="flex max-width">
       <base-breadcrumbs
         :bread-list="[
@@ -27,27 +27,35 @@
         ]"
       />
     </div>
-    <div class="max-width flex flex-col gap-2rem">
-      <h1 class="text-2xl font-bold text-primary">
-        {{ compilation?.title }}
-      </h1>
-    </div>
-    <div class="max-width flex flex-col gap-1rem">
-      <div v-html="compilation?.content" />
-    </div>
+    <template v-if="!isLoading">
+      <div class="max-width flex flex-col gap-2rem">
+        <h1 class="text-2xl font-bold text-primary">
+          {{ compilation?.title }}
+        </h1>
+      </div>
+      <div class="max-width flex flex-col gap-1rem">
+        <div v-html="compilation?.content" />
+      </div>
+    </template>
+    <template v-else>
+      <div class="max-width flex items-center justify-center h-300px relative">
+        <q-inner-loading :showing="isLoading" />
+      </div>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
 const { locale, t } = useI18n()
 
-const localePath = useLocalePath()
-
 const useCompilation = useCompilationApi()
 
 const route = useRoute()
 
+const isLoading = ref(false)
+
 const { data: compilation, refresh: refreshCompilation } = useLazyAsyncData('compilation-single', async () => {
+  isLoading.value = true
   const [err, result] = await to (useCompilation.findOne({
     query: {
       'filter[translations][compilationLanguages_code][_eq]': locale.value as 'zh' | 'en',
@@ -55,8 +63,10 @@ const { data: compilation, refresh: refreshCompilation } = useLazyAsyncData('com
     },
   }))
   if (err) {
+    isLoading.value = false
     return Promise.reject(err)
   }
+  isLoading.value = false
   return result
 }, {
   transform: (data) => {

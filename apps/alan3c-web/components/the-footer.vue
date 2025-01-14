@@ -15,7 +15,7 @@
           {{ t('universityDepartments') }}
         </div>
       </div>
-      <div class="flex gap-2rem font-medium">
+      <div class="flex gap-x-2rem gap-y-.5rem font-medium">
         <div>
           TEL: +886-4-24517250#3791~3
         </div>

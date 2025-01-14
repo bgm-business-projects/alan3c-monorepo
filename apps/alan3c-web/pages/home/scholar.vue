@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-col gap-2rem items-center layout-padding py-3rem">
+  <div class="w-full flex flex-col gap-2rem items-center layout-padding py-1.5rem lg:py-3rem">
     <div class="flex max-width">
       <base-breadcrumbs
         :bread-list="[
@@ -26,10 +26,17 @@
       </div>
     </div>
     <div class="max-width flex flex-col gap-2rem">
-      <scholar-card
-        v-for="(item) in scholarList?.originalData?.data" :key="item.id"
-        :data="item"
-      />
+      <template v-if="!isLoading">
+        <scholar-card
+          v-for="(item) in scholarList?.originalData?.data" :key="item.id"
+          :data="item"
+        />
+      </template>
+      <template v-else>
+        <div class="max-width flex items-center justify-center h-300px relative">
+          <q-inner-loading :showing="isLoading" />
+        </div>
+      </template>
       <!-- <div
         v-for="scholar in scholarList" :key="scholar.id"
         class="flex gap-1rem"
@@ -76,11 +83,16 @@ const { locale, t } = useI18n()
 
 const useScholar = useScholarApi()
 
+const isLoading = ref(false)
+
 const { data: scholarList, refresh: refreshScholar } = useLazyAsyncData('scholar', async () => {
+  isLoading.value = true
   const [err, result] = await to (useScholar.findList())
   if (err) {
+    isLoading.value = false
     return Promise.reject(err)
   }
+  isLoading.value = false
   return result
 }, {
   transform: (data) => {

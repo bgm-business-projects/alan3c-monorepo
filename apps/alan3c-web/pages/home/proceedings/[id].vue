@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-col gap-2rem items-center layout-padding py-3rem">
+  <div class="w-full flex flex-col gap-2rem items-center layout-padding py-1.5rem lg:py-3rem">
     <div class="flex max-width">
       <base-breadcrumbs
         :bread-list="[
@@ -27,14 +27,21 @@
         ]"
       />
     </div>
-    <div class="max-width flex flex-col gap-2rem">
-      <h1 class="text-2xl font-bold text-primary">
-        {{ proceedings?.title }}
-      </h1>
-    </div>
-    <div class="max-width flex flex-col gap-1rem">
-      <div v-html="proceedings?.content" />
-    </div>
+    <template v-if="!isLoading">
+      <div class="max-width flex flex-col gap-2rem">
+        <h1 class="text-2xl font-bold text-primary">
+          {{ proceedings?.title }}
+        </h1>
+      </div>
+      <div class="max-width flex flex-col gap-1rem">
+        <div v-html="proceedings?.content" />
+      </div>
+    </template>
+    <template v-else>
+      <div class="max-width flex items-center justify-center h-300px relative">
+        <q-inner-loading :showing="isLoading" />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -47,7 +54,10 @@ const useProceedings = useProceedingsApi()
 
 const route = useRoute()
 
+const isLoading = ref(false)
+
 const { data: proceedings, refresh: refreshProceedings } = useLazyAsyncData('proceedings-single', async () => {
+  isLoading.value = true
   const [err, result] = await to (useProceedings.findOne({
     query: {
       'filter[translations][proceedingsLanguages_code][_eq]': locale.value as 'zh' | 'en',
@@ -55,8 +65,10 @@ const { data: proceedings, refresh: refreshProceedings } = useLazyAsyncData('pro
     },
   }))
   if (err) {
+    isLoading.value = false
     return Promise.reject(err)
   }
+  isLoading.value = false
   return result
 }, {
   transform: (data) => {
@@ -66,11 +78,11 @@ const { data: proceedings, refresh: refreshProceedings } = useLazyAsyncData('pro
 })
 
 useSeoMeta({
-  title: '真誠文集',
-  description: '真誠文集',
-  keywords: '真誠文集',
-  ogTitle: '真誠文集',
-  ogDescription: '真誠文集',
+  title: '薪火相傳。文心薈萃文集',
+  description: '薪火相傳。文心薈萃文集',
+  keywords: '薪火相傳。文心薈萃文集',
+  ogTitle: '薪火相傳。文心薈萃文集',
+  ogDescription: '薪火相傳。文心薈萃文集',
 })
 </script>
 

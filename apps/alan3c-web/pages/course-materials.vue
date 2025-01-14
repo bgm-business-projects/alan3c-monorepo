@@ -1,6 +1,6 @@
 <template>
   <div class="w-full flex flex-col gap-2rem items-center layout-padding">
-    <div class="max-width flex flex-col gap-1.5rem pt-3rem">
+    <div class="max-width flex flex-col gap-1.5rem pt-1.5rem lg:pt-3rem">
       <div class="w-full flex flex-col gap-2rem">
         <h1 class="text-2xl font-bold text-primary">
           {{ t('navbar.courseMaterials') }}

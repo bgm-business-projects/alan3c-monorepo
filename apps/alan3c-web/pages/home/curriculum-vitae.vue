@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-col gap-2rem items-center layout-padding py-3rem border-solid">
+  <div class="w-full flex flex-col gap-2rem items-center layout-padding py-1.5rem lg:py-3rem">
     <div class="flex max-width">
       <base-breadcrumbs
         :bread-list="[
@@ -45,61 +45,69 @@
         </div>
       </div>
     </div>
-    <div class="max-width flex flex-col pb-1rem w-full overflow-x-scroll">
-      <div id="information" class="text-2xl font-semibold">
-        Information
-      </div>
-      <div class="w-full">
-        <div class="w-full" v-html="curriculumVitaeData?.data.curriculumVitae" />
-      </div>
+    <div class="max-width">
+      <div
+        v-if="!isLoading"
+        class="w-full flex flex-col pb-1rem w-full overflow-x-scroll"
+      >
+        <div id="information" class="text-2xl font-semibold">
+          Information
+        </div>
+        <div class="w-full">
+          <div class="w-full" v-html="curriculumVitaeData?.data.curriculumVitae" />
+        </div>
 
-      <div id="activities-society" class="text-2xl font-semibold mt-3rem">
-        Activities (Society)
-      </div>
-      <div class="w-full">
-        <div class="w-full" v-html="curriculumVitaeData?.data.activitiesSociety" />
-      </div>
+        <div id="activities-society" class="text-2xl font-semibold mt-3rem">
+          Activities (Society)
+        </div>
+        <div class="w-full">
+          <div class="w-full" v-html="curriculumVitaeData?.data.activitiesSociety" />
+        </div>
 
-      <div id="activities-other" class="text-2xl font-semibold mt-3rem">
-        Activities (Other)
-      </div>
-      <div class="w-full">
-        <div class="w-full" v-html="curriculumVitaeData?.data.activitiesOther" />
-      </div>
+        <div id="activities-other" class="text-2xl font-semibold mt-3rem">
+          Activities (Other)
+        </div>
+        <div class="w-full">
+          <div class="w-full" v-html="curriculumVitaeData?.data.activitiesOther" />
+        </div>
 
-      <div id="technical-reviewer" class="text-2xl font-semibold mt-3rem">
-        Technical Reviewer
-      </div>
-      <div class="w-full">
-        <div class="w-full" v-html="curriculumVitaeData?.data.technicalReviewer" />
-      </div>
+        <div id="technical-reviewer" class="text-2xl font-semibold mt-3rem">
+          Technical Reviewer
+        </div>
+        <div class="w-full">
+          <div class="w-full" v-html="curriculumVitaeData?.data.technicalReviewer" />
+        </div>
 
-      <div id="consulting" class="text-2xl font-semibold mt-3rem">
-        Consulting
-      </div>
-      <div class="w-full">
-        <div class="w-full" v-html="curriculumVitaeData?.data.consulting" />
-      </div>
+        <div id="consulting" class="text-2xl font-semibold mt-3rem">
+          Consulting
+        </div>
+        <div class="w-full">
+          <div class="w-full" v-html="curriculumVitaeData?.data.consulting" />
+        </div>
 
-      <div id="projects" class="text-2xl font-semibold mt-3rem">
-        Projects
-      </div>
-      <div class="w-full">
-        <div class="w-full" v-html="curriculumVitaeData?.data.projects" />
-      </div>
+        <div id="projects" class="text-2xl font-semibold mt-3rem">
+          Projects
+        </div>
+        <div class="w-full">
+          <div class="w-full" v-html="curriculumVitaeData?.data.projects" />
+        </div>
 
-      <div id="theses-master" class="text-2xl font-semibold mt-3rem">
-        Theses (Master)
-      </div>
-      <div class="w-full">
-        <div class="w-full" v-html="curriculumVitaeData?.data.thesesMaster" />
-      </div>
+        <div id="theses-master" class="text-2xl font-semibold mt-3rem">
+          Theses (Master)
+        </div>
+        <div class="w-full">
+          <div class="w-full" v-html="curriculumVitaeData?.data.thesesMaster" />
+        </div>
 
-      <div id="awards" class="text-2xl font-semibold mt-3rem">
-        Awards
+        <div id="awards" class="text-2xl font-semibold mt-3rem">
+          Awards
+        </div>
+        <div class="w-full">
+          <div class="w-full" v-html="curriculumVitaeData?.data.awards" />
+        </div>
       </div>
-      <div class="w-full">
-        <div class="w-full" v-html="curriculumVitaeData?.data.awards" />
+      <div v-else class="relative w-full h-300px">
+        <q-inner-loading :showing="isLoading" />
       </div>
     </div>
     <div class="fixed bottom-200px max-width flex justify-end layout-padding lg:px-0">
@@ -193,11 +201,16 @@ const categories = ref([
 
 const useCurriculumVitaeData = useCurriculumVitaeDataApi()
 
+const isLoading = ref(false)
+
 const { data: curriculumVitaeData, refresh: refreshCurriculumVitaeData } = useLazyAsyncData('curriculum-vitae', async () => {
+  isLoading.value = true
   const [err, result] = await to (useCurriculumVitaeData.findList())
   if (err) {
+    isLoading.value = false
     return Promise.reject(err)
   }
+  isLoading.value = false
   return result
 })
 
