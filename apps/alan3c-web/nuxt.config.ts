@@ -87,4 +87,7 @@ export default defineNuxtConfig({
       scrollBehaviorType: 'smooth',
     },
   },
+  nitro: {
+    preset: 'cloudflare', // 預設為 node-server
+  },
 })

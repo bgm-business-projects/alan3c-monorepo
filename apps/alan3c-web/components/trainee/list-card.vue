@@ -27,6 +27,7 @@
     </div>
     <div class="flex items-center">
       <a
+        v-if="props.data.file?.id"
         :href="downloadHref"
         :style="writingModeStyle"
         class="bg-accent rounded-.5rem text-direction"
@@ -37,6 +38,7 @@
       >
         {{ t('download') }}
       </a>
+      <div v-else class="w-30px h-30px" />
     </div>
   </div>
 </template>
@@ -45,7 +47,6 @@
 import type { CSSProperties } from 'vue'
 import type { TraineeList } from '../../contract/trainee/trainee.type'
 import type { NormalizeTranslations } from '../../contract/utils/translation.type'
-import { useWindowSize } from '@vueuse/core'
 import { combineImageUrl } from '../../utils/combine-image-url'
 
 const props = withDefaults(defineProps<Props>(), {
@@ -63,10 +64,8 @@ interface Props {
   data: NormalizeTranslations<TraineeList['data'][number]>;
 }
 
-const { width: windowWidth } = useWindowSize()
-
 const config = useRuntimeConfig()
-const downloadHref = computed(() => `${config.public.apiBaseUrl}/assets/${props.data.file.id}?download`)
+const downloadHref = computed(() => `${config.public.apiBaseUrl}/assets/${props.data.file?.id}?download`)
 
 const writingModeStyle = computed(() => {
   if (locale.value === 'zh') {

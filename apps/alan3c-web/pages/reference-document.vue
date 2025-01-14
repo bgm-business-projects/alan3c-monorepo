@@ -41,7 +41,7 @@
           <div>
             {{ item.uploadDate }}
           </div>
-          <div class="underline cursor-pointer" @click="addDownloadCount('artificialIntelligence', item.id.toString())">
+          <div class="underline cursor-pointer" @click="addDownloadCount('referenceDocument', item.id.toString())">
             {{ item.documentTitle }}
           </div>
           <div>

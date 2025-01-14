@@ -41,8 +41,15 @@
           </div>
         </div>
       </div>
-      <div class="border bg-gray-50 p-2rem flex justify-center gap-2rem font-medium">
-        <nuxt-link v-for="item in data" :key="item.name" :to="localePath(item.route)">
+      <div class="border bg-gray-50 p-2rem flex justify-center gap-x-2rem gap-y-1rem font-medium">
+        <nuxt-link
+          v-for="item in data" :key="item.name"
+          :to="localePath(item.route)"
+          class="relative py-.15rem link"
+        >
+          <div
+            class="absolute bottom-0 border-primary border-solid border-b-3px duration-300"
+          />
           {{ item.name }}
         </nuxt-link>
       </div>
@@ -188,4 +195,10 @@ useSeoMeta({
 </script>
 
 <style scoped lang="sass">
+.link
+  div
+    width: 0
+  &:hover
+    div
+      width: 100%
 </style>

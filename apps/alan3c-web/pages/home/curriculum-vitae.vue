@@ -258,8 +258,8 @@ function checkActiveStyle(category: string) {
     max-width: 100%
   ul
     list-style-type: disc !important
-    padding-left: 1rem
+    list-style-position: inside
   ol
     list-style-type: decimal-leading-zero
-    padding-left: 1rem
+    list-style-position: inside
 </style>

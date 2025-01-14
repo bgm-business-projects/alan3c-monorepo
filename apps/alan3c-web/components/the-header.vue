@@ -9,15 +9,22 @@
         <div
           class="flex items-center justify-center bg-[#f4f4f4] px-1rem py-.5rem rounded-.5rem xl:border gap-1rem"
         >
-          <div class="flex flex-row items-center gap-.5rem">
-            <nuxt-img
-              src="/logo.png"
-              class="w-1.7rem mt-.2rem"
-            />
-            <div class="font-600">
-              {{ t('webName') }}
+          <nuxt-link
+            :to="localePath({
+              name: 'home',
+            })"
+            @click="showMenu = false"
+          >
+            <div class="flex flex-row items-center gap-.5rem">
+              <nuxt-img
+                src="/logo.png"
+                class="w-1.7rem mt-.2rem"
+              />
+              <div class="font-600">
+                {{ t('webName') }}
+              </div>
             </div>
-          </div>
+          </nuxt-link>
           <div
             class="flex-1 flex justify-end xl:hidden"
           >
@@ -249,6 +256,8 @@ function handleLocale(locale: string) {
 
 <style scoped lang="sass">
 .link
+  div
+    width: 0
   &:hover
     div
       width: 100%
