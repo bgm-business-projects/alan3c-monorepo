@@ -25,7 +25,7 @@
         </h1>
       </div>
       <div class="w-full flex flex-col gap-2rem">
-        <div class="hidden lg:!flex gap-.5rem">
+        <div class="hidden lg:!flex gap-.5rem w-full flex">
           <div
             v-for="category in categories" :key="category.name"
             class="bg-[#f4f4f4] px-1rem py-.2rem rounded-.5rem"
@@ -54,56 +54,64 @@
           Information
         </div>
         <div class="w-full">
-          <div class="w-full" v-html="curriculumVitaeData?.data.curriculumVitae" />
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.curriculumVitae" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.curriculumVitae" /> -->
         </div>
 
         <div id="activities-society" class="text-2xl font-semibold mt-3rem">
           Activities (Society)
         </div>
         <div class="w-full">
-          <div class="w-full" v-html="curriculumVitaeData?.data.activitiesSociety" />
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.activitiesSociety" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.activitiesSociety" /> -->
         </div>
 
         <div id="activities-other" class="text-2xl font-semibold mt-3rem">
           Activities (Other)
         </div>
         <div class="w-full">
-          <div class="w-full" v-html="curriculumVitaeData?.data.activitiesOther" />
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.activitiesOther" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.activitiesOther" /> -->
         </div>
 
         <div id="technical-reviewer" class="text-2xl font-semibold mt-3rem">
           Technical Reviewer
         </div>
         <div class="w-full">
-          <div class="w-full" v-html="curriculumVitaeData?.data.technicalReviewer" />
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.technicalReviewer" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.technicalReviewer" /> -->
         </div>
 
         <div id="consulting" class="text-2xl font-semibold mt-3rem">
           Consulting
         </div>
         <div class="w-full">
-          <div class="w-full" v-html="curriculumVitaeData?.data.consulting" />
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.consulting" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.consulting" /> -->
         </div>
 
-        <div id="projects" class="text-2xl font-semibold mt-3rem">
+        <div id="projects" class="text-2xl font-semibold mt-3rem ">
           Projects
         </div>
         <div class="w-full">
-          <div class="w-full" v-html="curriculumVitaeData?.data.projects" />
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.projects" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.projects" /> -->
         </div>
 
         <div id="theses-master" class="text-2xl font-semibold mt-3rem">
           Theses (Master)
         </div>
         <div class="w-full">
-          <div class="w-full" v-html="curriculumVitaeData?.data.thesesMaster" />
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.thesesMaster" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.thesesMaster" /> -->
         </div>
 
         <div id="awards" class="text-2xl font-semibold mt-3rem">
           Awards
         </div>
         <div class="w-full">
-          <div class="w-full" v-html="curriculumVitaeData?.data.awards" />
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.awards" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.awards" /> -->
         </div>
       </div>
       <div v-else class="relative w-full h-300px">
@@ -123,6 +131,7 @@
 
 <script setup lang="ts">
 import { useAnchorScroll } from '~/.nuxt/imports'
+import BaseWysiwygPreview from '~/components/base-wysiwyg-preview.vue'
 import { useCurriculumVitaeDataApi } from '../../composables/use-curriculum-vitae-data-api'
 
 const { scrollToAnchor, scrollToTop } = useAnchorScroll({

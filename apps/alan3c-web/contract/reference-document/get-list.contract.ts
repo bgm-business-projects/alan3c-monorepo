@@ -7,6 +7,7 @@ export const getReferenceDocument = {
   path: `/items/referenceDocument`,
   query: z.object({
     'filter[documentTitle][_contains]': z.string().optional(),
+    'fields': z.string().default('*,video.*,file.*'),
   }),
   responses: {
     200: referenceDocumentSchema,

@@ -10,6 +10,7 @@ export default defineI18nConfig(() => ({
       search: 'Search',
       notFound: 'Data Not Found',
       moreInfo: 'More',
+      closeDialog: 'Close',
       navbar: {
         home: 'Boss\'s Home',
         trainee: 'Students',
@@ -63,6 +64,8 @@ export default defineI18nConfig(() => ({
         date: 'Date',
         title: 'Title',
         downloads: 'Downloads',
+        file: 'File',
+        video: 'Video',
       },
       courseMaterials: {
         date: 'Date',
@@ -101,6 +104,7 @@ export default defineI18nConfig(() => ({
       search: '搜尋',
       notFound: '查無結果',
       moreInfo: '更多資訊',
+      closeDialog: '關閉視窗',
       back: '返回',
       navbar: {
         home: '老闆的家',
@@ -154,7 +158,9 @@ export default defineI18nConfig(() => ({
       referenceDocuments: {
         date: '上傳日期',
         title: '文件標題',
+        file: '檔案',
         downloads: '下載次數',
+        video: '影片',
       },
       courseMaterials: {
         date: '上傳日期',

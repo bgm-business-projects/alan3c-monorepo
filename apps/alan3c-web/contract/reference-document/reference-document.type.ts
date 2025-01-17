@@ -13,6 +13,7 @@ export const referenceDocumentSchema = z.object({
     uploadDate: z.string(),
     downloadCount: z.number(),
     file: basicFileSchema,
+    video: basicFileSchema.optional(),
   })),
 })
 

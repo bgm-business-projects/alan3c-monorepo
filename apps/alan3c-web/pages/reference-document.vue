@@ -30,6 +30,18 @@
       <div class="flex items-center gap-.5rem">
         <div class="w-6px h-6px bg-primary rounded-full" />
         <div class="tracking-1px text-lg font-medium">
+          {{ t('referenceDocuments.file') }}
+        </div>
+      </div>
+      <div class="flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px text-lg font-medium">
+          {{ t('referenceDocuments.video') }}
+        </div>
+      </div>
+      <div class="flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px text-lg font-medium">
           {{ t('referenceDocuments.downloads') }}
         </div>
       </div>
@@ -41,8 +53,14 @@
           <div>
             {{ item.uploadDate }}
           </div>
-          <div class="underline cursor-pointer" @click="addDownloadCount('referenceDocument', item.id.toString())">
+          <div>
             {{ item.documentTitle }}
+          </div>
+          <div class="underline cursor-pointer" @click="addDownloadCount('referenceDocument', item.id.toString())">
+            {{ item.file.title }}
+          </div>
+          <div class="underline cursor-pointer" @click="openVideoDialog(combineImageUrl(item.video?.filename_disk))">
+            {{ item.video?.title }}
           </div>
           <div>
             {{ item.downloadCount }}
@@ -78,7 +96,9 @@
 </template>
 
 <script setup lang="ts">
+import BaseVideoDialog from '~/components/base-video-dialog.vue'
 import ReferenceDocumentMobileCard from '../components/reference-document/reference-document-mobile-card.vue'
+import { combineImageUrl } from '../utils/combine-image-url'
 
 const { locale, t } = useI18n()
 
@@ -90,28 +110,40 @@ const isLoading = ref(false)
 
 const { data: referenceDocument, refresh: refreshReferenceDocument } = useLazyAsyncData('reference-document', async () => {
   isLoading.value = true
-  if (keyword.value.length > 0) {
-    const [err, result] = await to (useReferenceDocument.findList({
-      query: {
-        'filter[documentTitle][_contains]': keyword.value,
-      },
-    }))
-    if (err) {
-      isLoading.value = false
-      return Promise.reject(err)
-    }
+  const [err, result] = await to (useReferenceDocument.findList({
+    query: {
+      'filter[documentTitle][_contains]': keyword.value ? keyword.value : undefined,
+    },
+  }))
+  if (err) {
     isLoading.value = false
-    return result
+    return Promise.reject(err)
   }
-  else {
-    const [err, result] = await to (useReferenceDocument.findList())
-    if (err) {
-      isLoading.value = false
-      return Promise.reject(err)
-    }
-    isLoading.value = false
-    return result
-  }
+  isLoading.value = false
+  return result
+
+  // if (keyword.value.length > 0) {
+  //   const [err, result] = await to (useReferenceDocument.findList({
+  //     query: {
+  //       'filter[documentTitle][_contains]': keyword.value,
+  //     },
+  //   }))
+  //   if (err) {
+  //     isLoading.value = false
+  //     return Promise.reject(err)
+  //   }
+  //   isLoading.value = false
+  //   return result
+  // }
+  // else {
+  //   const [err, result] = await to (useReferenceDocument.findList())
+  //   if (err) {
+  //     isLoading.value = false
+  //     return Promise.reject(err)
+  //   }
+  //   isLoading.value = false
+  //   return result
+  // }
 }, {
   watch: [locale],
 })
@@ -149,6 +181,17 @@ useSeoMeta({
   ogTitle: '參考文件',
   ogDescription: '參考文件',
 })
+
+const $q = useQuasar()
+
+function openVideoDialog(src: string) {
+  $q.dialog({
+    component: BaseVideoDialog,
+    componentProps: {
+      src,
+    },
+  })
+}
 </script>
 
 <style scoped lang="sass">
@@ -159,7 +202,7 @@ useSeoMeta({
 .custom-grid
   display: grid
   align-items: center
-  grid-template-columns: auto 1fr auto
+  grid-template-columns: auto 1fr 1fr 1fr auto
   gap: 1rem 2.5rem
   align-items: start
 
