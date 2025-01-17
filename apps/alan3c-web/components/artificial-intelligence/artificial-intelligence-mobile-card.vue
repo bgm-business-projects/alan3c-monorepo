@@ -5,7 +5,7 @@
         <div class="flex items-center gap-.5rem">
           <div class="w-6px h-6px bg-primary rounded-full" />
           <div class="tracking-1px font-medium">
-            報告日期
+            {{ t('artificialIntelligenceSeminar.date') }}
           </div>
         </div>
         <div class="text-#767676">
@@ -16,7 +16,7 @@
         <div class="flex items-center gap-.5rem">
           <div class="w-6px h-6px bg-primary rounded-full" />
           <div class="tracking-1px font-medium">
-            論文標題
+            {{ t('artificialIntelligenceSeminar.titleOfPaper') }}
           </div>
         </div>
         <div class="text-#767676 underline" @click="addDownloadCount('artificialIntelligence', props.data.id.toString())">
@@ -27,7 +27,7 @@
         <div class="flex items-center gap-.5rem">
           <div class="w-6px h-6px bg-primary rounded-full" />
           <div class="tracking-1px font-medium">
-            論文期刊
+            {{ t('artificialIntelligenceSeminar.journalOfPaper') }}
           </div>
         </div>
         <div class="text-#767676">
@@ -38,7 +38,7 @@
         <div class="flex items-center gap-.5rem">
           <div class="w-6px h-6px bg-primary rounded-full" />
           <div class="tracking-1px font-medium">
-            論文作者
+            {{ t('artificialIntelligenceSeminar.authorOfThePaper') }}
           </div>
         </div>
         <div class="text-#767676">
@@ -49,7 +49,7 @@
         <div class="flex items-center gap-.5rem">
           <div class="w-6px h-6px bg-primary rounded-full" />
           <div class="tracking-1px font-medium">
-            報告者
+            {{ t('artificialIntelligenceSeminar.reporter') }}
           </div>
         </div>
         <div class="text-#767676">
@@ -60,7 +60,7 @@
         <div class="flex items-center gap-.5rem">
           <div class="w-6px h-6px bg-primary rounded-full" />
           <div class="tracking-1px font-medium">
-            下載次數
+            {{ t('artificialIntelligenceSeminar.downloads') }}
           </div>
         </div>
         <div class="text-#767676">
@@ -111,6 +111,8 @@ function downloadFile(fileId: string) {
   a.click()
   document.body.removeChild(a)
 };
+
+const { t } = useI18n()
 </script>
 
 <style scoped lang="sass">

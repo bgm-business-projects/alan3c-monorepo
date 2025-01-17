@@ -5,7 +5,7 @@
         <div class="flex items-center gap-.5rem">
           <div class="w-6px h-6px bg-primary rounded-full" />
           <div class="tracking-1px font-medium">
-            上傳日期
+            {{ t('courseMaterials.date') }}
           </div>
         </div>
         <div class="text-#767676">
@@ -16,7 +16,7 @@
         <div class="flex items-center gap-.5rem">
           <div class="w-6px h-6px bg-primary rounded-full" />
           <div class="tracking-1px font-medium">
-            文件標題
+            {{ t('courseMaterials.title') }}
           </div>
         </div>
         <div class="text-#767676 underline" @click="addDownloadCount('courseMaterials', props.data.id.toString())">
@@ -27,7 +27,7 @@
         <div class="flex items-center gap-.5rem">
           <div class="w-6px h-6px bg-primary rounded-full" />
           <div class="tracking-1px font-medium">
-            下載次數
+            {{ t('courseMaterials.downloads') }}
           </div>
         </div>
         <div class="text-#767676">
@@ -77,6 +77,8 @@ function downloadFile(fileId: string) {
   a.click()
   document.body.removeChild(a)
 };
+
+const { t } = useI18n()
 </script>
 
 <style scoped lang="sass">

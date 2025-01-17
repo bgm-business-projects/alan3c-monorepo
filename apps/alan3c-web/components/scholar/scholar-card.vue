@@ -16,15 +16,15 @@
           </div>
           <div class="flex flex-col gap-.6rem items-start">
             <div class="bg-accent px-1rem py-.2rem rounded-.5rem font-medium">
-              來自 | {{ transformedData.translations?.comeFrom }}
+              {{ t('scholar.from') }} | {{ transformedData.translations?.comeFrom }}
             </div>
             <div class="bg-accent px-1rem py-.2rem rounded-.5rem font-medium">
-              專長 | {{ transformedData.translations?.expertise }}
+              {{ t('scholar.expertise') }}  | {{ transformedData.translations?.expertise }}
             </div>
           </div>
         </div>
         <div class="font-medium">
-          期間：{{ transformedData.startAt }} 至 {{ transformedData.endAt }}
+          {{ t('scholar.timePeriod') }} ：{{ transformedData.startAt }} 至 {{ transformedData.endAt }}
         </div>
       </div>
       <q-separator class="mt-.5rem" />
@@ -57,6 +57,8 @@ const transformedData = computed(() => {
     translations: props.data.translations.find((item) => item.scholarLanguages_code === locale.value),
   }
 })
+
+const { t } = useI18n()
 </script>
 
 <style lang="sass" scoped>

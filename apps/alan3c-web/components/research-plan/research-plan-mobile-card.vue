@@ -6,21 +6,21 @@
     <div class="py-.6rem px-1rem">
       <div class="custom-grid">
         <div>
-          期間
+          {{ t('researchPlan.timePeriod') }}
         </div>
         <div class="border-r-1px border-solid border-#DBDBDB h-13px" />
         <div>
           {{ transformedData?.startDate }} - {{ transformedData?.endDate }}
         </div>
         <div>
-          贊助單位
+          {{ t('researchPlan.sponsor') }}
         </div>
         <div class="border-r-1px border-solid border-#DBDBDB h-13px" />
         <div>
           {{ transformedData.translations?.sponsor }}
         </div>
         <div>
-          編號
+          {{ t('researchPlan.grantNumber') }}
         </div>
         <div class="border-r-1px border-solid border-#DBDBDB h-13px" />
         <div>
@@ -52,6 +52,8 @@ const transformedData = computed(() => {
     translations: props.data.translations.filter((item) => item.researchPlanLanguages_code === locale.value)[0],
   }
 })
+
+const { t } = useI18n()
 </script>
 
 <style scoped lang="sass">

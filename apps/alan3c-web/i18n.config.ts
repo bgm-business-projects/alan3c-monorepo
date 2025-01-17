@@ -96,6 +96,11 @@ export default defineI18nConfig(() => ({
         academicRecognition: 'Academic Recognition',
         coursesTaught: 'Courses Taught',
       },
+      scholar: {
+        from: 'From',
+        expertise: 'Expertise',
+        timePeriod: 'Time Period',
+      },
     },
     zh: {
       webName: '多媒體暨網路安全實驗室',
@@ -190,6 +195,11 @@ export default defineI18nConfig(() => ({
         academicActivities: '學術活動',
         academicRecognition: '學術榮譽',
         coursesTaught: '曾任教科目',
+      },
+      scholar: {
+        from: '來自',
+        expertise: '專長',
+        timePeriod: '期間',
       },
     },
   },
