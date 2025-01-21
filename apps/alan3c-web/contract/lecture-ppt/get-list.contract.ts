@@ -6,7 +6,7 @@ export const getLecturePpt = {
   method: 'GET',
   path: `/items/lecturePPT`,
   query: z.object({
-    'filter[lectureTitle][_contains]': z.string().optional(),
+    'filter[lectureTitle][_icontains]': z.string().optional(),
   }),
   responses: {
     200: lecturePptSchema,

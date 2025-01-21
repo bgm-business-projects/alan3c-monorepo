@@ -6,7 +6,7 @@ export const getImageProcessing = {
   method: 'GET',
   path: `/items/imageProcessing`,
   query: z.object({
-    'filter[thesisTitle][_contains]': z.string().optional(),
+    'filter[thesisTitle][_icontains]': z.string().optional(),
   }),
   responses: {
     200: imageProcessingSchema,

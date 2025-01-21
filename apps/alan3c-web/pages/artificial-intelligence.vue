@@ -123,7 +123,7 @@ const { data: artificialIntelligence, refresh: refreshArtificialIntelligence } =
   if (keyword.value.length > 0) {
     const [err, result] = await to (useArtificialIntelligence.findList({
       query: {
-        'filter[thesisTitle][_contains]': keyword.value,
+        'filter[thesisTitle][_icontains]': keyword.value,
       },
     }))
     if (err) {

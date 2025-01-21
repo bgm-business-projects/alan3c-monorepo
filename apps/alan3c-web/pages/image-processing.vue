@@ -123,7 +123,7 @@ const { data: imageProcessing, refresh: refreshImageProcessing } = useLazyAsyncD
   if (keyword.value.length > 0) {
     const [err, result] = await to (useImageProcessing.findList({
       query: {
-        'filter[thesisTitle][_contains]': keyword.value,
+        'filter[thesisTitle][_icontains]': keyword.value,
       },
     }))
     if (err) {

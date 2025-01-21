@@ -151,7 +151,7 @@ const { data: trainee, refresh: refreshTrainee } = useLazyAsyncData('trainee', a
     const [err, result] = await to (useTrainee.findList({
       query: {
         'filter[_and][0][traineeCategory][translations][name][_eq]': category,
-        'filter[_and][0][translations][name][_contains]': keyword.value,
+        'filter[_and][0][translations][name][_icontains]': keyword.value,
       },
     }))
     if (err) {

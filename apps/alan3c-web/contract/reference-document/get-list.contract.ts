@@ -6,7 +6,7 @@ export const getReferenceDocument = {
   method: 'GET',
   path: `/items/referenceDocument`,
   query: z.object({
-    'filter[documentTitle][_contains]': z.string().optional(),
+    'filter[documentTitle][_icontains]': z.string().optional(),
     'fields': z.string().default('*,video.*,file.*'),
   }),
   responses: {

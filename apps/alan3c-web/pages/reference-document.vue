@@ -112,7 +112,7 @@ const { data: referenceDocument, refresh: refreshReferenceDocument } = useLazyAs
   isLoading.value = true
   const [err, result] = await to (useReferenceDocument.findList({
     query: {
-      'filter[documentTitle][_contains]': keyword.value ? keyword.value : undefined,
+      'filter[documentTitle][_icontains]': keyword.value ? keyword.value : undefined,
     },
   }))
   if (err) {

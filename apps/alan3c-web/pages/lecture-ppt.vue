@@ -140,7 +140,7 @@ const { data: lecturePpt, refresh: refreshLecturePpt } = useLazyAsyncData('lectu
   if (keyword.value.length > 0) {
     const [err, result] = await to (useLecturePpt.findList({
       query: {
-        'filter[lectureTitle][_contains]': keyword.value,
+        'filter[lectureTitle][_icontains]': keyword.value,
       },
     }))
     if (err) {

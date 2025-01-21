@@ -94,7 +94,7 @@ const { data: courseMaterials, refresh: refreshCourseMaterials } = useLazyAsyncD
   if (keyword.value.length > 0) {
     const [err, result] = await to (useCourseMaterials.findList({
       query: {
-        'filter[documentTitle][_contains]': keyword.value,
+        'filter[documentTitle][_icontains]': keyword.value,
       },
     }))
     if (err) {
