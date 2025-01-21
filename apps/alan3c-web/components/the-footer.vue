@@ -19,9 +19,6 @@
         <div>
           TEL: +886-4-24517250#3791~3
         </div>
-        <div>
-          FAX: +886-4-27066495
-        </div>
       </div>
       <div class="border-solid border-t-1px border-black" />
       <div class="font-medium">

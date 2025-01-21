@@ -25,7 +25,7 @@
     </div>
     <div class="max-width flex flex-col gap-1rem">
       <template v-if="!isLoading">
-        <template v-if="!compilation?.transformedData || !compilation?.transformedData.every(item => item.translations?.title)">
+        <template v-if="!compilation?.transformedData || compilation?.transformedData.length === 0">
           <div
             class="max-width bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
             :class="locale === 'zh' ? ['tracking-.1rem']

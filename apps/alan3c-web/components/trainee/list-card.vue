@@ -22,7 +22,7 @@
         E-Mail : {{ props.data.email }}
       </p>
       <p>
-        Web : {{ props.data.web }}
+        Web : <a class="!underline" :href="props.data.web" target="_blank">{{ props.data.web }}</a>
       </p>
     </div>
     <div class="flex items-center">
