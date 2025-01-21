@@ -56,8 +56,18 @@
     </div>
     <div class="max-width">
       <template v-if="!isLoading">
-        <template v-if="trainee && trainee.length > 0">
-          <list-card v-for="item in trainee" :key="item.id" :data="item" />
+        <template v-if="trainee?.transformedData && trainee.transformedData.length > 0">
+          <list-card v-for="item in trainee.transformedData" :key="item.id" :data="item" />
+          <div class="flex justify-center pt-1rem">
+            <q-pagination
+              v-if="listMeta"
+              v-model="currentPage"
+              color="primary"
+              :max="listMeta"
+              flat
+              direction-links
+            />
+          </div>
         </template>
         <template v-else>
           <div
@@ -89,6 +99,7 @@ const keyword = ref('')
 const { locale, t } = useI18n()
 
 const useTraineeCategory = useTraineeCategoryApi()
+
 const { data: traineeCategories, refresh: refreshTraineeCategories } = useLazyAsyncData('trainee-category', async () => {
   const [err, result] = await to (useTraineeCategory.findList())
   if (err) {
@@ -136,6 +147,10 @@ const currentCategory = computed(() => {
 
 const useTrainee = useTraineeApi()
 
+const limit = ref(15)
+const currentPage = ref(1)
+const offset = computed(() => (currentPage.value - 1) * limit.value)
+
 const { data: trainee, refresh: refreshTrainee } = useLazyAsyncData('trainee', async () => {
   isLoading.value = true
   let category: string | undefined
@@ -147,41 +162,41 @@ const { data: trainee, refresh: refreshTrainee } = useLazyAsyncData('trainee', a
     category = currentCategory.value ?? undefined // 確保 category 是 string | undefined，過濾掉 null
   }
 
-  if (keyword.value.length > 0) {
-    const [err, result] = await to (useTrainee.findList({
-      query: {
-        'filter[_and][0][traineeCategory][translations][name][_eq]': category,
-        'filter[_and][0][translations][name][_icontains]': keyword.value,
-      },
-    }))
-    if (err) {
-      return Promise.reject(err)
-    }
-    isLoading.value = false
-    return result
+  const [err, result] = await to (useTrainee.findList({
+    query: {
+      'filter[_and][0][traineeCategory][translations][name][_eq]': category,
+      'filter[_and][0][translations][name][_icontains]': keyword.value ? keyword.value : undefined,
+      'limit': `${limit.value}`,
+      'offset': `${offset.value}`,
+    },
+  }))
+  if (err) {
+    return Promise.reject(err)
   }
-  else {
-    const [err, result] = await to (useTrainee.findList({
-      query: {
-        'filter[_and][0][traineeCategory][translations][name][_eq]': category,
-      },
-    }))
-    if (err) {
-      return Promise.reject(err)
-    }
-    isLoading.value = false
-    return result
-  }
+  isLoading.value = false
+  return result
 }, {
   transform: (data) => {
-    return data?.data.map((item) => {
-      return {
-        ...item,
-        translations: item.translations.filter((item) => item.traineeLanguages_code === locale.value)[0],
-      }
-    })
+    return {
+      transformedData: data?.data.map((item) => {
+        return {
+          ...item,
+          translations: item.translations.filter((item) => item.traineeLanguages_code === locale.value)[0],
+        }
+      }),
+      originalData: data,
+    }
   },
   watch: [locale, currentCategory],
+})
+
+const listMeta = computed(() => {
+  if (trainee.value?.originalData?.meta.filter_count && typeof Number.parseInt(trainee.value?.originalData.meta.filter_count) === 'number') {
+    if (Number.parseInt(trainee.value?.originalData.meta.filter_count) / limit.value < 1) {
+      return 1
+    }
+  }
+  return undefined
 })
 
 useSeoMeta({

@@ -24,6 +24,9 @@ const traineeSchema = z.object({
 
 export const traineeListSchema = z.object(
   {
+    meta: z.object({
+      filter_count: z.string(),
+    }),
     data: z.array(traineeSchema),
   },
 )

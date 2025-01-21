@@ -2,7 +2,6 @@ import type { AppRoute } from '@ts-rest/core'
 import { z } from 'zod'
 import { proceedingsSchema } from './proceedings.type'
 
-const translations = 'translations.*'
 export const getProceedingsList = {
   method: 'GET',
   path: `/items/proceedings`,
