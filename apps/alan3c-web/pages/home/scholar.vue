@@ -37,6 +37,16 @@
           <q-inner-loading :showing="isLoading" />
         </div>
       </template>
+      <div class="flex justify-center pt-1rem">
+        <q-pagination
+          v-if="listMeta"
+          v-model="currentPage"
+          color="primary"
+          :max="listMeta"
+          flat
+          direction-links
+        />
+      </div>
       <!-- <div
         v-for="scholar in scholarList" :key="scholar.id"
         class="flex gap-1rem"
@@ -84,10 +94,18 @@ const { locale, t } = useI18n()
 const useScholar = useScholarApi()
 
 const isLoading = ref(false)
+const limit = ref(15)
+const currentPage = ref(1)
+const offset = computed(() => (currentPage.value - 1) * limit.value)
 
 const { data: scholarList, refresh: refreshScholar } = useLazyAsyncData('scholar', async () => {
   isLoading.value = true
-  const [err, result] = await to (useScholar.findList())
+  const [err, result] = await to (useScholar.findList({
+    query: {
+      limit: `${limit.value}`,
+      offset: `${offset.value}`,
+    },
+  }))
   if (err) {
     isLoading.value = false
     return Promise.reject(err)
@@ -106,7 +124,17 @@ const { data: scholarList, refresh: refreshScholar } = useLazyAsyncData('scholar
       originalData: data,
     }
   },
-  watch: [locale],
+  watch: [locale, currentPage],
+})
+
+const listMeta = computed(() => {
+  if (scholarList.value?.originalData?.meta.filter_count && typeof Number.parseInt(scholarList.value?.originalData?.meta.filter_count) === 'number') {
+    if (Number.parseInt(scholarList.value?.originalData?.meta.filter_count) / limit.value < 1) {
+      return 1
+    }
+    return Math.ceil(Number.parseInt(scholarList.value?.originalData?.meta.filter_count) / limit.value)
+  }
+  return undefined
 })
 
 useSeoMeta({

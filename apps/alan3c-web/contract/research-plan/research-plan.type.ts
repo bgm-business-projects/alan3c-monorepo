@@ -1,6 +1,9 @@
 import { z } from 'zod'
 
 export const researchPlanSchema = z.object({
+  meta: z.object({
+    filter_count: z.string(),
+  }),
   data: z.array(
     z.object({
       id: z.number(),

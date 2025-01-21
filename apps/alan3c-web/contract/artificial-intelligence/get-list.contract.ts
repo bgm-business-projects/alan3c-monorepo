@@ -7,6 +7,9 @@ export const getArtificialIntelligence = {
   path: `/items/artificialIntelligence`,
   query: z.object({
     'filter[thesisTitle][_icontains]': z.string().optional(),
+    'meta': z.string().default('filter_count'),
+    'limit': z.string().optional(),
+    'offset': z.string().optional(),
   }),
   responses: {
     200: artificialIntelligenceSchema,

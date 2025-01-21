@@ -16,10 +16,22 @@ export function useCompilationApi(
     return useClient(compilationContract, clientHeader)
   })
 
-  async function findList() {
-    const result = await compilationApi.value.getCompilationList()
-    if (result.status === 200) {
-      return result.body
+  async function findList(params: CompilationRequest['getCompilationList']) {
+    if (params) {
+      const query = compilationContract.getCompilationList.query.parse(params.query)
+      const result = await compilationApi.value.getCompilationList({
+        ...params,
+        query,
+      })
+      if (result.status === 200) {
+        return result.body
+      }
+    }
+    else {
+      const result = await compilationApi.value.getCompilationList()
+      if (result.status === 200) {
+        return result.body
+      }
     }
   }
 

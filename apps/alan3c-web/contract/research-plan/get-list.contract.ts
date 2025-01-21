@@ -1,11 +1,10 @@
 import type { AppRoute } from '@ts-rest/core'
 import { z } from 'zod'
-import { proceedingsSchema } from './proceedings.type'
+import { researchPlanSchema } from './research-plan.type'
 
-const translations = 'translations.*'
-export const getProceedingsList = {
+export const getResearchPlan = {
   method: 'GET',
-  path: `/items/proceedings`,
+  path: `/items/researchPlan`,
   query: z.object({
     meta: z.string().default('filter_count'),
     limit: z.string().optional(),
@@ -13,6 +12,7 @@ export const getProceedingsList = {
     fields: z.string().default('*,translations.*'),
   }),
   responses: {
-    200: proceedingsSchema,
+    200: researchPlanSchema,
   },
+
 } satisfies AppRoute

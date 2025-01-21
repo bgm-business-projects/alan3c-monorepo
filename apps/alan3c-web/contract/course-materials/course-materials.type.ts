@@ -2,6 +2,9 @@ import { z } from 'zod'
 import { basicFileSchema } from '../basic-schema'
 
 export const courseMaterialsSchema = z.object({
+  meta: z.object({
+    filter_count: z.string(),
+  }),
   data: z.array(z.object({
     id: z.number(),
     sort: z.number().nullable(),

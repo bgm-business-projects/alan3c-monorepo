@@ -7,6 +7,9 @@ export const getCourseMaterials = {
   path: `/items/courseMaterials`,
   query: z.object({
     'filter[documentTitle][_icontains]': z.string().optional(),
+    'meta': z.string().default('filter_count'),
+    'limit': z.string().optional(),
+    'offset': z.string().optional(),
   }),
   responses: {
     200: courseMaterialsSchema,

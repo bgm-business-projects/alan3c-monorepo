@@ -92,6 +92,17 @@
         />
       </div>
     </template>
+
+    <div class="flex justify-center pt-1rem">
+      <q-pagination
+        v-if="listMeta"
+        v-model="currentPage"
+        color="primary"
+        :max="listMeta"
+        flat
+        direction-links
+      />
+    </div>
   </div>
 </template>
 
@@ -108,11 +119,17 @@ const useReferenceDocument = useReferenceDocumentApi()
 
 const isLoading = ref(false)
 
+const limit = ref(15)
+const currentPage = ref(1)
+const offset = computed(() => (currentPage.value - 1) * limit.value)
+
 const { data: referenceDocument, refresh: refreshReferenceDocument } = useLazyAsyncData('reference-document', async () => {
   isLoading.value = true
   const [err, result] = await to (useReferenceDocument.findList({
     query: {
       'filter[documentTitle][_icontains]': keyword.value ? keyword.value : undefined,
+      'limit': `${limit.value}`,
+      'offset': `${offset.value}`,
     },
   }))
   if (err) {
@@ -145,7 +162,17 @@ const { data: referenceDocument, refresh: refreshReferenceDocument } = useLazyAs
   //   return result
   // }
 }, {
-  watch: [locale],
+  watch: [locale, currentPage],
+})
+
+const listMeta = computed(() => {
+  if (referenceDocument.value?.meta.filter_count && typeof Number.parseInt(referenceDocument.value?.meta.filter_count) === 'number') {
+    if (Number.parseInt(referenceDocument.value?.meta.filter_count) / limit.value < 1) {
+      return 1
+    }
+    return Math.ceil(Number.parseInt(referenceDocument.value?.meta.filter_count) / limit.value)
+  }
+  return undefined
 })
 
 async function addDownloadCount(collection: string, id: string) {

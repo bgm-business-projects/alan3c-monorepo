@@ -2,7 +2,7 @@ import type { ClientInferRequest } from '@ts-rest/core'
 import { computed } from 'vue'
 import { proceedingsContract } from '../contract/proceedings'
 
-type proceedingsRequest = ClientInferRequest<typeof proceedingsContract>
+type ProceedingsRequest = ClientInferRequest<typeof proceedingsContract>
 
 export function useProceedingsApi(
   accessToken?: MaybeRefOrGetter<string | undefined>,
@@ -16,14 +16,26 @@ export function useProceedingsApi(
     return useClient(proceedingsContract, clientHeader)
   })
 
-  async function findList() {
-    const result = await proceedingsApi.value.getProceedingsList()
-    if (result.status === 200) {
-      return result.body
+  async function findList(params: ProceedingsRequest['getProceedingsList']) {
+    if (params) {
+      const query = proceedingsContract.getProceedingsList.query.parse(params.query)
+      const result = await proceedingsApi.value.getProceedingsList({
+        ...params,
+        query,
+      })
+      if (result.status === 200) {
+        return result.body
+      }
+    }
+    else {
+      const result = await proceedingsApi.value.getProceedingsList()
+      if (result.status === 200) {
+        return result.body
+      }
     }
   }
 
-  async function findOne(params: proceedingsRequest['getProceedings']) {
+  async function findOne(params: ProceedingsRequest['getProceedings']) {
     const query = proceedingsContract.getProceedings.query.parse(params.query)
     const result = await proceedingsApi.value.getProceedings({
       ...params,

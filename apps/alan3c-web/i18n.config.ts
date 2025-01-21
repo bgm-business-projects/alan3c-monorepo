@@ -134,7 +134,7 @@ export default defineI18nConfig(() => ({
         visitingScholarsPostdoctoralFellow: '訪問學者 / 博士後研究員',
         theCollectedWorksOfChinChen: '真誠文集',
         scholarlyTalks: '學術演講',
-        marqueeText: '千教萬教，教人求真 • 千學萬學，學做真人',
+        marqueeText: '求真之路無止境，真人袖裡有乾坤',
       },
       trainee: {
         graduate: '博士班 (藝成下山/畢)',

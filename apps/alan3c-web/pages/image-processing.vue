@@ -14,7 +14,6 @@
         </q-input>
       </div>
     </div>
-
     <div class="max-width custom-grid">
       <div class="flex items-center gap-.5rem">
         <div class="w-6px h-6px bg-primary rounded-full" />
@@ -104,6 +103,17 @@
         />
       </div>
     </template>
+
+    <div class="flex justify-center pt-1rem">
+      <q-pagination
+        v-if="listMeta"
+        v-model="currentPage"
+        color="primary"
+        :max="listMeta"
+        flat
+        direction-links
+      />
+    </div>
   </div>
 </template>
 
@@ -118,32 +128,37 @@ const useImageProcessing = useImageProcessingApi()
 
 const isLoading = ref(false)
 
+const limit = ref(15)
+const currentPage = ref(1)
+const offset = computed(() => (currentPage.value - 1) * limit.value)
+
 const { data: imageProcessing, refresh: refreshImageProcessing } = useLazyAsyncData('image-processing', async () => {
   isLoading.value = true
-  if (keyword.value.length > 0) {
-    const [err, result] = await to (useImageProcessing.findList({
-      query: {
-        'filter[thesisTitle][_icontains]': keyword.value,
-      },
-    }))
-    if (err) {
-      isLoading.value = false
-      return Promise.reject(err)
-    }
+  const [err, result] = await to (useImageProcessing.findList({
+    query: {
+      'filter[thesisTitle][_icontains]': keyword.value ? keyword.value : undefined,
+      'limit': `${limit.value}`,
+      'offset': `${offset.value}`,
+    },
+  }))
+  if (err) {
     isLoading.value = false
-    return result
+    return Promise.reject(err)
   }
-  else {
-    const [err, result] = await to (useImageProcessing.findList())
-    if (err) {
-      isLoading.value = false
-      return Promise.reject(err)
-    }
-    isLoading.value = false
-    return result
-  }
+  isLoading.value = false
+  return result
 }, {
-  watch: [locale],
+  watch: [locale, currentPage],
+})
+
+const listMeta = computed(() => {
+  if (imageProcessing.value?.meta.filter_count && typeof Number.parseInt(imageProcessing.value?.meta.filter_count) === 'number') {
+    if (Number.parseInt(imageProcessing.value?.meta.filter_count) / limit.value < 1) {
+      return 1
+    }
+    return Math.ceil(Number.parseInt(imageProcessing.value?.meta.filter_count) / limit.value)
+  }
+  return undefined
 })
 
 async function addDownloadCount(collection: string, id: string) {

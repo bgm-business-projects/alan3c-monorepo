@@ -1,5 +1,5 @@
 import { initContract } from '@ts-rest/core'
-import { getResearchPlan } from './get-single.contract'
+import { getResearchPlan } from './get-list.contract'
 
 const c = initContract()
 

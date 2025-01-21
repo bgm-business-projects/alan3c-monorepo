@@ -45,22 +45,22 @@
             :key="index"
           >
             <div class="flex">
-              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
+              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem flex-1">
                 {{ item.translations?.name }}
               </div>
             </div>
             <div class="flex">
-              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
+              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem flex-1">
                 {{ item?.startDate }} - {{ item?.endDate }}
               </div>
             </div>
             <div class="flex">
-              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
+              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem flex-1">
                 {{ item.translations?.sponsor }}
               </div>
             </div>
             <div class="flex">
-              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem">
+              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem flex-1">
                 {{ item?.referenceNumber }}
               </div>
             </div>
@@ -93,6 +93,16 @@
           />
         </template>
       </div>
+      <div class="max-width flex justify-center mt-8">
+        <q-pagination
+          v-if="listMeta"
+          v-model="currentPage"
+          color="primary"
+          :max="listMeta"
+          flat
+          direction-links
+        />
+      </div>
     </template>
   </div>
 </template>
@@ -106,9 +116,18 @@ const { locale, t } = useI18n()
 
 const isLoading = ref(false)
 
+const limit = ref(15)
+const currentPage = ref(1)
+const offset = computed(() => (currentPage.value - 1) * limit.value)
+
 const { data: researchPlan, refresh: refreshResearchPlan } = useLazyAsyncData('research-plan', async () => {
   isLoading.value = true
-  const [err, result] = await to (useResearchPlan.findList())
+  const [err, result] = await to (useResearchPlan.findList({
+    query: {
+      limit: `${limit.value}`,
+      offset: `${offset.value}`,
+    },
+  }))
   if (err) {
     isLoading.value = false
     return Promise.reject(err)
@@ -128,7 +147,17 @@ const { data: researchPlan, refresh: refreshResearchPlan } = useLazyAsyncData('r
       transformedData: result,
     }
   },
-  watch: [locale],
+  watch: [locale, currentPage],
+})
+
+const listMeta = computed(() => {
+  if (researchPlan.value?.originalData?.meta.filter_count && typeof Number.parseInt(researchPlan.value?.originalData.meta.filter_count) === 'number') {
+    if (Number.parseInt(researchPlan.value?.originalData.meta.filter_count) / limit.value < 1) {
+      return 1
+    }
+    return Math.ceil(Number.parseInt(researchPlan.value?.originalData.meta.filter_count) / limit.value)
+  }
+  return undefined
 })
 
 useSeoMeta({

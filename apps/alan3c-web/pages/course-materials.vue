@@ -76,6 +76,17 @@
         />
       </div>
     </template>
+
+    <div class="flex justify-center pt-1rem">
+      <q-pagination
+        v-if="listMeta"
+        v-model="currentPage"
+        color="primary"
+        :max="listMeta"
+        flat
+        direction-links
+      />
+    </div>
   </div>
 </template>
 
@@ -89,32 +100,38 @@ const keyword = ref('')
 const useCourseMaterials = useCourseMaterialsApi()
 
 const isLoading = ref(false)
+
+const limit = ref(15)
+const currentPage = ref(1)
+const offset = computed(() => (currentPage.value - 1) * limit.value)
+
 const { data: courseMaterials, refresh: refreshCourseMaterials } = useLazyAsyncData('course-materials', async () => {
   isLoading.value = true
-  if (keyword.value.length > 0) {
-    const [err, result] = await to (useCourseMaterials.findList({
-      query: {
-        'filter[documentTitle][_icontains]': keyword.value,
-      },
-    }))
-    if (err) {
-      isLoading.value = false
-      return Promise.reject(err)
-    }
+  const [err, result] = await to (useCourseMaterials.findList({
+    query: {
+      'filter[documentTitle][_icontains]': keyword.value ? keyword.value : undefined,
+      'limit': `${limit.value}`,
+      'offset': `${offset.value}`,
+    },
+  }))
+  if (err) {
     isLoading.value = false
-    return result
+    return Promise.reject(err)
   }
-  else {
-    const [err, result] = await to (useCourseMaterials.findList())
-    if (err) {
-      isLoading.value = false
-      return Promise.reject(err)
-    }
-    isLoading.value = false
-    return result
-  }
+  isLoading.value = false
+  return result
 }, {
-  watch: [locale],
+  watch: [locale, currentPage],
+})
+
+const listMeta = computed(() => {
+  if (courseMaterials.value?.meta.filter_count && typeof Number.parseInt(courseMaterials.value?.meta.filter_count) === 'number') {
+    if (Number.parseInt(courseMaterials.value?.meta.filter_count) / limit.value < 1) {
+      return 1
+    }
+    return Math.ceil(Number.parseInt(courseMaterials.value?.meta.filter_count) / limit.value)
+  }
+  return undefined
 })
 
 async function addDownloadCount(collection: string, id: string) {

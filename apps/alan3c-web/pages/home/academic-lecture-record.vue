@@ -94,6 +94,16 @@
         />
       </div>
     </template>
+    <div class="flex justify-center pt-1rem">
+      <q-pagination
+        v-if="listMeta"
+        v-model="currentPage"
+        color="primary"
+        :max="listMeta"
+        flat
+        direction-links
+      />
+    </div>
   </div>
 </template>
 
@@ -105,9 +115,18 @@ const useAcademicLectureRecord = useAcademicLectureRecordApi()
 const { locale, t } = useI18n()
 
 const isLoading = ref(false)
+const limit = ref(15)
+const currentPage = ref(1)
+const offset = computed(() => (currentPage.value - 1) * limit.value)
+
 const { data: academicLectureRecord, refresh: refreshAcademicLectureRecord } = useLazyAsyncData('academic-lecture-record', async () => {
   isLoading.value = true
-  const [err, result] = await to (useAcademicLectureRecord.findList())
+  const [err, result] = await to (useAcademicLectureRecord.findList({
+    query: {
+      limit: `${limit.value}`,
+      offset: `${offset.value}`,
+    },
+  }))
   if (err) {
     isLoading.value = false
     return Promise.reject(err)
@@ -129,7 +148,17 @@ const { data: academicLectureRecord, refresh: refreshAcademicLectureRecord } = u
       },
     }
   },
-  watch: [locale],
+  watch: [locale, currentPage],
+})
+
+const listMeta = computed(() => {
+  if (academicLectureRecord.value?.data.originalData?.meta.filter_count && typeof Number.parseInt(academicLectureRecord.value?.data.originalData.meta.filter_count) === 'number') {
+    if (Number.parseInt(academicLectureRecord.value?.data.originalData.meta.filter_count) / limit.value < 1) {
+      return 1
+    }
+    return Math.ceil(Number.parseInt(academicLectureRecord.value?.data.originalData.meta.filter_count) / limit.value)
+  }
+  return undefined
 })
 
 useSeoMeta({

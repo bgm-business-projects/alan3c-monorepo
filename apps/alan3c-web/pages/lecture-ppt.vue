@@ -76,6 +76,17 @@
         />
       </div>
     </template>
+
+    <div class="flex justify-center pt-1rem">
+      <q-pagination
+        v-if="listMeta"
+        v-model="currentPage"
+        color="primary"
+        :max="listMeta"
+        flat
+        direction-links
+      />
+    </div>
     <!-- <div class="max-width flex flex-col gap-1.2rem">
       <div class="flex w-full gap-1rem text-lg font-semibold">
         <div class="w-10rem flex items-center gap-.5rem">
@@ -135,32 +146,36 @@ const keyword = ref('')
 const useLecturePpt = useLecturePptApi()
 
 const isLoading = ref(false)
+
+const limit = ref(15)
+const currentPage = ref(1)
+const offset = computed(() => (currentPage.value - 1) * limit.value)
+
 const { data: lecturePpt, refresh: refreshLecturePpt } = useLazyAsyncData('lecture-ppt', async () => {
   isLoading.value = true
-  if (keyword.value.length > 0) {
-    const [err, result] = await to (useLecturePpt.findList({
-      query: {
-        'filter[lectureTitle][_icontains]': keyword.value,
-      },
-    }))
-    if (err) {
-      isLoading.value = false
-      return Promise.reject(err)
-    }
+  const [err, result] = await to (useLecturePpt.findList({
+    query: {
+      'filter[lectureTitle][_icontains]': keyword.value ? keyword.value : undefined,
+    },
+  }))
+  if (err) {
     isLoading.value = false
-    return result
+    return Promise.reject(err)
   }
-  else {
-    const [err, result] = await to (useLecturePpt.findList())
-    if (err) {
-      isLoading.value = false
-      return Promise.reject(err)
-    }
-    isLoading.value = false
-    return result
-  }
+  isLoading.value = false
+  return result
 }, {
-  watch: [locale],
+  watch: [locale, currentPage],
+})
+
+const listMeta = computed(() => {
+  if (lecturePpt.value?.meta.filter_count && typeof Number.parseInt(lecturePpt.value?.meta.filter_count) === 'number') {
+    if (Number.parseInt(lecturePpt.value?.meta.filter_count) / limit.value < 1) {
+      return 1
+    }
+    return Math.ceil(Number.parseInt(lecturePpt.value?.meta.filter_count) / limit.value)
+  }
+  return undefined
 })
 
 async function addDownloadCount(collection: string, id: string) {
