@@ -34,6 +34,7 @@ export default defineI18nConfig(() => ({
         visitingScholarsPostdoctoralFellow: 'Visiting Scholars/Postdoctoral Fellow',
         theCollectedWorksOfChinChen: 'The Collected Works of Chin-Chen',
         scholarlyTalks: 'Scholarly Talks',
+        futureSpeech: 'Future Speech',
         marqueeText: 'Among thousands of teachings, the most important is to teach people to seek the truth. Among thousands of lessons, the most valuable is to learn to be a true person.',
       },
       trainee: {
@@ -93,6 +94,12 @@ export default defineI18nConfig(() => ({
         date: 'Date',
         location: 'Location',
       },
+      futureSpeech: {
+        grantNumber: 'Grant Number',
+        projectTitle: 'Project Title',
+        date: 'Date',
+        location: 'Location',
+      },
       biography: {
         resume: 'Resume',
         curriculumVitae: 'Curriculum Vitae',
@@ -138,6 +145,7 @@ export default defineI18nConfig(() => ({
         visitingScholarsPostdoctoralFellow: '訪問學者 / 博士後研究員',
         theCollectedWorksOfChinChen: '真誠文集',
         scholarlyTalks: '學術演講',
+        futureSpeech: '未來演講',
         marqueeText: '求真之路無止境，真人袖裡有乾坤',
       },
       trainee: {
@@ -192,6 +200,12 @@ export default defineI18nConfig(() => ({
         grantNumber: '編號',
       },
       scholarlyTalks: {
+        grantNumber: '編號',
+        projectTitle: '演講題目',
+        date: '日期',
+        location: '地點',
+      },
+      futureSpeech: {
         grantNumber: '編號',
         projectTitle: '演講題目',
         date: '日期',

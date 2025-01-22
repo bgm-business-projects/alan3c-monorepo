@@ -6,10 +6,11 @@ export const getAcademicLectureRecord = {
   method: 'GET',
   path: `/items/academicLectureRecord`,
   query: z.object({
-    meta: z.string().default('filter_count'),
-    limit: z.string().optional(),
-    offset: z.string().optional(),
-    fields: z.string().default('*,translations.*'),
+    'meta': z.string().default('filter_count'),
+    'limit': z.string().optional(),
+    'offset': z.string().optional(),
+    'filter[showOnAcademicLectureRecord][_eq]': z.boolean().default(true),
+    'fields': z.string().default('*,translations.*'),
   }),
   responses: {
     200: academicLectureRecordSchema,

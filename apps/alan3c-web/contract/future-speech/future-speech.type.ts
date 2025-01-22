@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const academicLectureRecordSchema = z.object({
+export const futureSpeechSchema = z.object({
   meta: z.object({
     filter_count: z.string(),
   }),
@@ -23,4 +23,4 @@ export const academicLectureRecordSchema = z.object({
   ),
 })
 
-export type AcademicLectureRecord = z.infer<typeof academicLectureRecordSchema>
+export type FutureSpeech = z.infer<typeof futureSpeechSchema>

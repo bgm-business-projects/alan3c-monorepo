@@ -4,6 +4,8 @@
 </template>
 
 <script setup lang="ts">
+import tinyMCEStyle from './tinyMCE.css?raw'
+
 interface Props {
   htmlCode?: string | null;
 }
@@ -53,7 +55,14 @@ function handleRenderHTML() {
 function createElementFromHTML(htmlString: string | null) {
   htmlString = htmlString || '<div></div>'
   const div = document.createElement('div')
-  div.innerHTML = htmlString.trim()
+  div.innerHTML = `
+  <style>
+    ${tinyMCEStyle}
+  </style>
+  <div class="timymce-body">
+    ${htmlString.trim()}
+  </div>
+  `
   return div
 }
 </script>

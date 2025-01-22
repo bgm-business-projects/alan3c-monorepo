@@ -131,6 +131,7 @@
 
 <script setup lang="ts">
 import { useAnchorScroll } from '~/.nuxt/imports'
+import BaseWysiwygPreview from '~/components/wysiwyg-preview/base-wysiwyg-preview.vue'
 import { useCurriculumVitaeDataApi } from '../../composables/use-curriculum-vitae-data-api'
 
 const { scrollToAnchor, scrollToTop } = useAnchorScroll({
