@@ -51,6 +51,8 @@ export default defineI18nConfig(() => ({
         authorOfThePaper: 'Author',
         reporter: 'Reporter',
         downloads: 'Downloads',
+        file: 'File',
+        video: 'Video',
       },
       artificialIntelligenceSeminar: {
         date: 'Date',
@@ -59,6 +61,8 @@ export default defineI18nConfig(() => ({
         authorOfThePaper: 'Author',
         reporter: 'Reporter',
         downloads: 'Downloads',
+        file: 'File',
+        video: 'Video',
       },
       referenceDocuments: {
         date: 'Date',
@@ -151,6 +155,8 @@ export default defineI18nConfig(() => ({
         authorOfThePaper: '論文作者',
         reporter: '報告者',
         downloads: '下載次數',
+        file: '檔案',
+        video: '影片',
       },
       artificialIntelligenceSeminar: {
         date: '報告日期',
@@ -159,6 +165,8 @@ export default defineI18nConfig(() => ({
         authorOfThePaper: '論文作者',
         reporter: '報告者',
         downloads: '下載次數',
+        file: '檔案',
+        video: '影片',
       },
       referenceDocuments: {
         date: '上傳日期',

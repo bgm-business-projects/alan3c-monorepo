@@ -19,6 +19,7 @@ export const imageProcessingSchema = z.object({
     reporter: z.string(),
     downloadCount: z.number(),
     file: basicFileSchema,
+    video: basicFileSchema,
   })),
 })
 

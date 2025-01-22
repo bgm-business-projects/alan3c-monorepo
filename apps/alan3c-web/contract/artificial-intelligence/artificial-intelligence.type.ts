@@ -18,6 +18,7 @@ export const artificialIntelligenceSchema = z.object({
     paperAuthor: z.string(),
     reporter: z.string(),
     downloadCount: z.number(),
+    video: basicFileSchema,
     file: basicFileSchema,
   })),
 })

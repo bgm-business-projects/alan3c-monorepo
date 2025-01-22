@@ -48,6 +48,18 @@
       <div class="flex items-center gap-.5rem">
         <div class="w-6px h-6px bg-primary rounded-full" />
         <div class="tracking-1px text-lg font-medium">
+          {{ t('imageProcessingSeminar.file') }}
+        </div>
+      </div>
+      <div class="flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px text-lg font-medium">
+          {{ t('imageProcessingSeminar.video') }}
+        </div>
+      </div>
+      <div class="flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px text-lg font-medium">
           {{ t('imageProcessingSeminar.downloads') }}
         </div>
       </div>
@@ -60,7 +72,7 @@
             <div>
               {{ item.reportDate }}
             </div>
-            <div class="underline cursor-pointer" @click="addDownloadCount('imageProcessing', item.id.toString())">
+            <div>
               {{ item.thesisTitle }}
             </div>
             <div>
@@ -71,6 +83,12 @@
             </div>
             <div>
               {{ item.reporter }}
+            </div>
+            <div class="underline cursor-pointer" @click="addDownloadCount('imageProcessing', item.id.toString())">
+              {{ item.file?.title }}
+            </div>
+            <div class="underline cursor-pointer" @click="openVideoDialog(combineImageUrl(item.video?.filename_disk))">
+              {{ item.video?.title }}
             </div>
             <div>
               {{ item.downloadCount }}
@@ -118,7 +136,9 @@
 </template>
 
 <script setup lang="ts">
+import BaseVideoDialog from '~/components/base-video-dialog.vue'
 import ImageProcessingMobileCard from '~/components/image-processing/image-processing-mobile-card.vue'
+import { combineImageUrl } from '../utils/combine-image-url'
 
 const { locale, t } = useI18n()
 
@@ -194,6 +214,16 @@ useSeoMeta({
   ogTitle: '圖像處理 Seminar',
   ogDescription: '圖像處理 Seminar',
 })
+
+const $q = useQuasar()
+function openVideoDialog(src: string) {
+  $q.dialog({
+    component: BaseVideoDialog,
+    componentProps: {
+      src,
+    },
+  })
+}
 </script>
 
 <style scoped lang="sass">
@@ -204,7 +234,7 @@ useSeoMeta({
 .custom-grid
   display: grid
   align-items: center
-  grid-template-columns: auto 1fr 1fr 1fr auto auto
+  grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr 1fr auto
   gap: 1rem 2.5rem
   align-items: start
 
