@@ -7,9 +7,10 @@
     </div>
     <div class="max-width">
       <template v-if="!isLoading">
-        <div
+        <base-wysiwyg-preview
           v-if="researchFocus?.translations?.content"
-          v-html="researchFocus?.translations?.content"
+          class="w-full"
+          :html-code="researchFocus?.translations?.content"
         />
         <div
           v-else

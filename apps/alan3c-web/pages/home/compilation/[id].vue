@@ -34,7 +34,9 @@
         </h1>
       </div>
       <div class="max-width flex flex-col gap-1rem">
-        <div v-html="compilation?.content" />
+        <base-wysiwyg-preview
+          :html-code="compilation?.content"
+        />
       </div>
     </template>
     <template v-else>

@@ -2,10 +2,10 @@
   <div
     class="w-full"
   >
-    <div
+    <base-wysiwyg-preview
       v-if="props.data"
       class="w-full"
-      v-html="props.data"
+      :html-code="props.data"
     />
     <div
       v-else

@@ -1,6 +1,5 @@
 <template>
-  <div v-if="isClient" ref="shadowContainer" />
-  <div v-else class="wysiwyg-preview" v-html="props.htmlCode" />
+  <div ref="shadowContainer" />
 </template>
 
 <script setup lang="ts">
@@ -15,20 +14,15 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>()
 
-// 判斷是否為客戶端環境
-const isClient = import.meta.client
-
 const shadowContainer = ref<HTMLElement>()
 
 onMounted(() => {
-  if (isClient) {
-    watch(() => props.htmlCode, async () => {
-      await nextTick()
-      handleRenderHTML()
-    }, {
-      immediate: true,
-    })
-  }
+  watch(() => props.htmlCode, async () => {
+    await nextTick()
+    handleRenderHTML()
+  }, {
+    immediate: true,
+  })
 })
 
 function handleRenderHTML() {
@@ -51,7 +45,7 @@ function handleRenderHTML() {
 }
 
 function createElementFromHTML(htmlString: string | null) {
-  htmlString = htmlString || '<div></div>'
+  htmlString = htmlString || '<div>讀取中</div>'
   const div = document.createElement('div')
   div.innerHTML = htmlString.trim()
   return div
@@ -59,34 +53,4 @@ function createElementFromHTML(htmlString: string | null) {
 </script>
 
 <style lang="sass">
-.wysiwyg-preview
-  all: unset // 重設 Reset 的影響，但保留繼承樣式
-  all: revert // 使用瀏覽器預設樣式（更適合瀏覽器的原生標籤）
-
-  table
-    all: revert
-    border: 1px solid #000
-    border-collapse: collapse
-    width: 100%
-
-  th, td
-    all: revert
-    border: 1px solid #000
-    padding: 8px
-    text-align: left
-
-  p, h1, h2, h3, h4, h5, h6
-    all: revert
-    margin: revert
-    padding: revert
-
-  ul, ol
-    all: revert
-    padding-left: 40px
-    list-style: revert
-
-  a
-    all: revert
-    color: blue
-    text-decoration: underline
 </style>
