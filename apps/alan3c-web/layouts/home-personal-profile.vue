@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center layout-padding">
     <slot name="header" />
     <div class="max-width py-4.5rem min-h-[calc(100dvh-197px)]">
-      <div class="flex max-width py-1.5rem lg:py-3rem">
+      <div class="flex max-width py-1.5rem sm:py-3rem">
         <base-breadcrumbs
           :bread-list="[
             {
@@ -23,9 +23,10 @@
           ]"
         />
       </div>
-      <div class="w-full flex flex-col lg:flex-row items-start gap-1rem lg:gap-3rem">
-        <div class="flex lg:hidden overflow-scroll max-w-full">
-          <div class="bg-accent relative flex flex-nowrap">
+      <div class="w-full flex flex-col sm:flex-row items-start gap-1rem sm:gap-3rem">
+        <!-- mobile -->
+        <div class="scrollable sm:hidden max-w-full w-full">
+          <div class="bg-accent relative flex flex-nowrap min-w-max">
             <nuxt-link
               v-for="(category, index) in data"
               ref="categoryElements"
@@ -38,7 +39,8 @@
             <div class="absolute bottom-0 border-primary border-1px border-solid duration-300" :style="bottomLineStyle" />
           </div>
         </div>
-        <ul class="hidden lg:!flex flex-col gap-.5rem">
+        <!-- desktop -->
+        <ul class="hidden sm:!flex flex-col gap-.5rem">
           <li v-for="(category, index) in data" :key="index">
             <nuxt-link
               :to="category.route"
@@ -97,6 +99,13 @@ const data = computed(() => [
       params: { id: 'coursesTaught' },
     },
   },
+  {
+    name: t('biography.patentApplication'),
+    route: {
+      name: 'home-personal-profile-id',
+      params: { id: 'patentApplication' },
+    },
+  },
 ])
 
 // 存放每個元素的 ref
@@ -138,3 +147,9 @@ watch(bottomLineStyle, (newValue, oldValue) => {
   deep: true,
 })
 </script>
+
+<style lang="sass" scoped>
+.scrollable
+  overflow-x: auto  /* 保留水平滾動 */
+  overflow-y: hidden /* 隱藏垂直滾動 */
+</style>

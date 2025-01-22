@@ -21,6 +21,7 @@ import { isAcademicActivities } from '~/contract/personal-profile/academic-activ
 import { isAcademicRecognition } from '~/contract/personal-profile/academic-recognition/academic-recognition.type'
 import { isCoursesTaught } from '~/contract/personal-profile/courses-taught/courses-taught.type'
 import { isCurriculumVitae } from '~/contract/personal-profile/curriculum-vitae/curriculum-vitae.type'
+import { isPatentApplication } from '~/contract/personal-profile/patent-application/patent-application.type'
 import { isResume } from '~/contract/personal-profile/resume/resume.type'
 
 const route = useRoute()
@@ -81,6 +82,16 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
     isLoading.value = false
     return result
   }
+
+  if (route.params.id === 'patentApplication') {
+    const [err, result] = await to (usePersonalProfile.findPatentApplication())
+    if (err) {
+      isLoading.value = false
+      return Promise.reject(err)
+    }
+    isLoading.value = false
+    return result
+  }
 }, {
   transform: (data) => {
     if (isResume(data)) {
@@ -111,6 +122,12 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
       return {
         ...data?.data,
         translations: data?.data.translations.filter((item) => item.coursesTaughtLanguages_code === locale.value)[0],
+      }
+    }
+    if (isPatentApplication(data)) {
+      return {
+        ...data?.data,
+        translations: data?.data.translations.filter((item) => item.patentApplicationLanguages_code === locale.value)[0],
       }
     }
   },

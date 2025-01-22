@@ -3,6 +3,7 @@ import { academicActivitiesContract } from '~/contract/personal-profile/academic
 import { academicRecognitionContract } from '~/contract/personal-profile/academic-recognition'
 import { coursesTaughtContract } from '~/contract/personal-profile/courses-taught'
 import { curriculumVitaeContract } from '~/contract/personal-profile/curriculum-vitae'
+import { patentApplicationContract } from '../contract/personal-profile/patent-application'
 import { resumeContract } from '../contract/personal-profile/resume'
 
 export function usePersonalProfileApi(
@@ -80,11 +81,26 @@ export function usePersonalProfileApi(
     }
   }
 
+  const patentApplicationApi = computed(() => {
+    const clientHeader = accessToken
+      ? { authorization: `Bearer ${toValue(accessToken)}` }
+      : {}
+    return useClient(patentApplicationContract, clientHeader)
+  })
+
+  async function findPatentApplication() {
+    const result = await patentApplicationApi.value.getPatentApplication()
+    if (result.status === 200) {
+      return result.body
+    }
+  }
+
   return {
     findResume,
     findCurriculumVitae,
     findAcademicActivities,
     findAcademicRecognition,
     findCoursesTaught,
+    findPatentApplication,
   }
 }

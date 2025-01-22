@@ -20,6 +20,8 @@
 </template>
 
 <script setup lang="ts">
+import BaseWysiwygPreview from '../wysiwyg-preview/base-wysiwyg-preview.vue'
+
 interface Props {
   data: string | null | undefined;
 }
