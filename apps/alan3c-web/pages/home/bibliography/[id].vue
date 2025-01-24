@@ -60,7 +60,7 @@
 <script setup lang="ts">
 import { pipe } from 'remeda'
 import BaseWysiwygPreview from '~/components/wysiwyg-preview/base-wysiwyg-preview.vue'
-import { isBookChapters, isDomesticMagazineArticles, isGuestEditorial, isInternationalConferencePapers, isInternationalJournalPapers, isLocalConferencePapers, isLocalJournalPapers, isTechnicalReports } from '~/contract/bibliography/bibliography.type'
+import { isBookChapters, isDomesticMagazineArticles, isGuestEditorial, isInternationalConferencePapers, isLocalConferencePapers, isLocalJournalPapers, isTechnicalReports } from '~/contract/bibliography/bibliography.type'
 
 const { locale, t } = useI18n()
 
@@ -93,9 +93,9 @@ const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData(`b
       (value) => value.find((item) => item[0] === route.params.id),
       (value) => value?.[1],
       (value) => {
-        if (isInternationalJournalPapers(value)) {
-          return value.find((item) => item.internationalJournalPapersLanguages_code === locale.value)
-        }
+        // if (isInternationalJournalPapers(value)) {
+        //   return value.find((item) => item.internationalJournalPapersLanguages_code === locale.value)
+        // }
         if (isInternationalConferencePapers(value)) {
           return value.find((item) => item.internationalConferencePapersLanguages_code === locale.value)
         }

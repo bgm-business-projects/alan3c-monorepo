@@ -25,6 +25,12 @@ export function useBibliographyApi(
     if (result.status === 200) {
       return result.body
     }
+    if (result.status === 401) {
+      throw new Error('Token 過期')
+    }
+    if (result.status === 403) {
+      throw new Error('無權限')
+    }
   }
 
   async function findAuthoredBooks(params: BibliographyRequest['getAuthoredBooks']) {

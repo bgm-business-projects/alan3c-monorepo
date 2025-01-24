@@ -6,7 +6,7 @@ export const getBibliography = {
   method: 'GET',
   path: `/items/bibliography`,
   query: z.object({
-    fields: z.string().default('*,internationalJournalPapers.*,internationalConferencePapers.*,bookChapters.*,localJournalPapers.*,domesticMagazineArticles.*,technicalReports.*,guestEditorial.*,localConferencePapers.*'),
+    fields: z.string().default('*,internationalConferencePapers.*,bookChapters.*,localJournalPapers.*,domesticMagazineArticles.*,technicalReports.*,guestEditorial.*,localConferencePapers.*'),
   }),
   responses: {
     200: bibliographySchema,

@@ -3,7 +3,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  ssr: false,
+  // ssr: false,
   modules: [
     'nuxt-quasar-ui',
     '@nuxtjs/i18n',
@@ -70,8 +70,9 @@ export default defineNuxtConfig({
     public: {
       // 客戶端和服務端都可以訪問的環境變數
       // eslint-disable-next-line node/prefer-global/process
-      apiBaseUrl: process.env.NUXT_API_BASE_URL || 'https://localhost:3000',
+      apiBaseUrl: process.env.NUXT_API_BASE_URL || 'http://localhost:3000',
     },
+    baseUrl: '',
   },
   hooks: {
     'pages:extend': function (pages) {

@@ -1,7 +1,6 @@
 <template>
   <div class="w-full flex flex-col gap-2rem items-center layout-padding py-1.5rem lg:py-3rem">
-    {{ bibliography }}
-    <!-- <div class="flex max-width">
+    <div class="flex max-width">
       <base-breadcrumbs
         :bread-list="[
           {
@@ -105,54 +104,32 @@
           <q-inner-loading :showing="isLoading" />
         </div>
       </template>
-    </div> -->
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import BaseLoginDialog from '../../../components/base-login-dialog.vue'
 
-// const { locale, t } = useI18n()
+const { locale, t } = useI18n()
 
-// const useBibliography = useBibliographyApi()
+const useBibliography = useBibliographyApi()
 
-// const localePath = useLocalePath()
-
-const $q = useQuasar()
-
-const authStore = useAuthStore()
-const { bibliographyToken } = storeToRefs(authStore)
+const localePath = useLocalePath()
 
 const isLoading = ref(false)
 
 const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('bibliography', async () => {
   isLoading.value = true
-  if (import.meta.client) {
-    if (!bibliographyToken.value) {
-      console.log('bibliographyToken', bibliographyToken.value)
-      const credentials = await openLoginDialog()
-      const [loginError, loginResult] = await to(authStore.loginBibliography(credentials.account, credentials.password))
-      if (loginError) {
-        isLoading.value = false
-        throw loginError
-      }
-      const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
-      if (getDataError) {
-        isLoading.value = false
-        throw getDataError
-      }
-      isLoading.value = false
-      return getDataResult
-    }
-    const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
-    if (getDataError) {
-      isLoading.value = false
-      throw getDataError
-    }
+  const [err, result] = await to (useBibliography.findOne({
+    query: {},
+  }))
+  if (err) {
     isLoading.value = false
-    return getDataResult
+    return Promise.reject(err)
   }
-  return undefined
+  isLoading.value = false
+  return result
 }, {
   transform: (data) => {
     if (!data?.data)
@@ -161,40 +138,18 @@ const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('b
       normal: Object.entries(data?.data).filter((item) => !item.find((item) => item === 'id' || item === 'authoredBooks' || item === 'internationalJournalPapers')),
     }
   },
+  watch: [locale],
 })
 
-// onMounted(async () => {
-//   if (bibliographyToken.value) {
-//     try {
-//       await refreshBibliography()
-//     }
-//     catch (error) {
-//       const credentials = await openLoginDialog()
-//       await authStore.loginBibliography(credentials.account, credentials.password)
-//     }
-//   }
-//   else {
-//     const credentials = await openLoginDialog()
-//     authStore.loginBibliography(credentials.account, credentials.password)
-//   }
-// })
+const $q = useQuasar()
 
-function openLoginDialog() {
-  return new Promise<{
-    account: string;
-    password: string;
-  }>((resolve, reject) => {
-    $q.dialog({
-      component: BaseLoginDialog,
-      componentProps: {
-        onSubmitCredentials(data: {
-          account: string;
-          password: string;
-        }) {
-          resolve(data)
-        },
-      },
-    })
+onMounted(() => {
+  openPasswordDialog()
+})
+
+function openPasswordDialog() {
+  $q.dialog({
+    component: BaseLoginDialog,
   })
 }
 
