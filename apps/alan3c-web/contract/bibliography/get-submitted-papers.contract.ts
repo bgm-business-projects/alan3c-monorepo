@@ -9,6 +9,7 @@ export const getSubmittedPapers = {
     meta: z.string().default('filter_count'),
     limit: z.string().optional(),
     offset: z.string().optional(),
+    sort: z.string().default('-year'),
     fields: z.string().default('*,translations.*'),
   }),
   responses: {

@@ -93,6 +93,7 @@ ul ul,
 			ol ul {
 	margin: 0;
 }
+
 b, strong {
 	font-weight: 700;
 }
@@ -164,4 +165,9 @@ figure figcaption {
 	display: block;
 	margin-top: 0.25rem;
 	text-align: center;
+}
+
+span {
+  display: inline-block; /* 讓元素遵循區塊行為 */
+  max-width: 100%;
 }

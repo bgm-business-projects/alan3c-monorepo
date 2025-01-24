@@ -68,7 +68,7 @@
             v-for="item in bibliography.data"
             :id="`year-${item.year}`"
             :key="item.id"
-            class="flex flex-col gap-1rem"
+            class="flex flex-col gap-1rem w-full"
           >
             <h2 class="text-xl font-semibold">
               {{ item.year }}
