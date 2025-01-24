@@ -127,31 +127,47 @@ const { bibliographyToken } = storeToRefs(authStore)
 const isLoading = ref(false)
 const dialog = ref<DialogChainObject>()
 
+const isClient = ref(false)
+
+async function loginAndGetData() {
+  const credentials = await openLoginDialog()
+  const [loginError, loginResult] = await to(authStore.loginBibliography(credentials.account, credentials.password))
+  if (loginError) {
+    isLoading.value = false
+    throw loginError
+  }
+  dialog.value?.hide()
+
+  const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
+  if (getDataError) {
+    isLoading.value = false
+    console.log('getDataError', getDataError)
+    throw getDataError
+  }
+  isLoading.value = false
+  return getDataResult
+}
+
 const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('bibliography', async () => {
   isLoading.value = true
-  if (import.meta.server)
+  if (import.meta.server || !isClient.value)
     return
 
   if (!bibliographyToken.value) {
-    const credentials = await openLoginDialog()
-    const [loginError, loginResult] = await to(authStore.loginBibliography(credentials.account, credentials.password))
-    if (loginError) {
-      isLoading.value = false
-      throw loginError
-    }
-    dialog.value?.hide()
-    const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
-    if (getDataError) {
-      isLoading.value = false
-      throw getDataError
-    }
-    isLoading.value = false
-    return getDataResult
+    await loginAndGetData()
   }
   const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
   if (getDataError) {
     isLoading.value = false
-    throw getDataError
+    $q.notify({
+      message: getDataError.message,
+      color: 'red',
+      position: 'center',
+    })
+
+    const result = await loginAndGetData()
+    if (result)
+      return result
   }
   isLoading.value = false
   return getDataResult
@@ -163,8 +179,12 @@ const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('b
       normal: Object.entries(data?.data).filter((item) => !item.find((item) => item === 'id' || item === 'authoredBooks' || item === 'internationalJournalPapers')),
     }
   },
+  watch: [isClient],
 })
 
+onMounted(() => {
+  isClient.value = true
+})
 // onMounted(async () => {
 //   if (bibliographyToken.value) {
 //     try {

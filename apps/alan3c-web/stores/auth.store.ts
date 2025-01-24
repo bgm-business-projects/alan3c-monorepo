@@ -40,13 +40,13 @@ export const useAuthStore = defineStore('auth', () => {
     if (!bibliographyToken.value)
       return undefined
 
-    const [err, result] = await to (useBibliography.findOne({
+    const [err, result] = await to(useBibliography.findOne({
       query: {},
     }))
 
     if (err) {
-      logoutBibliography()
-      throw new Error('錯誤登出')
+      // logoutBibliography()
+      throw new Error(err.message)
     }
 
     return result
