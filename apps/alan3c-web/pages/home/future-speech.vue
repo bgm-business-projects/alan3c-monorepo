@@ -58,7 +58,7 @@
                 </div>
                 <div class="flex">
                   <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
-                    {{ item.lectureDate }}
+                    {{ dayjs(item.lectureDate.toString(), 'YYYYMMDD').format('YYYY-MM-DD') }}
                   </div>
                 </div>
                 <div class="flex">
@@ -128,6 +128,8 @@
 import AcademicLectureRecordMobileCard from '~/components/academic-lecture-record/academic-lecture-record-mobile-card.vue'
 import BaseQuotes from '~/components/future-speech/base-quotes.vue'
 import { useFutureSpeechApi } from '../../composables/use-future-speech-api'
+
+const dayjs = useDayjs()
 
 const useFutureSpeech = useFutureSpeechApi()
 const { locale, t } = useI18n()

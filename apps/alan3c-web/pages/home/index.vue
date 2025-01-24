@@ -132,6 +132,12 @@ const data = computed(() => [
     },
   },
   {
+    name: t('home.bibliography'),
+    route: {
+      name: 'home-bibliography',
+    },
+  },
+  {
     name: t('home.curriculumVitae'),
     route: {
       name: 'home-curriculum-vitae',

@@ -8,7 +8,7 @@ export const futureSpeechSchema = z.object({
     z.object({
       id: z.number(),
       sort: z.number().nullable(), // sort 可以為 null
-      lectureDate: z.string(), // 日期作為字串處理
+      lectureDate: z.number(), //
       translations: z.array(
         z.object({
           id: z.number(),

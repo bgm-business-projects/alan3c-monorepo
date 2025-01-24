@@ -55,7 +55,7 @@
             </div>
             <div class="flex">
               <div class="bg-accent px-1rem py-.2rem rounded-.4rem">
-                {{ item.lectureDate }}
+                {{ dayjs(item.lectureDate.toString(), 'YYYYMMDD').format('YYYY-MM-DD') }}
               </div>
             </div>
             <div class="flex">
@@ -110,6 +110,8 @@
 <script setup lang="ts">
 import AcademicLectureRecordMobileCard from '~/components/academic-lecture-record/academic-lecture-record-mobile-card.vue'
 import { useAcademicLectureRecordApi } from '../../composables/use-academic-lecture-record-api'
+// not need if you are using auto import
+const dayjs = useDayjs()
 
 const useAcademicLectureRecord = useAcademicLectureRecordApi()
 const { locale, t } = useI18n()
