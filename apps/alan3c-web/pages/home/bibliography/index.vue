@@ -110,6 +110,7 @@
 </template>
 
 <script setup lang="ts">
+import type { DialogChainObject } from 'quasar'
 import BaseLoginDialog from '../../../components/base-login-dialog.vue'
 
 // const { locale, t } = useI18n()
@@ -124,26 +125,21 @@ const authStore = useAuthStore()
 const { bibliographyToken } = storeToRefs(authStore)
 
 const isLoading = ref(false)
+const dialog = ref<DialogChainObject>()
 
 const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('bibliography', async () => {
   isLoading.value = true
-  if (import.meta.client) {
-    if (!bibliographyToken.value) {
-      console.log('bibliographyToken', bibliographyToken.value)
-      const credentials = await openLoginDialog()
-      const [loginError, loginResult] = await to(authStore.loginBibliography(credentials.account, credentials.password))
-      if (loginError) {
-        isLoading.value = false
-        throw loginError
-      }
-      const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
-      if (getDataError) {
-        isLoading.value = false
-        throw getDataError
-      }
+  if (import.meta.server)
+    return
+
+  if (!bibliographyToken.value) {
+    const credentials = await openLoginDialog()
+    const [loginError, loginResult] = await to(authStore.loginBibliography(credentials.account, credentials.password))
+    if (loginError) {
       isLoading.value = false
-      return getDataResult
+      throw loginError
     }
+    dialog.value?.hide()
     const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
     if (getDataError) {
       isLoading.value = false
@@ -152,7 +148,13 @@ const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('b
     isLoading.value = false
     return getDataResult
   }
-  return undefined
+  const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
+  if (getDataError) {
+    isLoading.value = false
+    throw getDataError
+  }
+  isLoading.value = false
+  return getDataResult
 }, {
   transform: (data) => {
     if (!data?.data)
@@ -184,7 +186,7 @@ function openLoginDialog() {
     account: string;
     password: string;
   }>((resolve, reject) => {
-    $q.dialog({
+    dialog.value = $q.dialog({
       component: BaseLoginDialog,
       componentProps: {
         onSubmitCredentials(data: {

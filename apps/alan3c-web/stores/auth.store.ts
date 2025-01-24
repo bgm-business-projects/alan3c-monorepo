@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
+import { useQuasar } from 'quasar'
 
 export const useAuthStore = defineStore('auth', () => {
+  const $q = useQuasar()
   const bibliographyToken = ref('')
   onMounted(() => {
     const tokenInSession = sessionStorage.getItem('bibliographyToken')
@@ -33,6 +35,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   // 取得著作目錄
   const useBibliography = useBibliographyApi(bibliographyToken)
+
   async function fetchBibliography() {
     if (!bibliographyToken.value)
       return undefined
