@@ -32,6 +32,8 @@
 </template>
 
 <script setup lang="ts">
+import BaseWysiwygPreview from '~/components/wysiwyg-preview/base-wysiwyg-preview.vue'
+
 const useResearchFocus = useResearchFocusApi()
 const { locale, t } = useI18n()
 
