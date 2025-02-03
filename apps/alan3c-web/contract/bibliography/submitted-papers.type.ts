@@ -21,4 +21,4 @@ export const submittedPapersSchema = z.object({
   ),
 })
 
-export type AuthoredBooks = z.infer<typeof submittedPapersSchema>
+export type SubmittedPapers = z.infer<typeof submittedPapersSchema>

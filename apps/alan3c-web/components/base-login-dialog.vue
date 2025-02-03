@@ -2,7 +2,7 @@
   <q-dialog ref="dialogRef" persistent @hide="onDialogHide">
     <q-card class="q-dialog-plugin p-1rem">
       <q-form
-        @submit="loginAndGetData"
+        @submit="loginAndGetData(props.target)"
       >
         <div class="flex flex-col gap-1rem p-.7rem">
           <div class="text-lg font-medium">
@@ -36,9 +36,16 @@
 import { useDialogPluginComponent } from 'quasar'
 import { ref } from 'vue'
 
+interface Props {
+  target: 'Bibliography' | 'SubmittedPapers';
+}
+const props = withDefaults(defineProps<Props>(), {
+})
+
 const emit = defineEmits([
   ...useDialogPluginComponent.emits,
   'get-bibliography-data',
+  'get-submitted-papers-data',
 ])
 
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
@@ -50,22 +57,40 @@ const password = ref<string>('')
 const $q = useQuasar()
 const authStore = useAuthStore()
 
-async function loginAndGetData() {
-  const [loginError, loginResult] = await to(authStore.loginBibliography(`${account.value}@gmail.com`, password.value))
-  if (loginError) {
-    $q.notify({
-      message: loginError.message,
-      position: 'center',
-      color: 'red',
-    })
+async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers') {
+  if (target === 'Bibliography') {
+    const [loginError, loginResult] = await to(authStore.loginBibliography(`${account.value}@gmail.com`, password.value))
+    if (loginError) {
+      $q.notify({
+        message: loginError.message,
+        position: 'center',
+        color: 'red',
+      })
+    }
+    const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
+    if (getDataError) {
+      throw getDataError
+    }
+    emit('get-bibliography-data', getDataResult)
+    return getDataResult
   }
+  else if (target === 'SubmittedPapers') {
+    const [loginError, loginResult] = await to(authStore.loginSubmittedPapers(`${account.value}@yahoo.com.tw`, password.value))
+    if (loginError) {
+      $q.notify({
+        message: loginError.message,
+        position: 'center',
+        color: 'red',
+      })
+    }
+    const [getDataError, getDataResult] = await to(authStore.fetchSubmittedPapers())
 
-  const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
-  if (getDataError) {
-    throw getDataError
+    if (getDataError) {
+      throw getDataError
+    }
+    emit('get-submitted-papers-data', getDataResult)
+    return getDataResult
   }
-  emit('get-bibliography-data', getDataResult)
-  return getDataResult
 }
 </script>
 

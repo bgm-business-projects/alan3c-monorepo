@@ -28,10 +28,17 @@ export const useAuthStore = defineStore('auth', () => {
     // })
   })
 
-  // 登出功能
+  // 登出 Bibliography 功能
   const logoutBibliography = () => {
     bibliographyToken.value = ''
     sessionStorage.removeItem('bibliographyToken')
+    // Cookies.remove('directus_token')
+  }
+
+  // 登出  Submitted Papers 功能
+  const logoutSubmittedPapers = () => {
+    submittedPapersToken.value = ''
+    sessionStorage.removeItem('submittedPapersToken')
     // Cookies.remove('directus_token')
   }
 
@@ -53,6 +60,27 @@ export const useAuthStore = defineStore('auth', () => {
       throw new Error(err.message)
     }
 
+    return result
+  }
+
+  const useSubmittedPapers = useBibliographyApi(submittedPapersToken)
+
+  async function fetchSubmittedPapers() {
+    console.log('submittedPapersToken.value', submittedPapersToken.value)
+    if (!submittedPapersToken.value)
+      return undefined
+
+    const [err, result] = await to(useSubmittedPapers.findSubmittedPapers({
+      query: {},
+    }))
+
+    console.log('result', result)
+
+    if (err) {
+      // logoutBibliography()
+      throw new Error(err.message)
+    }
+    console.log('test', result)
     return result
   }
 
@@ -92,7 +120,7 @@ export const useAuthStore = defineStore('auth', () => {
 
       const data = await response.json()
       sessionStorage.setItem('submittedPapersToken', data.data.access_token)
-      bibliographyToken.value = data.data.access_token
+      submittedPapersToken.value = data.data.access_token
     }
     catch (error) {
       console.error('登入失敗:', error)
@@ -102,9 +130,12 @@ export const useAuthStore = defineStore('auth', () => {
 
   return {
     bibliographyToken,
+    submittedPapersToken,
     loginBibliography,
     loginSubmittedPapers,
     fetchBibliography,
+    fetchSubmittedPapers,
     logoutBibliography,
+    logoutSubmittedPapers,
   }
 })

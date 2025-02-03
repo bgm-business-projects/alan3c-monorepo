@@ -200,6 +200,7 @@ function openLoginDialog() {
     dialog.value = $q.dialog({
       component: BaseLoginDialog,
       componentProps: {
+        target: 'Bibliography',
         onGetBibliographyData(data: BibliographyData) {
           resolve(data)
         },

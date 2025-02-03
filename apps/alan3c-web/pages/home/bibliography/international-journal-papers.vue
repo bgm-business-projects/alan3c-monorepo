@@ -1,5 +1,6 @@
 <template>
   <div class="w-full flex flex-col gap-2rem items-center layout-padding py-1.5rem lg:py-3rem">
+    <!-- {{ bibliography }} -->
     <div class="flex max-width">
       <base-breadcrumbs
         :bread-list="[
