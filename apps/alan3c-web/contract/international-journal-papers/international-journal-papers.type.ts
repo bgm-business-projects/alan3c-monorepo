@@ -25,3 +25,17 @@ export const internationalJournalPapersSchema = z.object({
 })
 
 export type InternationalJournalPapers = z.infer<typeof internationalJournalPapersSchema>
+
+export interface InternationalJournalPapersCreateInput {
+  author: string;
+  titleOfThePaper: string;
+  journalName: string;
+  vol: string;
+  no: string;
+  pp: string;
+  year: string;
+  month: string;
+  day: string;
+  status: string;
+  file: File;
+}

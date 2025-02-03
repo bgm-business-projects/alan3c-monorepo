@@ -46,6 +46,8 @@ const emit = defineEmits([
   ...useDialogPluginComponent.emits,
   'get-bibliography-data',
   'get-submitted-papers-data',
+  'get-international-journal-papers',
+  'login-international-journal-papers-creator',
 ])
 
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
@@ -57,7 +59,7 @@ const password = ref<string>('')
 const $q = useQuasar()
 const authStore = useAuthStore()
 
-async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers') {
+async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'InternationalJournalPapers') {
   if (target === 'Bibliography') {
     const [loginError, loginResult] = await to(authStore.loginBibliography(`${account.value}@gmail.com`, password.value))
     if (loginError) {
@@ -74,6 +76,7 @@ async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers') {
     emit('get-bibliography-data', getDataResult)
     return getDataResult
   }
+
   else if (target === 'SubmittedPapers') {
     const [loginError, loginResult] = await to(authStore.loginSubmittedPapers(`${account.value}@yahoo.com.tw`, password.value))
     if (loginError) {
@@ -90,6 +93,37 @@ async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers') {
     }
     emit('get-submitted-papers-data', getDataResult)
     return getDataResult
+  }
+
+  else if (target === 'InternationalJournalPapers') {
+    const [loginError, loginResult] = await to(authStore.loginBibliography(`${account.value}@gmail.com`, password.value))
+    if (loginError) {
+      $q.notify({
+        message: loginError.message,
+        position: 'center',
+        color: 'red',
+      })
+    }
+    const [getDataError, getDataResult] = await to(authStore.fetchInternationalJournalPapers())
+
+    if (getDataError) {
+      throw getDataError
+    }
+    emit('get-international-journal-papers', getDataResult)
+    return getDataResult
+  }
+
+  else if (target === 'InternationalJournalPapersCreator') {
+    const [loginError, loginResult] = await to(authStore.loginInternationalJournalPapersCreator(`${account.value}@gmail.com`, password.value))
+    if (loginError) {
+      $q.notify({
+        message: loginError.message,
+        position: 'center',
+        color: 'red',
+      })
+      throw new Error(loginError.message)
+    }
+    emit('login-international-journal-papers-creator', loginResult)
   }
 }
 </script>
