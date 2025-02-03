@@ -2,7 +2,7 @@
   <q-dialog ref="dialogRef" persistent @hide="onDialogHide">
     <q-card class="q-dialog-plugin p-1rem">
       <q-form
-        @submit="handleLogin"
+        @submit="loginAndGetData"
       >
         <div class="flex flex-col gap-1rem p-.7rem">
           <div class="text-lg font-medium">
@@ -38,20 +38,34 @@ import { ref } from 'vue'
 
 const emit = defineEmits([
   ...useDialogPluginComponent.emits,
-  'submit-credentials',
+  'get-bibliography-data',
 ])
-
-const account = ref<string>('')
-const password = ref<string>('')
 
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
 
 // 處理登入
-async function handleLogin() {
-  emit('submit-credentials', {
-    account: `${account.value}@gmail.com`,
-    password: password.value,
-  })
+const account = ref<string>('')
+const password = ref<string>('')
+
+const $q = useQuasar()
+const authStore = useAuthStore()
+
+async function loginAndGetData() {
+  const [loginError, loginResult] = await to(authStore.loginBibliography(`${account.value}@gmail.com`, password.value))
+  if (loginError) {
+    $q.notify({
+      message: loginError.message,
+      position: 'center',
+      color: 'red',
+    })
+  }
+
+  const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
+  if (getDataError) {
+    throw getDataError
+  }
+  emit('get-bibliography-data', getDataResult)
+  return getDataResult
 }
 </script>
 

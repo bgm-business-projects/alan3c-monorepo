@@ -112,6 +112,7 @@
 
 <script setup lang="ts">
 import type { DialogChainObject } from 'quasar'
+import type { BibliographyData } from '~/contract/bibliography/bibliography.type'
 import BaseLoginDialog from '../../../components/base-login-dialog.vue'
 
 const { locale, t } = useI18n()
@@ -130,47 +131,49 @@ const dialog = ref<DialogChainObject>()
 
 const isClient = ref(false)
 
-async function loginAndGetData() {
-  const credentials = await openLoginDialog()
-  const [loginError, loginResult] = await to(authStore.loginBibliography(credentials.account, credentials.password))
-  if (loginError) {
-    isLoading.value = false
-    throw loginError
-  }
-  dialog.value?.hide()
-
-  const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
-  if (getDataError) {
-    isLoading.value = false
-    throw getDataError
-  }
-  isLoading.value = false
-  return getDataResult
-}
-
 const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('bibliography', async () => {
   isLoading.value = true
   if (import.meta.server || !isClient.value)
     return
 
   if (!bibliographyToken.value) {
-    await loginAndGetData()
-  }
-  const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
-  if (getDataError) {
-    isLoading.value = false
-    $q.notify({
-      message: getDataError.message,
-      color: 'red',
-      position: 'center',
-    })
-
-    const result = await loginAndGetData()
-    if (result)
+    const [err, result] = await to(openLoginDialog())
+    if (result) {
+      $q.notify({
+        message: '登入成功',
+        color: 'green',
+        position: 'center',
+      })
+      dialog.value?.hide()
+      isLoading.value = false
       return result
+    }
   }
-  isLoading.value = false
-  return getDataResult
+  else {
+    const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
+    if (getDataError) {
+      isLoading.value = false
+      $q.notify({
+        message: getDataError.message,
+        color: 'red',
+        position: 'center',
+      })
+
+      const [err, result] = await to(openLoginDialog())
+      if (result) {
+        $q.notify({
+          message: '登入成功',
+          color: 'green',
+          position: 'center',
+        })
+        dialog.value?.hide()
+        isLoading.value = false
+        return result
+      }
+    }
+    isLoading.value = false
+    return getDataResult
+  }
 }, {
   transform: (data) => {
     if (!data?.data)
@@ -187,11 +190,30 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  console.log('bibliography', bibliography)
   if (!bibliography.value) {
-    console.log('test')
     dialog.value?.hide()
   }
+})
+
+function openLoginDialog() {
+  return new Promise<BibliographyData>((resolve, reject) => {
+    dialog.value = $q.dialog({
+      component: BaseLoginDialog,
+      componentProps: {
+        onGetBibliographyData(data: BibliographyData) {
+          resolve(data)
+        },
+      },
+    })
+  })
+}
+
+useSeoMeta({
+  title: '著作目錄',
+  description: '著作目錄',
+  keywords: '著作目錄',
+  ogTitle: '著作目錄',
+  ogDescription: '著作目錄',
 })
 
 // onUnmounted(() => {
@@ -212,33 +234,6 @@ onBeforeUnmount(() => {
 //     authStore.loginBibliography(credentials.account, credentials.password)
 //   }
 // })
-
-function openLoginDialog() {
-  return new Promise<{
-    account: string;
-    password: string;
-  }>((resolve, reject) => {
-    dialog.value = $q.dialog({
-      component: BaseLoginDialog,
-      componentProps: {
-        onSubmitCredentials(data: {
-          account: string;
-          password: string;
-        }) {
-          resolve(data)
-        },
-      },
-    })
-  })
-}
-
-useSeoMeta({
-  title: '著作目錄',
-  description: '著作目錄',
-  keywords: '著作目錄',
-  ogTitle: '著作目錄',
-  ogDescription: '著作目錄',
-})
 </script>
 
 <style scoped lang="sass">

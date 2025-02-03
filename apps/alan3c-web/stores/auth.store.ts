@@ -1,13 +1,17 @@
 import { defineStore } from 'pinia'
-import { useQuasar } from 'quasar'
 
 export const useAuthStore = defineStore('auth', () => {
-  const $q = useQuasar()
   const bibliographyToken = ref('')
+  const submittedPapersToken = ref('')
   onMounted(() => {
-    const tokenInSession = sessionStorage.getItem('bibliographyToken')
-    if (tokenInSession) {
-      bibliographyToken.value = tokenInSession
+    const bibliographyTokenInSession = sessionStorage.getItem('bibliographyToken')
+    if (bibliographyTokenInSession) {
+      bibliographyToken.value = bibliographyTokenInSession
+    }
+
+    const submittedPapersTokenInSession = sessionStorage.getItem('submittedPapersToken')
+    if (submittedPapersTokenInSession) {
+      submittedPapersToken.value = submittedPapersTokenInSession
     }
     // watch(bibliographyToken, (token) => {
     //   if (import.meta.server)
@@ -52,7 +56,7 @@ export const useAuthStore = defineStore('auth', () => {
     return result
   }
 
-  // 登入功能
+  // 登入 Bibliography 功能
   async function loginBibliography(email: string, password: string) {
     try {
       const response = await fetch(`${config.public.apiBaseUrl}/auth/login`, {
@@ -74,9 +78,32 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  // 登入 Submitted Papers 功能
+  async function loginSubmittedPapers(email: string, password: string) {
+    try {
+      const response = await fetch(`${config.public.apiBaseUrl}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
+
+      if (!response.ok)
+        throw new Error('登入失敗，請檢查帳號密碼')
+
+      const data = await response.json()
+      sessionStorage.setItem('submittedPapersToken', data.data.access_token)
+      bibliographyToken.value = data.data.access_token
+    }
+    catch (error) {
+      console.error('登入失敗:', error)
+      throw error
+    }
+  }
+
   return {
     bibliographyToken,
     loginBibliography,
+    loginSubmittedPapers,
     fetchBibliography,
     logoutBibliography,
   }
