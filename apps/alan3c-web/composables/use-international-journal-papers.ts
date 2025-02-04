@@ -61,7 +61,7 @@ export function useInternationalJournalPapersApi(
     formData.append('folder', folderId) // 指定上傳的資料夾
     formData.append('file', file)
 
-    const [err, result] = await to(internationalJournalPapersApi.value.uploadInternationalJournalPapersFile({
+    const [err, result] = await to(internationalJournalPapersApi.value.uploadFile({
       body: formData,
     }))
     if (err) {

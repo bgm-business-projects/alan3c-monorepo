@@ -1,7 +1,7 @@
 import { type AppRoute, initContract } from '@ts-rest/core'
 import { z } from 'zod'
 
-export const uploadInternationalJournalPapersFile = {
+export const uploadFile = {
   method: 'POST',
   path: `/files`,
   contentType: 'multipart/form-data',

@@ -34,3 +34,13 @@ export const downloadCountAPIResponseSchema = z.object({
 
 export type ArtificialIntelligence = z.infer<typeof artificialIntelligenceSchema>
 export type DownloadCountAPIResponse = z.infer<typeof downloadCountAPIResponseSchema>
+
+export interface ArtificialIntelligenceCreateInput {
+  reportDate: string;
+  thesisTitle: string;
+  academicJournal: string;
+  paperAuthor: string;
+  reporter: string;
+  video: File;
+  file: File;
+}

@@ -31,6 +31,7 @@
             label="密碼"
             lazy-rules
             outlined
+            type="password"
           />
         </div>
         <div class="p-.7rem">
@@ -46,7 +47,7 @@ import { useDialogPluginComponent } from 'quasar'
 import { ref } from 'vue'
 
 interface Props {
-  target: 'Bibliography' | 'SubmittedPapers' | 'InternationalJournalPapers' | 'InternationalJournalPapersCreator';
+  target: 'Bibliography' | 'SubmittedPapers' | 'InternationalJournalPapers' | 'InternationalJournalPapersCreator' | 'ImageProcessing' | 'ArtificialIntelligence';
 }
 const props = withDefaults(defineProps<Props>(), {
 })
@@ -57,6 +58,8 @@ const emit = defineEmits([
   'get-submitted-papers-data',
   'get-international-journal-papers',
   'login-international-journal-papers-creator',
+  'get-image-processing',
+  'get-artificial-intelligence',
 ])
 
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
@@ -68,7 +71,7 @@ const password = ref<string>('')
 const $q = useQuasar()
 const authStore = useAuthStore()
 
-async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'InternationalJournalPapers' | 'InternationalJournalPapersCreator') {
+async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'InternationalJournalPapers' | 'InternationalJournalPapersCreator' | 'ImageProcessing' | 'ArtificialIntelligence') {
   if (props.target === 'Bibliography') {
     const [loginError, loginResult] = await to(authStore.loginBibliography(`${account.value}@gmail.com`, password.value))
     if (loginError) {
@@ -77,6 +80,7 @@ async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'Int
         position: 'center',
         color: 'red',
       })
+      throw new Error(loginError.message)
     }
     const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
     if (getDataError) {
@@ -133,6 +137,42 @@ async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'Int
       throw new Error(loginError.message)
     }
     emit('login-international-journal-papers-creator', loginResult)
+  }
+
+  else if (props.target === 'ImageProcessing') {
+    const [loginError, loginResult] = await to(authStore.loginImageProcessing(`${account.value}@image.com`, password.value))
+    if (loginError) {
+      $q.notify({
+        message: loginError.message,
+        position: 'center',
+        color: 'red',
+      })
+      throw new Error(loginError.message)
+    }
+    const [getDataError, getDataResult] = await to(authStore.fetchImageProcessing())
+    if (getDataError) {
+      throw getDataError
+    }
+    emit('get-image-processing', getDataResult)
+    return getDataResult
+  }
+
+  else if (props.target === 'ArtificialIntelligence') {
+    const [loginError, loginResult] = await to(authStore.loginArtificialIntelligence(`${account.value}@artificial.com`, password.value))
+    if (loginError) {
+      $q.notify({
+        message: loginError.message,
+        position: 'center',
+        color: 'red',
+      })
+      throw new Error(loginError.message)
+    }
+    const [getDataError, getDataResult] = await to(authStore.fetchArtificialIntelligence())
+    if (getDataError) {
+      throw getDataError
+    }
+    emit('get-artificial-intelligence', getDataResult)
+    return getDataResult
   }
 }
 </script>
