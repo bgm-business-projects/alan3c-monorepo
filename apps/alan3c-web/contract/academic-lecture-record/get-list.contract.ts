@@ -10,6 +10,7 @@ export const getAcademicLectureRecord = {
     'limit': z.string().optional(),
     'offset': z.string().optional(),
     'filter[showOnAcademicLectureRecord][_eq]': z.boolean().default(true),
+    'filter[translations][name][_contains]': z.string().optional(),
     'sort': z.string().default('-lectureDate'),
     'fields': z.string().default('*,translations.*'),
   }),

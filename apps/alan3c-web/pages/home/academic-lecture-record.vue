@@ -23,6 +23,15 @@
         {{ t('home.scholarlyTalks') }}
       </h1>
     </div>
+    <div class="max-width">
+      <div class="flex">
+        <q-input v-model="keyword" outlined :placeholder="t('search')" dense @keyup.enter="refreshAcademicLectureRecord()">
+          <template #prepend>
+            <q-icon name="search" class="text-16px" />
+          </template>
+        </q-input>
+      </div>
+    </div>
 
     <div class="max-width custom-grid">
       <div class="text-lg font-medium">
@@ -113,6 +122,8 @@ import { useAcademicLectureRecordApi } from '../../composables/use-academic-lect
 // not need if you are using auto import
 const dayjs = useDayjs()
 
+const keyword = ref('')
+
 const useAcademicLectureRecord = useAcademicLectureRecordApi()
 const { locale, t } = useI18n()
 
@@ -125,8 +136,9 @@ const { data: academicLectureRecord, refresh: refreshAcademicLectureRecord } = u
   isLoading.value = true
   const [err, result] = await to (useAcademicLectureRecord.findList({
     query: {
-      limit: `${limit.value}`,
-      offset: `${offset.value}`,
+      'limit': `${limit.value}`,
+      'offset': `${offset.value}`,
+      'filter[translations][name][_contains]': keyword.value ? keyword.value : undefined,
     },
   }))
   if (err) {
