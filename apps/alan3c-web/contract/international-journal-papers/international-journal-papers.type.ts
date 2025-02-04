@@ -33,7 +33,7 @@ export interface InternationalJournalPapersCreateInput {
   vol: string;
   no: string;
   pp: string;
-  year: string;
+  year: number;
   month: string;
   day: string;
   status: string;

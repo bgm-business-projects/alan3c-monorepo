@@ -49,6 +49,13 @@ export const useAuthStore = defineStore('auth', () => {
     // Cookies.remove('directus_token')
   }
 
+  // 登出  Submitted Papers 功能
+  const logoutInternationalJournalPapersCreator = () => {
+    internationalJournalPapersCreatorToken.value = ''
+    sessionStorage.removeItem('internationalJournalPapersToken')
+    // Cookies.remove('directus_token')
+  }
+
   const config = useRuntimeConfig()
 
   const useBibliography = useBibliographyApi(bibliographyToken)
@@ -161,7 +168,17 @@ export const useAuthStore = defineStore('auth', () => {
         throw new Error('登入失敗，請檢查帳號密碼')
 
       const data = await response.json()
-      console.log('data', data)
+
+      const useInternationalJournalPapersCreator = useInternationalJournalPapersApi(data.data.access_token)
+
+      const [err, result] = await to(useInternationalJournalPapersCreator.checkUser())
+      if (err) {
+        // logoutBibliography()
+        throw new Error(err.message)
+      }
+      if (result.body?.data?.id !== '94695a57-cecd-4173-9962-0dd05657d99c') {
+        throw new Error('身份驗證錯誤，無建立資料權限')
+      }
       sessionStorage.setItem('internationalJournalPapersToken', data.data.access_token)
       internationalJournalPapersCreatorToken.value = data.data.access_token
     }
@@ -173,30 +190,32 @@ export const useAuthStore = defineStore('auth', () => {
 
   // 用於測試 International Journal Papers Creator Token 是否過期
 
-  const useInternationalJournalPapersCreator = useInternationalJournalPapersApi(internationalJournalPapersCreatorToken ?? bibliographyToken)
-  async function fetchInternationalJournalPapersCreator() {
-    if (!submittedPapersToken.value)
-      return undefined
-
-    const [err, result] = await to(useInternationalJournalPapersCreator.findList())
-
-    if (err) {
-      // logoutBibliography()
-      throw new Error(err.message)
-    }
-    return result
-  }
-
-  async function checkInternationalJournalPapersUser() {
-    const test = internationalJournalPapersCreatorToken.value ?? bibliographyToken.value
-    console.log('test', test)
+  async function checkInternationalJournalPapersUser(token: globalThis.Ref<string>) {
+    const useInternationalJournalPapersCreator = useInternationalJournalPapersApi(token)
     const [err, result] = await to(useInternationalJournalPapersCreator.checkUser())
     if (err) {
       // logoutBibliography()
+      console.log('checkErr', err)
       throw new Error(err.message)
     }
+    if (result.body?.data?.id !== '94695a57-cecd-4173-9962-0dd05657d99c') {
+      throw new Error('身份驗證錯誤，無建立資料權限')
+    }
+    console.log('checkResult', result)
     return result
   }
+  // async function fetchInternationalJournalPapersCreator() {
+  //   if (!submittedPapersToken.value)
+  //     return undefined
+
+  //   const [err, result] = await to(useInternationalJournalPapersCreator.findList())
+
+  //   if (err) {
+  //     // logoutBibliography()
+  //     throw new Error(err.message)
+  //   }
+  //   return result
+  // }
 
   return {
     bibliographyToken,
@@ -208,9 +227,10 @@ export const useAuthStore = defineStore('auth', () => {
     fetchBibliography,
     fetchSubmittedPapers,
     fetchInternationalJournalPapers,
-    fetchInternationalJournalPapersCreator,
+    // fetchInternationalJournalPapersCreator,
     logoutBibliography,
     logoutSubmittedPapers,
     checkInternationalJournalPapersUser,
+    logoutInternationalJournalPapersCreator,
   }
 })

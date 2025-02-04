@@ -1,4 +1,5 @@
 import type { ClientInferRequest } from '@ts-rest/core'
+import type { InternationalJournalPapersCreateInput } from '~/contract/international-journal-papers/international-journal-papers.type'
 import { computed } from 'vue'
 import { commonContract } from '~/contract/common'
 import { internationalJournalPapersContract } from '../contract/international-journal-papers'
@@ -66,21 +67,8 @@ export function useInternationalJournalPapersApi(
     if (err) {
       throw new Error(err.message)
     }
-    return result.body.json().data?.id
-  }
-
-  interface InternationalJournalPapersCreateInput {
-    author: string;
-    titleOfThePaper: string;
-    journalName: string;
-    vol: string;
-    no: string;
-    pp: string;
-    year: string;
-    month: string;
-    day: string;
-    status: string;
-    file: File;
+    // console.log('result.body', result.body.data?.id)
+    return result.body.data?.id
   }
 
   async function createData(data: Partial<InternationalJournalPapersCreateInput>) {
@@ -92,11 +80,11 @@ export function useInternationalJournalPapersApi(
 
       const inputData = {
         ...data,
-        file: uploadFileResult,
+        file: uploadFileResult as string | undefined,
       }
 
       const [err, result] = await to(internationalJournalPapersApi.value.createInternationalJournalPapers({
-        body: JSON.stringify(inputData),
+        body: inputData,
       }))
       if (err) {
         throw new Error(err.message)
@@ -104,8 +92,12 @@ export function useInternationalJournalPapersApi(
       return result
     }
     else {
+      const inputData = {
+        ...data,
+        file: undefined,
+      }
       const [err, result] = await to(internationalJournalPapersApi.value.createInternationalJournalPapers({
-        body: JSON.stringify(data),
+        body: inputData,
       }))
       if (err) {
         throw new Error(err.message)

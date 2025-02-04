@@ -1,12 +1,21 @@
 <template>
-  <q-dialog ref="dialogRef" persistent @hide="onDialogHide">
+  <q-dialog
+    ref="dialogRef"
+    :persistent="props.target !== 'InternationalJournalPapersCreator'"
+    @hide="onDialogHide"
+  >
     <q-card class="q-dialog-plugin p-1rem">
       <q-form
         @submit="loginAndGetData(props.target)"
       >
         <div class="flex flex-col gap-1rem p-.7rem">
           <div class="text-lg font-medium">
-            此頁面需驗證身份
+            <template v-if="props.target === 'InternationalJournalPapersCreator'">
+              新增資料需驗證身份
+            </template>
+            <template v-else>
+              此頁面需驗證身份
+            </template>
           </div>
           <div class="text-#666">
             請輸入帳號密碼
@@ -37,7 +46,7 @@ import { useDialogPluginComponent } from 'quasar'
 import { ref } from 'vue'
 
 interface Props {
-  target: 'Bibliography' | 'SubmittedPapers';
+  target: 'Bibliography' | 'SubmittedPapers' | 'InternationalJournalPapers' | 'InternationalJournalPapersCreator';
 }
 const props = withDefaults(defineProps<Props>(), {
 })
@@ -59,8 +68,8 @@ const password = ref<string>('')
 const $q = useQuasar()
 const authStore = useAuthStore()
 
-async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'InternationalJournalPapers') {
-  if (target === 'Bibliography') {
+async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'InternationalJournalPapers' | 'InternationalJournalPapersCreator') {
+  if (props.target === 'Bibliography') {
     const [loginError, loginResult] = await to(authStore.loginBibliography(`${account.value}@gmail.com`, password.value))
     if (loginError) {
       $q.notify({
@@ -77,7 +86,7 @@ async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'Int
     return getDataResult
   }
 
-  else if (target === 'SubmittedPapers') {
+  else if (props.target === 'SubmittedPapers') {
     const [loginError, loginResult] = await to(authStore.loginSubmittedPapers(`${account.value}@yahoo.com.tw`, password.value))
     if (loginError) {
       $q.notify({
@@ -95,7 +104,7 @@ async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'Int
     return getDataResult
   }
 
-  else if (target === 'InternationalJournalPapers') {
+  else if (props.target === 'InternationalJournalPapers') {
     const [loginError, loginResult] = await to(authStore.loginBibliography(`${account.value}@gmail.com`, password.value))
     if (loginError) {
       $q.notify({
@@ -113,7 +122,7 @@ async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'Int
     return getDataResult
   }
 
-  else if (target === 'InternationalJournalPapersCreator') {
+  else if (props.target === 'InternationalJournalPapersCreator') {
     const [loginError, loginResult] = await to(authStore.loginInternationalJournalPapersCreator(`${account.value}@gmail.com`, password.value))
     if (loginError) {
       $q.notify({

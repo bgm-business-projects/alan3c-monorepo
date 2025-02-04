@@ -2,7 +2,7 @@
   <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card class="q-dialog-plugin !rounded-.8rem">
       <q-form
-        @submit="createInternationalJournalPapers(data)"
+        @submit="createInternationalJournalPapers(transferData)"
       >
         <div class="flex flex-col gap-1rem">
           <div class="text-lg font-medium bg-primary py-.8rem px-1.5rem text-white">
@@ -30,7 +30,7 @@
             <div>檔案</div>
             <q-file v-model="data.file" outlined label="檔案" dense />
             <div>狀態</div>
-            <q-select v-model="data.status" outlined :options="options" dense />
+            <q-select v-model="status" outlined :options="options" dense />
           </div>
           <div class="p-1.5rem pt-0 flex justify-end">
             <q-btn label="送出" type="submit" outline />
@@ -58,19 +58,9 @@ const emit = defineEmits([
 
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
 
-const useInternationalJournalPapers = useInternationalJournalPapersApi()
-
-// const author = ref('')
-// const titleOfThePaper = ref('')
-// const journalName = ref('')
-// const vol = ref('')
-// const no = ref('')
-// const pp = ref('')
-// const year = ref('')
-// const month = ref('')
-// const day = ref('')
-// const status = ref('')
-// const file = ref()
+const autStore = useAuthStore()
+const { internationalJournalPapersCreatorToken } = storeToRefs(autStore)
+const useInternationalJournalPapers = useInternationalJournalPapersApi(internationalJournalPapersCreatorToken)
 
 const data = ref<Partial<InternationalJournalPapersCreateInput>>({
   author: '',
@@ -79,12 +69,13 @@ const data = ref<Partial<InternationalJournalPapersCreateInput>>({
   vol: '',
   no: '',
   pp: '',
-  year: '',
+  year: undefined,
   month: '',
   day: '',
-  status: '',
   file: undefined,
 })
+
+const status = ref()
 
 const options = [{
   value: 'publication',
@@ -93,6 +84,13 @@ const options = [{
   value: 'onlyAccepted',
   label: '僅接受',
 }]
+
+const transferData = computed(() => {
+  return {
+    ...data.value,
+    status: status.value?.value,
+  }
+})
 
 // async function uploadFile(file: File) {
 //   const [error, result] = await to(useInternationalJournalPapers.uploadFile(file))

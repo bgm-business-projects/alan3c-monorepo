@@ -75,7 +75,7 @@ import { combineImageUrl } from '../../../utils/combine-image-url'
 
 const { locale, t } = useI18n()
 
-const useInternationalJournalPapers = useInternationalJournalPapersApi()
+// const useInternationalJournalPapers = useInternationalJournalPapersApi()
 
 const authStore = useAuthStore()
 const { bibliographyToken, internationalJournalPapersCreatorToken } = storeToRefs(authStore)
@@ -176,7 +176,7 @@ function openCreateInternationalJournalPapersDialog() {
     dialog.value = $q.dialog({
       component: CreateDataDialog,
       componentProps: {
-        onUploadFile(data: any) {
+        onCreateData(data: any) {
           resolve(data)
         },
       },
@@ -185,88 +185,51 @@ function openCreateInternationalJournalPapersDialog() {
 }
 
 async function openCreatorDialog() {
+  // 當沒有登入過建立資料身份
   if (!internationalJournalPapersCreatorToken.value) {
+    // 登入建立資料身份
     const [loginErr, loginResult] = await to(openLoginInternationalJournalPapersCreatorDialog())
     if (loginErr) {
       throw new Error(loginErr.message)
     }
-    const [checkUserErr, checkUserResult] = await to(authStore.checkInternationalJournalPapersUser())
-    if (checkUserErr) {
-      console.log('checkUserErr', checkUserErr)
-    }
-    console.log('checkUserResult', checkUserResult)
-    if (loginResult) {
-      $q.notify({
-        message: '登入成功',
-        color: 'green',
-        position: 'center',
-      })
-      dialog.value?.hide()
+    dialog.value?.hide()
 
-      const [creatorError, creatorResult] = await to(openCreateInternationalJournalPapersDialog())
-      if (creatorError) {
-        throw new Error(creatorError.message)
-      }
-      $q.notify({
-        message: '新增成功',
-        color: 'green',
-        position: 'center',
-      })
+    const [creatorError, creatorResult] = await to(openCreateInternationalJournalPapersDialog())
+    if (creatorError) {
+      throw new Error(creatorError.message)
     }
+    $q.notify({
+      message: '新增成功',
+      color: 'green',
+      position: 'center',
+    })
+    dialog.value?.hide()
   }
   else {
-    const [fetchError, fetchResult] = await to(authStore.fetchInternationalJournalPapersCreator())
-    if (fetchError) {
-      $q.notify({
-        message: fetchError.message,
-        position: 'center',
-        color: 'red',
-      })
-      const [loginErr, loginResult] = await to(openLoginInternationalJournalPapersCreatorDialog())
-      if (loginErr) {
-        throw new Error(loginErr.message)
-      }
-      if (loginResult) {
-        $q.notify({
-          message: '登入成功',
-          color: 'green',
-          position: 'center',
-        })
-        dialog.value?.hide()
-
-        const [creatorError, creatorResult] = await to(openCreateInternationalJournalPapersDialog())
-        if (creatorError) {
-          throw new Error(creatorError.message)
-        }
-        $q.notify({
-          message: '新增成功',
-          color: 'green',
-          position: 'center',
-        })
-        dialog.value?.hide()
-      }
-    }
-    else {
-      const [creatorError, creatorResult] = await to(openCreateInternationalJournalPapersDialog())
-      if (creatorError) {
-        throw new Error(creatorError.message)
-      }
-      $q.notify({
-        message: '新增成功',
-        color: 'green',
-        position: 'center',
-      })
+    const [checkError, checkResult] = await to(authStore.checkInternationalJournalPapersUser(internationalJournalPapersCreatorToken))
+    if (checkError) {
+      authStore.logoutInternationalJournalPapersCreator()
       dialog.value?.hide()
+      $q.notify({
+        message: '請重新登入',
+        color: 'red',
+        position: 'center',
+      })
+      openCreatorDialog()
+      return
     }
+    const [creatorError, creatorResult] = await to(openCreateInternationalJournalPapersDialog())
+    if (creatorError) {
+      throw new Error(creatorError.message)
+    }
+    $q.notify({
+      message: '新增成功',
+      color: 'green',
+      position: 'center',
+    })
+    dialog.value?.hide()
   }
 }
-
-// const $q = useQuasar()
-// function openPasswordDialog() {
-//   $q.dialog({
-//     component: BaseLoginDialog,
-//   })
-// }
 
 useSeoMeta({
   title: t('bibliography.internationalJournalPapers'),

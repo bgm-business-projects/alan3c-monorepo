@@ -5,7 +5,20 @@ import { internationalJournalPapersSchema } from './international-journal-papers
 export const createInternationalJournalPapers = {
   method: 'POST',
   path: `/items/internationalJournalPapers`,
-  body: z.string(),
+  contentType: 'application/json',
+  body: z.object({
+    author: z.string().optional(),
+    titleOfThePaper: z.string().optional(),
+    journalName: z.string().optional(),
+    vol: z.string().optional(),
+    no: z.string().optional(),
+    pp: z.string().optional(),
+    year: z.number().optional(),
+    month: z.string().optional(),
+    day: z.string().optional(),
+    status: z.string().optional(),
+    file: z.string().optional(),
+  }),
   responses: {
     200: internationalJournalPapersSchema,
   },
