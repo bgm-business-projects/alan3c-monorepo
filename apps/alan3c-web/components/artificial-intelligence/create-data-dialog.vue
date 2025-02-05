@@ -2,6 +2,7 @@
   <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card class="q-dialog-plugin !rounded-.8rem">
       <q-form
+        v-if="!isLoading"
         @submit="createArtificialIntelligence(data)"
       >
         <div class="flex flex-col gap-1rem">
@@ -38,6 +39,9 @@
           </div>
         </div>
       </q-form>
+      <div v-else class="min-h-15rem relative">
+        <q-inner-loading :showing="isLoading" label="Please wait..." />
+      </div>
     </q-card>
   </q-dialog>
 </template>
@@ -58,6 +62,8 @@ const emit = defineEmits([
 
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
 
+const isLoading = ref(false)
+
 const autStore = useAuthStore()
 const { artificialIntelligenceCreatorToken } = storeToRefs(autStore)
 const useArtificialIntelligence = useArtificialIntelligenceApi(artificialIntelligenceCreatorToken)
@@ -75,9 +81,11 @@ const data = ref({
 async function createArtificialIntelligence(inputData: typeof data.value) {
   const [createDataErr, createDataResult] = await to(useArtificialIntelligence.createData(inputData))
   if (createDataErr) {
+    isLoading.value = false
     throw new Error(createDataErr.message)
   }
   emit('create-data', createDataResult)
+  isLoading.value = false
   return createDataResult
 }
 </script>

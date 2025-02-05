@@ -8,6 +8,7 @@
           </h1>
         </div>
         <div v-if="!isCreatorLoggedIn" class="flex flex-col gap-1rem py-1rem px-1.5rem border-solid border-1px border-gray-300 rounded-.5rem mb-.5rem">
+          <q-inner-loading :showing="isLoginLoading" label="Please wait..." />
           <div class="text-md font-medium tracking-.08rem">
             上傳資料資格身份
           </div>
@@ -198,6 +199,9 @@ const $q = useQuasar()
 const useArtificialIntelligence = useArtificialIntelligenceApi()
 
 const isLoading = ref(false)
+
+const isLoginLoading = ref(false)
+
 const isClient = ref(false)
 
 const limit = ref(15)
@@ -388,10 +392,13 @@ async function uploadData() {
 }
 
 async function loginCreatorAccount() {
+  isLoginLoading.value = true
   const [err, result] = await to(authStore.loginArtificialIntelligenceCreator(`${account.value}@yahoo.com.tw`, password.value))
   if (err) {
+    isLoginLoading.value = false
     throw new Error(err.message)
   }
+  isLoginLoading.value = false
   isCreatorLoggedIn.value = true
 }
 

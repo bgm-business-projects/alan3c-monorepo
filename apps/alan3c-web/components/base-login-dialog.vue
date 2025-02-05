@@ -6,6 +6,7 @@
   >
     <q-card class="q-dialog-plugin p-1rem">
       <q-form
+        v-if="!isLoading"
         @submit="loginAndGetData(props.target)"
       >
         <div class="flex flex-col gap-1rem p-.7rem">
@@ -38,6 +39,9 @@
           <q-btn label="送出" type="submit" outline />
         </div>
       </q-form>
+      <div v-else class="min-h-15rem relative">
+        <q-inner-loading :showing="isLoading" label="Please wait..." />
+      </div>
     </q-card>
   </q-dialog>
 </template>
@@ -64,14 +68,16 @@ const emit = defineEmits([
 
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
 
-// 處理登入
 const account = ref<string>('')
 const password = ref<string>('')
 
 const $q = useQuasar()
 const authStore = useAuthStore()
 
+const isLoading = ref(false)
+
 async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'InternationalJournalPapers' | 'InternationalJournalPapersCreator' | 'ImageProcessing' | 'ArtificialIntelligence') {
+  isLoading.value = true
   if (props.target === 'Bibliography') {
     const [loginError, loginResult] = await to(authStore.loginBibliography(`${account.value}@gmail.com`, password.value))
     if (loginError) {
@@ -80,13 +86,16 @@ async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'Int
         position: 'center',
         color: 'red',
       })
+      isLoading.value = false
       throw new Error(loginError.message)
     }
     const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
     if (getDataError) {
+      isLoading.value = false
       throw getDataError
     }
     emit('get-bibliography-data', getDataResult)
+    isLoading.value = false
     return getDataResult
   }
 
@@ -98,13 +107,17 @@ async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'Int
         position: 'center',
         color: 'red',
       })
+      isLoading.value = false
+      throw new Error(loginError.message)
     }
     const [getDataError, getDataResult] = await to(authStore.fetchSubmittedPapers())
 
     if (getDataError) {
+      isLoading.value = false
       throw getDataError
     }
     emit('get-submitted-papers-data', getDataResult)
+    isLoading.value = false
     return getDataResult
   }
 
@@ -116,13 +129,17 @@ async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'Int
         position: 'center',
         color: 'red',
       })
+      isLoading.value = false
+      throw new Error(loginError.message)
     }
     const [getDataError, getDataResult] = await to(authStore.fetchInternationalJournalPapers())
 
     if (getDataError) {
+      isLoading.value = false
       throw getDataError
     }
     emit('get-international-journal-papers', getDataResult)
+    isLoading.value = false
     return getDataResult
   }
 
@@ -134,9 +151,11 @@ async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'Int
         position: 'center',
         color: 'red',
       })
+      isLoading.value = false
       throw new Error(loginError.message)
     }
     emit('login-international-journal-papers-creator', loginResult)
+    isLoading.value = false
   }
 
   else if (props.target === 'ImageProcessing') {
@@ -147,13 +166,16 @@ async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'Int
         position: 'center',
         color: 'red',
       })
+      isLoading.value = false
       throw new Error(loginError.message)
     }
     const [getDataError, getDataResult] = await to(authStore.fetchImageProcessing())
     if (getDataError) {
+      isLoading.value = false
       throw getDataError
     }
     emit('get-image-processing', getDataResult)
+    isLoading.value = false
     return getDataResult
   }
 
@@ -165,13 +187,16 @@ async function loginAndGetData(target: 'Bibliography' | 'SubmittedPapers' | 'Int
         position: 'center',
         color: 'red',
       })
+      isLoading.value = false
       throw new Error(loginError.message)
     }
     const [getDataError, getDataResult] = await to(authStore.fetchArtificialIntelligence())
     if (getDataError) {
+      isLoading.value = false
       throw getDataError
     }
     emit('get-artificial-intelligence', getDataResult)
+    isLoading.value = false
     return getDataResult
   }
 }

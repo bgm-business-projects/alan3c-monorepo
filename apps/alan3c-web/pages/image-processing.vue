@@ -8,6 +8,7 @@
           </h1>
         </div>
         <div v-if="!isCreatorLoggedIn" class="flex flex-col gap-1rem py-1rem px-1.5rem border-solid border-1px border-gray-300 rounded-.5rem mb-.5rem">
+          <q-inner-loading :showing="isLoginLoading" label="Please wait..." />
           <div class="text-md font-medium tracking-.08rem">
             上傳資料資格身份
           </div>
@@ -197,6 +198,9 @@ const $q = useQuasar()
 const useImageProcessing = useImageProcessingApi()
 
 const isLoading = ref(false)
+
+const isLoginLoading = ref(false)
+
 const isClient = ref(false)
 
 const limit = ref(15)
@@ -386,56 +390,14 @@ async function uploadData() {
 }
 
 async function loginCreatorAccount() {
+  isLoginLoading.value = true
   const [err, result] = await to(authStore.loginImageProcessingCreator(`${account.value}@gmail.com`, password.value))
   if (err) {
+    isLoginLoading.value = false
     throw new Error(err.message)
   }
+  isLoginLoading.value = false
   isCreatorLoggedIn.value = true
-
-  // 當沒有登入過建立資料身份
-  // if (!internationalJournalPapersCreatorToken.value) {
-  //   // 登入建立資料身份
-  //   const [loginErr, loginResult] = await to(openLoginInternationalJournalPapersCreatorDialog())
-  //   if (loginErr) {
-  //     throw new Error(loginErr.message)
-  //   }
-  //   dialog.value?.hide()
-
-  //   const [creatorError, creatorResult] = await to(openCreateInternationalJournalPapersDialog())
-  //   if (creatorError) {
-  //     throw new Error(creatorError.message)
-  //   }
-  //   $q.notify({
-  //     message: '新增成功',
-  //     color: 'green',
-  //     position: 'center',
-  //   })
-  //   dialog.value?.hide()
-  // }
-  // else {
-  //   const [checkError, checkResult] = await to(authStore.checkInternationalJournalPapersUser(internationalJournalPapersCreatorToken))
-  //   if (checkError) {
-  //     authStore.logoutInternationalJournalPapersCreator()
-  //     dialog.value?.hide()
-  //     $q.notify({
-  //       message: '請重新登入',
-  //       color: 'red',
-  //       position: 'center',
-  //     })
-  //     openCreatorDialog()
-  //     return
-  //   }
-  //   const [creatorError, creatorResult] = await to(openCreateInternationalJournalPapersDialog())
-  //   if (creatorError) {
-  //     throw new Error(creatorError.message)
-  //   }
-  //   $q.notify({
-  //     message: '新增成功',
-  //     color: 'green',
-  //     position: 'center',
-  //   })
-  //   dialog.value?.hide()
-  // }
 }
 
 function logout() {

@@ -58,9 +58,11 @@
 </template>
 
 <script setup lang="ts">
+import type { DialogChainObject } from 'quasar'
 import { pipe } from 'remeda'
 import BaseWysiwygPreview from '~/components/wysiwyg-preview/base-wysiwyg-preview.vue'
-import { isBookChapters, isDomesticMagazineArticles, isGuestEditorial, isInternationalConferencePapers, isLocalConferencePapers, isLocalJournalPapers, isTechnicalReports } from '~/contract/bibliography/bibliography.type'
+import { type BibliographyData, isBookChapters, isDomesticMagazineArticles, isGuestEditorial, isInternationalConferencePapers, isLocalConferencePapers, isLocalJournalPapers, isTechnicalReports } from '~/contract/bibliography/bibliography.type'
+import BaseLoginDialog from '../../../components/base-login-dialog.vue'
 
 const { locale, t } = useI18n()
 
@@ -70,19 +72,59 @@ const route = useRoute()
 
 const localePath = useLocalePath()
 
+const $q = useQuasar()
+
+const authStore = useAuthStore()
+const { bibliographyToken } = storeToRefs(authStore)
+
 const isLoading = ref(false)
+const dialog = ref<DialogChainObject>()
+
+const isClient = ref(false)
 
 const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData(`bibliography-${route.params.id}`, async () => {
   isLoading.value = true
-  const [err, result] = await to (useBibliography.findOne({
-    query: {},
-  }))
-  if (err) {
-    isLoading.value = false
-    return Promise.reject(err)
+  if (import.meta.server || !isClient.value)
+    return
+
+  if (!bibliographyToken.value) {
+    const [err, result] = await to(openLoginDialog())
+    if (result) {
+      $q.notify({
+        message: '登入成功',
+        color: 'green',
+        position: 'center',
+      })
+      dialog.value?.hide()
+      isLoading.value = false
+      return result
+    }
   }
-  isLoading.value = false
-  return result
+  else {
+    const [getDataError, getDataResult] = await to(authStore.fetchBibliography())
+    if (getDataError) {
+      isLoading.value = false
+      $q.notify({
+        message: getDataError.message,
+        color: 'red',
+        position: 'center',
+      })
+
+      const [err, result] = await to(openLoginDialog())
+      if (result) {
+        $q.notify({
+          message: '登入成功',
+          color: 'green',
+          position: 'center',
+        })
+        dialog.value?.hide()
+        isLoading.value = false
+        return result
+      }
+    }
+    isLoading.value = false
+    return getDataResult
+  }
 }, {
   transform: (data) => {
     if (!data?.data)
@@ -120,8 +162,32 @@ const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData(`b
       },
     )
   },
-  watch: [locale],
+  watch: [locale, isClient],
 })
+
+onMounted(() => {
+  isClient.value = true
+})
+
+onBeforeUnmount(() => {
+  if (!bibliography.value) {
+    dialog.value?.hide()
+  }
+})
+
+function openLoginDialog() {
+  return new Promise<BibliographyData>((resolve, reject) => {
+    dialog.value = $q.dialog({
+      component: BaseLoginDialog,
+      componentProps: {
+        target: 'Bibliography',
+        onGetBibliographyData(data: BibliographyData) {
+          resolve(data)
+        },
+      },
+    })
+  })
+}
 
 useSeoMeta({
   title: t(`bibliography.${route.params.id}`),

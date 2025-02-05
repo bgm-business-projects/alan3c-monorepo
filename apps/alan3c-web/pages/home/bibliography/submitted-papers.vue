@@ -75,7 +75,7 @@
                 {{ item.year }}
               </h2>
               <q-separator />
-              <base-wysiwyg-preview class="w-full" :html-code="item.translations.content" />
+              <base-wysiwyg-preview v-if="item.translations?.content" class="w-full" :html-code="item.translations.content" />
             </div>
           </template>
         </template>

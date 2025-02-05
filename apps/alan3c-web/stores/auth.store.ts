@@ -274,14 +274,11 @@ export const useAuthStore = defineStore('auth', () => {
     const useInternationalJournalPapersCreator = useInternationalJournalPapersApi(token)
     const [err, result] = await to(useInternationalJournalPapersCreator.checkUser())
     if (err) {
-      // logoutBibliography()
-      console.log('checkErr', err)
       throw new Error(err.message)
     }
     if (result.body?.data?.id !== '94695a57-cecd-4173-9962-0dd05657d99c') {
       throw new Error('身份驗證錯誤，無建立資料權限')
     }
-    console.log('checkResult', result)
     return result
   }
 
@@ -334,14 +331,11 @@ export const useAuthStore = defineStore('auth', () => {
     const useImageProcessingCreator = useImageProcessingApi(token)
     const [err, result] = await to(useImageProcessingCreator.checkUser())
     if (err) {
-      // logoutBibliography()
-      console.log('checkErr', err)
       throw new Error(err.message)
     }
     if (result.body?.data?.id !== '614a40cc-f9dd-43a3-b5f1-7309fd8d22f9') {
       throw new Error('身份驗證錯誤，無建立資料權限')
     }
-    console.log('checkResult', result)
     return result
   }
 
@@ -444,7 +438,6 @@ export const useAuthStore = defineStore('auth', () => {
     fetchInternationalJournalPapers,
     fetchImageProcessing,
     fetchArtificialIntelligence,
-    // fetchInternationalJournalPapersCreator,
     logoutBibliography,
     logoutSubmittedPapers,
     logoutImageProcessingCreator,
@@ -455,5 +448,6 @@ export const useAuthStore = defineStore('auth', () => {
     logoutInternationalJournalPapersCreator,
     loginImageProcessingCreator,
     loginArtificialIntelligenceCreator,
+    // fetchInternationalJournalPapersCreator,
   }
 })

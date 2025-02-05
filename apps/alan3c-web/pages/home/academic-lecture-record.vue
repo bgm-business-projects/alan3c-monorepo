@@ -138,7 +138,7 @@ const { data: academicLectureRecord, refresh: refreshAcademicLectureRecord } = u
     query: {
       'limit': `${limit.value}`,
       'offset': `${offset.value}`,
-      'filter[translations][name][_contains]': keyword.value ? keyword.value : undefined,
+      'filter[translations][name][_icontains]': keyword.value ? keyword.value : undefined,
     },
   }))
   if (err) {

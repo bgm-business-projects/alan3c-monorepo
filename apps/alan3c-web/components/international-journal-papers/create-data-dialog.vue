@@ -2,6 +2,7 @@
   <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card class="q-dialog-plugin !rounded-.8rem">
       <q-form
+        v-if="!isLoading"
         @submit="createInternationalJournalPapers(transferData)"
       >
         <div class="flex flex-col gap-1rem">
@@ -22,11 +23,11 @@
             <div>pp.</div>
             <q-input v-model="data.pp" outlined dense />
             <div>年</div>
-            <q-input v-model="data.year" outlined dense placeholder="( YYYY )" />
+            <q-input v-model="data.year" outlined dense placeholder="YYYY" />
             <div>月</div>
-            <q-input v-model="data.month" outlined dense placeholder="( MM )" />
+            <q-input v-model="data.month" outlined dense placeholder="MM" />
             <div>日</div>
-            <q-input v-model="data.day" outlined dense placeholder="( DD )" />
+            <q-input v-model="data.day" outlined dense placeholder="DD" />
             <div>檔案</div>
             <q-file v-model="data.file" outlined label="檔案" dense />
             <div>狀態</div>
@@ -37,6 +38,9 @@
           </div>
         </div>
       </q-form>
+      <div v-else class="min-h-15rem relative">
+        <q-inner-loading :showing="isLoading" label="Please wait..." />
+      </div>
     </q-card>
   </q-dialog>
 </template>
@@ -57,6 +61,8 @@ const emit = defineEmits([
 ])
 
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+
+const isLoading = ref(false)
 
 const autStore = useAuthStore()
 const { internationalJournalPapersCreatorToken } = storeToRefs(autStore)
@@ -102,11 +108,14 @@ const transferData = computed(() => {
 // }
 
 async function createInternationalJournalPapers(data: Partial<InternationalJournalPapersCreateInput>) {
+  isLoading.value = true
   const [createDataErr, createDataResult] = await to(useInternationalJournalPapers.createData(data))
   if (createDataErr) {
+    isLoading.value = false
     throw new Error(createDataErr.message)
   }
   emit('create-data', createDataResult)
+  isLoading.value = false
   return createDataResult
 }
 </script>
