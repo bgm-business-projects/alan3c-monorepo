@@ -121,7 +121,7 @@
               :name="item.primeOfLife_id.translations.find(item => item.primeOfLifeLanguages_code === locale)?.name ?? '無標題'"
               class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
             />
-            {{ lifeSnippets?.target?.data.primeOfLife[0].primeOfLife_id.translations.find(item => item.primeOfLifeLanguages_code === locale)?.name }}
+            <!-- {{ lifeSnippets?.target?.data.primeOfLife[0].primeOfLife_id.translations.find(item => item.primeOfLifeLanguages_code === locale)?.name }} -->
           </div>
           <div
             v-if="isAdministrativeYearsDeep(lifeSnippets?.target)"

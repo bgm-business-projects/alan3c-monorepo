@@ -1,27 +1,30 @@
 <template>
   <div class="flex gap-2rem w-full flex-col lg:flex-row">
     <div class="w-150px aspect-3/4 overflow-hidden flex justify-center items-center">
-      <nuxt-img class="min-w-full min-h-full object-cover" :src="combineImageUrl(props.data.mainImage.filename_disk)" />
+      <nuxt-img v-if="props.data?.mainImage?.filename_disk" class="min-w-full min-h-full object-cover" :src="combineImageUrl(props.data?.mainImage?.filename_disk)" />
+      <div v-else class="flex justify-center items-center bg-gray-100 w-full h-full">
+        <q-icon name="sym_o_hide_image" class="text-5xl text-gray-400 font-semibold" />
+      </div>
     </div>
     <div class="flex flex-col justify-center gap-.5rem flex-1">
-      <h3 class="font-bold text-lg">
+      <h3 v-if="props.data.translations.name" class="font-bold text-lg">
         {{ props.data.translations.name }}
       </h3>
-      <p>
+      <p v-if="props.data.translations.topic">
         {{ props.data.translations.topic }}
       </p>
-      <p>
+      <p v-if="props.data.translations.graduation">
         {{ props.data.translations.graduation }}
       </p>
     </div>
     <div class="flex flex-col justify-center gap-.5rem flex-1">
-      <h3 class="font-bold text-lg">
+      <h3 v-if="props.data.translations.title " class="font-bold text-lg">
         {{ props.data.translations.title }}
       </h3>
-      <p>
+      <p v-if="props.data.email">
         E-Mail : {{ props.data.email }}
       </p>
-      <p>
+      <p v-if="props.data.web">
         Web : <a class="!underline" :href="props.data.web" target="_blank">{{ props.data.web }}</a>
       </p>
     </div>

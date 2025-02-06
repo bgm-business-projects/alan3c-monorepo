@@ -1,5 +1,6 @@
 <template>
   <div class="flex flex-col items-center layout-padding">
+    <div id="top" />
     <slot name="header" />
     <div class="max-width py-4.5rem min-h-[calc(100dvh-197px)]">
       <div class="flex max-width py-1.5rem sm:py-3rem">
@@ -55,6 +56,7 @@
       </div>
     </div>
     <slot name="footer" />
+    <base-scroll-to-top />
   </div>
 </template>
 
