@@ -14,9 +14,9 @@
 	background: #e4eaf1;
 }
 .timymce-body {
-	color: #4f5464;
-	background-color: #fff;
+	/* color: #4f5464; */
 	/* margin: 20px; */
+	background-color: #fff;
 	font-family: "Inter", system-ui;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;

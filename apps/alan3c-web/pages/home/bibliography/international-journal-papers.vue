@@ -52,6 +52,12 @@
                 <span v-else>
                   {{ index + 1 }}
                 </span>. {{ item.author }} , ({{ item.year }}) : {{ item.titleOfThePaper }} {{ item.journalName }} {{ item.journalName }}, Vol. {{ item.vol }}, No. {{ item.no }}, {{ item.month }}, {{ item.year }}, pp. {{ item.pp }}
+                <span v-if="transferStatus(item.status)">
+                  (
+                  {{ transferStatus(item.status) }}
+                  {{ item.statusDate }}
+                  )
+                </span>
               </div>
             </div>
           </template>
@@ -228,6 +234,15 @@ async function openCreatorDialog() {
       position: 'center',
     })
     dialog.value?.hide()
+  }
+}
+
+function transferStatus(status: 'onlyAccepted' | 'publication' | null) {
+  if (status === 'publication') {
+    return 'Publication'
+  }
+  if (status === 'onlyAccepted') {
+    return 'Accepted'
   }
 }
 

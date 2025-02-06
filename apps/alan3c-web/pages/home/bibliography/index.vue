@@ -51,25 +51,115 @@
                 <q-icon name="img:/arrow.svg" />
               </div>
             </nuxt-link>
-            <div v-for="item, index in bibliography.normal" :key="index">
-              <nuxt-link
-                :to="localePath({
-                  name: 'home-bibliography-id',
-                  params: {
-                    id: item[0],
-                  },
-                })"
-                class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
-              >
-                <div class="flex-1 font-semibold text-lg">
-                  {{ t(`bibliography.${item[0]}`) }}
-                </div>
-                <div class="flex items-center gap-.4rem font-semibold border-solid border-black border-1px px-1rem py-.3rem rounded-.5rem">
-                  <div>{{ t('moreInfo') }}</div>
-                  <q-icon name="img:/arrow.svg" />
-                </div>
-              </nuxt-link>
-            </div>
+
+            <nuxt-link
+              :to="localePath({
+                name: 'home-bibliography-id',
+                params: {
+                  id: bookChapters?.[0],
+                },
+              })"
+              class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
+            >
+              <div class="flex-1 font-semibold text-lg">
+                {{ t(`bibliography.${bookChapters?.[0]}`) }}
+              </div>
+              <div class="flex items-center gap-.4rem font-semibold border-solid border-black border-1px px-1rem py-.3rem rounded-.5rem">
+                <div>{{ t('moreInfo') }}</div>
+                <q-icon name="img:/arrow.svg" />
+              </div>
+            </nuxt-link>
+
+            <nuxt-link
+              :to="localePath({
+                name: 'home-bibliography-id',
+                params: {
+                  id: localJournalPapers?.[0],
+                },
+              })"
+              class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
+            >
+              <div class="flex-1 font-semibold text-lg">
+                {{ t(`bibliography.${localJournalPapers?.[0]}`) }}
+              </div>
+              <div class="flex items-center gap-.4rem font-semibold border-solid border-black border-1px px-1rem py-.3rem rounded-.5rem">
+                <div>{{ t('moreInfo') }}</div>
+                <q-icon name="img:/arrow.svg" />
+              </div>
+            </nuxt-link>
+
+            <nuxt-link
+              :to="localePath({
+                name: 'home-bibliography-id',
+                params: {
+                  id: internationalConferencePapers?.[0],
+                },
+              })"
+              class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
+            >
+              <div class="flex-1 font-semibold text-lg">
+                {{ t(`bibliography.${internationalConferencePapers?.[0]}`) }}
+              </div>
+              <div class="flex items-center gap-.4rem font-semibold border-solid border-black border-1px px-1rem py-.3rem rounded-.5rem">
+                <div>{{ t('moreInfo') }}</div>
+                <q-icon name="img:/arrow.svg" />
+              </div>
+            </nuxt-link>
+
+            <nuxt-link
+              :to="localePath({
+                name: 'home-bibliography-id',
+                params: {
+                  id: localConferencePapers?.[0],
+                },
+              })"
+              class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
+            >
+              <div class="flex-1 font-semibold text-lg">
+                {{ t(`bibliography.${localConferencePapers?.[0]}`) }}
+              </div>
+              <div class="flex items-center gap-.4rem font-semibold border-solid border-black border-1px px-1rem py-.3rem rounded-.5rem">
+                <div>{{ t('moreInfo') }}</div>
+                <q-icon name="img:/arrow.svg" />
+              </div>
+            </nuxt-link>
+
+            <nuxt-link
+              :to="localePath({
+                name: 'home-bibliography-id',
+                params: {
+                  id: guestEditorial?.[0],
+                },
+              })"
+              class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
+            >
+              <div class="flex-1 font-semibold text-lg">
+                {{ t(`bibliography.${guestEditorial?.[0]}`) }}
+              </div>
+              <div class="flex items-center gap-.4rem font-semibold border-solid border-black border-1px px-1rem py-.3rem rounded-.5rem">
+                <div>{{ t('moreInfo') }}</div>
+                <q-icon name="img:/arrow.svg" />
+              </div>
+            </nuxt-link>
+
+            <nuxt-link
+              :to="localePath({
+                name: 'home-bibliography-id',
+                params: {
+                  id: domesticMagazineArticles?.[0],
+                },
+              })"
+              class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
+            >
+              <div class="flex-1 font-semibold text-lg">
+                {{ t(`bibliography.${domesticMagazineArticles?.[0]}`) }}
+              </div>
+              <div class="flex items-center gap-.4rem font-semibold border-solid border-black border-1px px-1rem py-.3rem rounded-.5rem">
+                <div>{{ t('moreInfo') }}</div>
+                <q-icon name="img:/arrow.svg" />
+              </div>
+            </nuxt-link>
+
             <nuxt-link
               :to="localePath({
                 name: 'home-bibliography-authored-books',
@@ -84,6 +174,25 @@
                 <q-icon name="img:/arrow.svg" />
               </div>
             </nuxt-link>
+
+            <nuxt-link
+              :to="localePath({
+                name: 'home-bibliography-id',
+                params: {
+                  id: technicalReports?.[0],
+                },
+              })"
+              class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
+            >
+              <div class="flex-1 font-semibold text-lg">
+                {{ t(`bibliography.${technicalReports?.[0]}`) }}
+              </div>
+              <div class="flex items-center gap-.4rem font-semibold border-solid border-black border-1px px-1rem py-.3rem rounded-.5rem">
+                <div>{{ t('moreInfo') }}</div>
+                <q-icon name="img:/arrow.svg" />
+              </div>
+            </nuxt-link>
+
             <nuxt-link
               :to="localePath({
                 name: 'home-bibliography-submitted-papers',
@@ -215,6 +324,34 @@ useSeoMeta({
   keywords: '著作目錄',
   ogTitle: '著作目錄',
   ogDescription: '著作目錄',
+})
+
+const bookChapters = computed(() => {
+  return bibliography.value?.normal.find((item) => item[0] === 'bookChapters')
+})
+
+const localJournalPapers = computed(() => {
+  return bibliography.value?.normal.find((item) => item[0] === 'localJournalPapers')
+})
+
+const internationalConferencePapers = computed(() => {
+  return bibliography.value?.normal.find((item) => item[0] === 'internationalConferencePapers')
+})
+
+const localConferencePapers = computed(() => {
+  return bibliography.value?.normal.find((item) => item[0] === 'localConferencePapers')
+})
+
+const guestEditorial = computed(() => {
+  return bibliography.value?.normal.find((item) => item[0] === 'guestEditorial')
+})
+
+const domesticMagazineArticles = computed(() => {
+  return bibliography.value?.normal.find((item) => item[0] === 'domesticMagazineArticles')
+})
+
+const technicalReports = computed(() => {
+  return bibliography.value?.normal.find((item) => item[0] === 'technicalReports')
 })
 
 // onUnmounted(() => {

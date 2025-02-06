@@ -168,21 +168,64 @@ const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('s
     if (!data)
       return
     return {
-      categories: data?.data.map((item) => {
-        return {
-          name: item.year,
-          route: {
-            name: 'home-bibliography-submitted-papers',
-            hash: `#year-${item.year}`,
-          },
-        }
-      }),
-      data: data?.data.map((item) => {
-        return {
-          ...item,
-          translations: item.translations.filter((translation) => translation.submittedPapersLanguages_code === locale.value)[0],
-        }
-      }),
+      categories: [
+        // 原始帶有年份的資料
+        ...data?.data.map((item) => {
+          return {
+            name: item.year,
+            route: {
+              name: 'home-bibliography-submitted-papers',
+              hash: `#year-${item.year}`,
+            },
+          }
+        }).filter((item) => item.name),
+        // 未帶有年份的資料改為 Pending
+        ...data?.data.map((item) => {
+          if (!item.year) {
+            return {
+              name: 'Pending',
+              route: {
+                name: 'home-bibliography-submitted-papers',
+                hash: `#year-Pending`,
+              },
+            }
+          }
+          else {
+            return {
+              name: item.year,
+              route: {
+                name: 'home-bibliography-submitted-papers',
+                hash: `#year-${item.year}`,
+              },
+            }
+          }
+        }).filter((item) => item.name === 'Pending'),
+      ],
+
+      data: [
+        ...data?.data.map((item) => {
+          return {
+            ...item,
+            translations: item.translations.filter((translation) => translation.submittedPapersLanguages_code === locale.value)[0],
+          }
+        }).filter((item) => item.year),
+
+        ...data?.data.map((item) => {
+          if (!item.year) {
+            return {
+              ...item,
+              year: 'Pending',
+              translations: item.translations.filter((translation) => translation.submittedPapersLanguages_code === locale.value)[0],
+            }
+          }
+          else {
+            return {
+              ...item,
+              translations: item.translations.filter((translation) => translation.submittedPapersLanguages_code === locale.value)[0],
+            }
+          }
+        }).filter((item) => item.year === 'Pending'),
+      ],
     }
   },
   watch: [isClient, locale],

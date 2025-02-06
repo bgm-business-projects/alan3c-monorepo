@@ -13,13 +13,13 @@
         <h3 class="font-bold text-lg">
           {{ props.data.translations.title }}
         </h3>
-        <div v-if="props.data.translations.coAuthor">
+        <div v-if="props.data.translations?.coAuthor">
           {{ t('authoredBooks.coAuthor') }} : {{ props.data.translations.coAuthor }}
         </div>
       </div>
       <div class="flex flex-col justify-center gap-.5rem flex-1">
         <p>
-          {{ props.data.translations.company }}
+          {{ props.data.translations?.company }}
         </p>
         <p>
           {{ props.data.date }}

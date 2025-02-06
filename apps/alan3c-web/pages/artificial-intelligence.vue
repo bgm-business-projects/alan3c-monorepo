@@ -126,7 +126,7 @@
               <div>
                 {{ item.reporter }}
               </div>
-              <div class="underline cursor-pointer" @click="addDownloadCount('imageProcessing', item.id.toString())">
+              <div class="underline cursor-pointer" @click="addDownloadCount('artificialIntelligence', item.id.toString())">
                 {{ item.file?.title }}
               </div>
               <div class="underline cursor-pointer" @click="openVideoDialog(combineImageUrl(item.video?.filename_disk))">
@@ -164,7 +164,7 @@
         </div>
       </template>
 
-      <div class="flex justify-center pt-1rem">
+      <div class="flex justify-center pt-3rem">
         <q-pagination
           v-if="listMeta"
           v-model="currentPage"

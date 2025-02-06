@@ -8,6 +8,7 @@ export const getReferenceDocument = {
   query: z.object({
     'filter[documentTitle][_icontains]': z.string().optional(),
     'meta': z.string().default('filter_count'),
+    'sort[]': z.string().default('-uploadDate'),
     'limit': z.string().optional(),
     'offset': z.string().optional(),
     'fields': z.string().default('*,video.*,file.*'),

@@ -93,7 +93,7 @@
           />
         </template>
       </div>
-      <div class="max-width flex justify-center mt-8">
+      <div class="max-width flex justify-center pt-3rem">
         <q-pagination
           v-if="listMeta"
           v-model="currentPage"

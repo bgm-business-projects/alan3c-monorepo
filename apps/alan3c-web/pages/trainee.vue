@@ -58,7 +58,7 @@
       <template v-if="!isLoading">
         <template v-if="trainee?.transformedData && trainee.transformedData.length > 0">
           <list-card v-for="item in trainee.transformedData" :key="item.id" :data="item" />
-          <div class="flex justify-center pt-1rem">
+          <div class="flex justify-center pt-3rem">
             <q-pagination
               v-if="listMeta"
               v-model="currentPage"

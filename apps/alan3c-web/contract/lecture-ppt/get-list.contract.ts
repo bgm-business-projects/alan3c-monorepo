@@ -7,6 +7,7 @@ export const getLecturePpt = {
   path: `/items/lecturePPT`,
   query: z.object({
     'filter[lectureTitle][_icontains]': z.string().optional(),
+    'sort[]': z.string().default('-uploadDate'),
     'meta': z.string().default('filter_count'),
     'limit': z.string().optional(),
     'offset': z.string().optional(),

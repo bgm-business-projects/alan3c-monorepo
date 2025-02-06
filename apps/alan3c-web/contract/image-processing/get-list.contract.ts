@@ -7,8 +7,10 @@ export const getImageProcessing = {
   path: `/items/imageProcessing`,
   query: z.object({
     'filter[thesisTitle][_icontains]': z.string().optional(),
+    'sort[]': z.string().default('-reportDate'),
     'meta': z.string().default('filter_count'),
     'limit': z.string().optional(),
+
     'offset': z.string().optional(),
     'fields': z.string().default('*,video.*,file.*'),
   }),
