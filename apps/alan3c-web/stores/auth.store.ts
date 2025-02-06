@@ -257,7 +257,7 @@ export const useAuthStore = defineStore('auth', () => {
         // logoutBibliography()
         throw new Error(err.message)
       }
-      if (result.body?.data?.id !== '94695a57-cecd-4173-9962-0dd05657d99c') {
+      if (result?.data?.id !== '94695a57-cecd-4173-9962-0dd05657d99c') {
         throw new Error('身份驗證錯誤，無建立資料權限')
       }
       sessionStorage.setItem('internationalJournalPapersToken', data.data.access_token)
@@ -276,7 +276,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (err) {
       throw new Error(err.message)
     }
-    if (result.body?.data?.id !== '94695a57-cecd-4173-9962-0dd05657d99c') {
+    if (result?.data?.id !== '94695a57-cecd-4173-9962-0dd05657d99c') {
       throw new Error('身份驗證錯誤，無建立資料權限')
     }
     return result
@@ -333,7 +333,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (err) {
       throw new Error(err.message)
     }
-    if (result.body?.data?.id !== '614a40cc-f9dd-43a3-b5f1-7309fd8d22f9') {
+    if (result?.data?.id !== '614a40cc-f9dd-43a3-b5f1-7309fd8d22f9') {
       throw new Error('身份驗證錯誤，無建立資料權限')
     }
     return result
@@ -361,7 +361,7 @@ export const useAuthStore = defineStore('auth', () => {
       if (err) {
         throw new Error(err.message)
       }
-      if (result.body?.data?.id !== '614a40cc-f9dd-43a3-b5f1-7309fd8d22f9') {
+      if (result?.data?.id !== '614a40cc-f9dd-43a3-b5f1-7309fd8d22f9') {
         throw new Error('身份驗證錯誤，無建立資料權限')
       }
       sessionStorage.setItem('imageProcessingCreatorToken', data.data.access_token)
@@ -380,7 +380,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (err) {
       throw new Error(err.message)
     }
-    if (result.body?.data?.id !== 'd594ddb5-903d-41f4-94ef-9cf946aaf0de') {
+    if (result?.data?.id !== 'd594ddb5-903d-41f4-94ef-9cf946aaf0de') {
       throw new Error('身份驗證錯誤，無建立資料權限')
     }
     return result
@@ -408,7 +408,7 @@ export const useAuthStore = defineStore('auth', () => {
         throw new Error(err.message)
       }
 
-      if (result.body?.data?.id !== 'd594ddb5-903d-41f4-94ef-9cf946aaf0de') {
+      if (result?.data?.id !== 'd594ddb5-903d-41f4-94ef-9cf946aaf0de') {
         throw new Error('身份驗證錯誤，無建立資料權限')
       }
       sessionStorage.setItem('artificialIntelligenceCreatorToken', data.data.access_token)

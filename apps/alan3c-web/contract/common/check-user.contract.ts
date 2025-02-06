@@ -5,6 +5,10 @@ export const checkDirectusUser = {
   method: 'GET',
   path: `/users/me`,
   responses: {
-    200: z.any(),
+    200: z.object({
+      data: z.object({
+        id: z.string().uuid(),
+      }),
+    }),
   },
 } satisfies AppRoute

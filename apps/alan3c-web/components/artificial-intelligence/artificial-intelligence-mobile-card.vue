@@ -63,7 +63,7 @@
             {{ t('imageProcessingSeminar.file') }}
           </div>
         </div>
-        <div class="text-#767676 underline" @click="addDownloadCount('artificialIntelligence', props.data.id.toString())">
+        <div class="text-#767676 underline cursor-pointer" @click="addDownloadCount('artificialIntelligence', props.data.id.toString())">
           {{ props.data.file?.title }}
         </div>
       </div>
@@ -74,7 +74,7 @@
             {{ t('imageProcessingSeminar.video') }}
           </div>
         </div>
-        <div class="text-#767676 underline" @click="openVideoDialog(combineImageUrl(props.data.video?.filename_disk))">
+        <div class="text-#767676 underline cursor-pointer" @click="openVideoDialog(combineImageUrl(props.data.video?.filename_disk))">
           {{ props.data.video?.title }}
         </div>
       </div>

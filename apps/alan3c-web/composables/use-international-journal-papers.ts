@@ -111,7 +111,9 @@ export function useInternationalJournalPapersApi(
     if (err) {
       throw new Error(err.message)
     }
-    return result
+    if (result.status === 200) {
+      return result.body
+    }
   }
 
   return {
