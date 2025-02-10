@@ -5,6 +5,7 @@ import { coursesTaughtContract } from '~/contract/personal-profile/courses-taugh
 import { curriculumVitaeContract } from '~/contract/personal-profile/curriculum-vitae'
 import { patentApplicationContract } from '../contract/personal-profile/patent-application'
 import { resumeContract } from '../contract/personal-profile/resume'
+import { servicesToPractitionersCommunityContract } from '../contract/personal-profile/services-to-practitioners-community'
 
 export function usePersonalProfileApi(
   accessToken?: MaybeRefOrGetter<string | undefined>,
@@ -95,6 +96,20 @@ export function usePersonalProfileApi(
     }
   }
 
+  const servicesToPractitionersCommunityApi = computed(() => {
+    const clientHeader = accessToken
+      ? { authorization: `Bearer ${toValue(accessToken)}` }
+      : {}
+    return useClient(servicesToPractitionersCommunityContract, clientHeader)
+  })
+
+  async function findServicesToPractitionersCommunity() {
+    const result = await servicesToPractitionersCommunityApi.value.getServicesToPractitionersCommunity()
+    if (result.status === 200) {
+      return result.body
+    }
+  }
+
   return {
     findResume,
     findCurriculumVitae,
@@ -102,5 +117,6 @@ export function usePersonalProfileApi(
     findAcademicRecognition,
     findCoursesTaught,
     findPatentApplication,
+    findServicesToPractitionersCommunity,
   }
 }

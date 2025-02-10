@@ -63,7 +63,7 @@ const { data: compilation, refresh: refreshCompilation } = useLazyAsyncData('com
   const [err, result] = await to (useCompilation.findOne({
     query: {
       'filter[translations][compilationLanguages_code][_eq]': locale.value as 'zh' | 'en',
-      'filter[translations][title][_eq]': route.params.id as string,
+      'filter[translations][compilation_id][_eq]': route.query.id as string,
     },
   }))
   if (err) {

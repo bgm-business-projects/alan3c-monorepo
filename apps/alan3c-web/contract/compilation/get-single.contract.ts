@@ -10,7 +10,7 @@ export const getCompilation = {
   },
   query: z.object({
     'filter[translations][compilationLanguages_code][_eq]': z.enum(['zh', 'en']),
-    'filter[translations][title][_eq]': z.string(),
+    'filter[translations][compilation_id][_eq]': z.string(),
     'fields': z.string().default('translations.*'),
   }),
 } satisfies AppRoute

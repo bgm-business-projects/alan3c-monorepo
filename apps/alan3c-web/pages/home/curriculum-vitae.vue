@@ -118,14 +118,14 @@
         <q-inner-loading :showing="isLoading" />
       </div>
     </div>
-    <div class="fixed bottom-200px max-width flex justify-end layout-padding lg:px-0">
+    <!-- <div class="fixed bottom-200px max-width flex justify-end layout-padding lg:px-0">
       <div
         class="bg-primary w-3rem aspect-1/1 rounded-full flex justify-center items-center pb-.2rem border-white border-2px border-solid text-white font-semibold cursor-pointer"
         @click="scrollToTop()"
       >
         Top
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

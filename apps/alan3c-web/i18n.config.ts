@@ -108,6 +108,7 @@ export default defineI18nConfig(() => ({
         academicRecognition: 'Academic Recognition',
         coursesTaught: 'Courses Taught',
         patentApplication: 'Patent Application',
+        servicesToPractitionersCommunity: `Services To Practitioner's Community`,
       },
       scholar: {
         from: 'From',
@@ -236,6 +237,7 @@ export default defineI18nConfig(() => ({
         academicRecognition: '學術榮譽',
         coursesTaught: '曾任教科目',
         patentApplication: '專利申請',
+        servicesToPractitionersCommunity: `針對執業者社群的服務`,
       },
       scholar: {
         from: '來自',

@@ -161,11 +161,11 @@ const listMeta = computed(() => {
 })
 
 useSeoMeta({
-  title: '學術演講',
-  description: '學術演講',
-  keywords: '學術演講',
-  ogTitle: '學術演講',
-  ogDescription: '學術演講',
+  title: '研究計畫',
+  description: '研究計畫',
+  keywords: '研究計畫',
+  ogTitle: '研究計畫',
+  ogDescription: '研究計畫',
 })
 </script>
 

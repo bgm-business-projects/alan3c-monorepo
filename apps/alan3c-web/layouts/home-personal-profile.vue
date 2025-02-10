@@ -3,7 +3,7 @@
     <div id="top" />
     <slot name="header" />
     <div class="max-width py-4.5rem min-h-[calc(100dvh-197px)]">
-      <div class="flex max-width py-1.5rem sm:py-3rem">
+      <div ref="containerRef" class="flex max-width py-1.5rem sm:py-3rem">
         <base-breadcrumbs
           :bread-list="[
             {
@@ -41,18 +41,22 @@
           </div>
         </div>
         <!-- desktop -->
-        <ul class="hidden sm:!flex flex-col gap-.5rem">
-          <li v-for="(category, index) in data" :key="index">
-            <nuxt-link
-              :to="category.route"
-              class="text-md font-medium tracking-.05rem hover:text-primary duration-300"
-              :class="route.params.id === category.route.params.id ? 'text-primary' : ''"
-            >
-              {{ category.name }}
-            </nuxt-link>
-          </li>
-        </ul>
-        <nuxt-page />
+        <div class="flex gap-3rem flex-nowrap">
+          <ul ref="ulRef" class="hidden sm:!flex flex-col gap-.5rem">
+            <li v-for="(category, index) in data" :key="index">
+              <nuxt-link
+                :to="category.route"
+                class="text-md font-medium tracking-.05rem hover:text-primary duration-300 whitespace-nowrap"
+                :class="route.params.id === category.route.params.id ? 'text-primary' : ''"
+              >
+                {{ category.name }}
+              </nuxt-link>
+            </li>
+          </ul>
+          <div class="flex flex-1" :style="{ width: contentWidthStyle }">
+            <nuxt-page />
+          </div>
+        </div>
       </div>
     </div>
     <slot name="footer" />
@@ -61,8 +65,25 @@
 </template>
 
 <script lang="ts" setup>
+import { useElementSize } from '@vueuse/core'
+
 const route = useRoute()
 const localePath = useLocalePath()
+
+const containerRef = ref<HTMLElement | null>(null)
+const { width: containerWidth } = useElementSize(containerRef)
+const ulRef = ref<HTMLElement | null>(null)
+
+const { width: ulWidth } = useElementSize(ulRef)
+
+const contentWidthStyle = computed(() => {
+  if (ulWidth.value !== 0) {
+    return `${containerWidth.value - ulWidth.value - 48}px`
+  }
+  else {
+    return `${containerWidth.value}px`
+  }
+})
 
 const { t } = useI18n()
 const data = computed(() => [
@@ -106,6 +127,13 @@ const data = computed(() => [
     route: {
       name: 'home-personal-profile-id',
       params: { id: 'patentApplication' },
+    },
+  },
+  {
+    name: t('biography.servicesToPractitionersCommunity'),
+    route: {
+      name: 'home-personal-profile-id',
+      params: { id: 'servicesToPractitionersCommunity' },
     },
   },
 ])

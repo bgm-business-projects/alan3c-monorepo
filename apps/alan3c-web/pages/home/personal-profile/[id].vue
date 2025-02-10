@@ -23,6 +23,7 @@ import { isCoursesTaught } from '~/contract/personal-profile/courses-taught/cour
 import { isCurriculumVitae } from '~/contract/personal-profile/curriculum-vitae/curriculum-vitae.type'
 import { isPatentApplication } from '~/contract/personal-profile/patent-application/patent-application.type'
 import { isResume } from '~/contract/personal-profile/resume/resume.type'
+import { isServicesToPractitionersCommunity } from '~/contract/personal-profile/services-to-practitioners-community/services-to-practitioners-community.type'
 
 const route = useRoute()
 const { locale } = useI18n()
@@ -92,6 +93,17 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
     isLoading.value = false
     return result
   }
+
+  if (route.params.id === 'servicesToPractitionersCommunity') {
+    const [err, result] = await to (usePersonalProfile.findServicesToPractitionersCommunity())
+    console.log('result', isServicesToPractitionersCommunity(result))
+    if (err) {
+      isLoading.value = false
+      return Promise.reject(err)
+    }
+    isLoading.value = false
+    return result
+  }
 }, {
   transform: (data) => {
     if (isResume(data)) {
@@ -128,6 +140,12 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
       return {
         ...data?.data,
         translations: data?.data.translations.filter((item) => item.patentApplicationLanguages_code === locale.value)[0],
+      }
+    }
+    if (isServicesToPractitionersCommunity(data)) {
+      return {
+        ...data?.data,
+        translations: data?.data.translations.filter((item) => item.servicesToPractitionersCommunityLanguages_code === locale.value)[0],
       }
     }
   },

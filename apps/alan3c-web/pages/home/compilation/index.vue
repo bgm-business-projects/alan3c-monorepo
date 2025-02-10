@@ -47,6 +47,9 @@
                 params: {
                   id: item.translations?.title,
                 },
+                query: {
+                  id: item.translations.compilation_id,
+                },
               })"
               class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
             >
