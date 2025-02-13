@@ -1,12 +1,12 @@
 <template>
-  <div class="flex gap-2rem w-full flex-col lg:flex-row">
+  <div class="flex gap-2rem w-full flex-col lg:flex-row lg:justify-start">
     <div class="w-150px aspect-3/4 overflow-hidden flex justify-center items-center">
       <nuxt-img v-if="props.data?.mainImage?.filename_disk" class="min-w-full min-h-full object-cover" :src="combineImageUrl(props.data?.mainImage?.filename_disk)" />
       <div v-else class="flex justify-center items-center bg-gray-100 w-full h-full">
         <q-icon name="sym_o_hide_image" class="text-5xl text-gray-400 font-semibold" />
       </div>
     </div>
-    <div class="flex flex-col justify-center gap-.5rem flex-1">
+    <div class="flex flex-col justify-center gap-.5rem w-full lg:w-35%">
       <h3 v-if="props.data.translations.name" class="font-bold text-lg">
         {{ props.data.translations.name }}
       </h3>
@@ -29,7 +29,7 @@
       </p>
     </div>
     <div class="flex items-center">
-      <a
+      <!-- <a
         v-if="props.data.file?.id"
         :href="downloadHref"
         :style="writingModeStyle"
@@ -39,7 +39,20 @@
           : locale === 'en' ? ['tracking-.05rem', 'py-.3rem', 'px-1rem']
             : []"
       >
-        {{ t('download') }}
+        {{ t('preview') }}
+      </a> -->
+      <a
+        v-if="props.data.file?.id"
+        :href="previewHref"
+        target="_blank"
+        :style="writingModeStyle"
+        class="bg-accent rounded-.5rem text-direction"
+        :class="
+          locale === 'zh' ? ['tracking-.5rem', 'pt-1.1rem', 'pb-.7rem', 'px-.4rem']
+          : locale === 'en' ? ['tracking-.05rem', 'py-.3rem', 'px-1rem']
+            : []"
+      >
+        {{ t('preview') }}
       </a>
       <div v-else class="w-30px h-30px" />
     </div>
@@ -69,6 +82,8 @@ interface Props {
 
 const config = useRuntimeConfig()
 const downloadHref = computed(() => `${config.public.apiBaseUrl}/assets/${props.data.file?.id}?download`)
+
+const previewHref = computed(() => `${config.public.apiBaseUrl}/assets/${props.data.file?.id}`)
 
 const writingModeStyle = computed(() => {
   if (locale.value === 'zh') {
@@ -103,5 +118,5 @@ const writingModeStyle = computed(() => {
   .text-direction
     writing-mode: horizontal-tb !important
     padding: 6px 15px !important
-    letter-spacing: 3px
+    letter-spacing: 2px
 </style>

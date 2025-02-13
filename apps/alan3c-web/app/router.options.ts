@@ -9,7 +9,7 @@ export default <RouterOptions>{
     else if (to.hash) {
       const element = document.querySelector(to.hash) // 找到目標元素
       if (element) {
-        const offset = 230 // 設置偏移量
+        const offset = 90 // 設置偏移量
         const top = element.getBoundingClientRect().top + window.scrollY - offset
         return { top, behavior: 'smooth' } // 平滑滾動
       }

@@ -25,7 +25,7 @@
         </h1>
       </div>
       <div class="w-full flex flex-col gap-2rem">
-        <div class="hidden lg:!flex gap-.5rem w-full flex">
+        <div class="hidden lg:!flex gap-.5rem w-full">
           <div
             v-for="category in categories" :key="category.name"
             class="bg-[#f4f4f4] px-1rem py-.2rem rounded-.5rem"
@@ -48,7 +48,7 @@
     <div class="max-width">
       <div
         v-if="!isLoading"
-        class="w-full flex flex-col pb-1rem w-full overflow-x-scroll"
+        class="w-full flex flex-col pb-1rem overflow-x-scroll"
       >
         <div id="information" class="text-2xl font-semibold">
           Information
