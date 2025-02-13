@@ -2,17 +2,8 @@
   <div
     class="w-full"
   >
-    <div v-if="props.data">
+    <div v-if="transferData">
       <span>{{ transferData?.title }}</span>
-    </div>
-    <div
-      v-else
-      class="bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
-      :class="locale === 'zh' ? ['tracking-.1rem']
-        : locale === 'en' ? ['tracking-.05rem']
-          : []"
-    >
-      {{ t('notFound') }}
     </div>
   </div>
 </template>

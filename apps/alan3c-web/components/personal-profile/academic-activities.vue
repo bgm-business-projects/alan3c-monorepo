@@ -2,11 +2,22 @@
   <div
     class="w-full flex flex-col gap-1rem"
   >
-    <div v-for="(item, index) in props.data" :key="item.id" class="flex flex-nowrap gap-.5rem">
-      <span>{{ index + 1 }}.</span>
-      <span>
-        <base-combine-info :data="item" />
-      </span>
+    <template v-if="props.data.length && props.data.length > 0">
+      <div v-for="(item, index) in props.data" :key="item.id" class="flex flex-nowrap gap-.5rem">
+        <span>{{ index + 1 }}.</span>
+        <span>
+          <base-combine-info :data="item" />
+        </span>
+      </div>
+    </template>
+    <div
+      v-else
+      class="bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+      :class="locale === 'zh' ? ['tracking-.1rem']
+        : locale === 'en' ? ['tracking-.05rem']
+          : []"
+    >
+      {{ t('notFound') }}
     </div>
   </div>
 </template>

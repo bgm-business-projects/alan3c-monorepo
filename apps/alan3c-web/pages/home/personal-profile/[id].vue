@@ -64,7 +64,9 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
   }
 
   if (route.params.id === 'academicActivities') {
-    const [err, result] = await to (useJournalEditor.findJournalEditor())
+    const [err, result] = await to (useJournalEditor.findJournalEditor({
+      query: {},
+    }))
     if (err) {
       isLoading.value = false
       return Promise.reject(err)
