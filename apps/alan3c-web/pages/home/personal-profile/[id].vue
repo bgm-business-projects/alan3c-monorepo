@@ -5,19 +5,26 @@
         <div v-if="isLoading" class="w-full h-300px">
           <q-inner-loading :showing="isLoading" />
         </div>
-        <base-info
-          v-else
-          :data="personalProfile?.translations?.content"
-        />
+        <template v-else>
+          <academic-activities v-if="isJournalEditor(personalProfile)" :data="personalProfile.data" />
+          <template v-else>
+            <base-info
+              v-if="personalProfile"
+              :data="transferBasicData(personalProfile)?.translations.content"
+            />
+          </template>
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import AcademicActivities from '~/components/personal-profile/academic-activities.vue'
 import BaseInfo from '~/components/personal-profile/base-info.vue'
+import { useJournalEditorApi } from '~/composables/academic-activities/use-journal-editor-api'
 import { usePersonalProfileApi } from '~/composables/use-personal-profile'
-import { isAcademicActivities } from '~/contract/personal-profile/academic-activities/academic-activities.type'
+import { isJournalEditor } from '~/contract/personal-profile/academic-activities/journal-editor/journal-editor.type'
 import { isAcademicRecognition } from '~/contract/personal-profile/academic-recognition/academic-recognition.type'
 import { isCoursesTaught } from '~/contract/personal-profile/courses-taught/courses-taught.type'
 import { isCurriculumVitae } from '~/contract/personal-profile/curriculum-vitae/curriculum-vitae.type'
@@ -31,6 +38,8 @@ const { locale } = useI18n()
 const usePersonalProfile = usePersonalProfileApi()
 
 const isLoading = ref(false)
+
+const useJournalEditor = useJournalEditorApi()
 
 const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncData('personal-profile', async () => {
   isLoading.value = true
@@ -55,7 +64,7 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
   }
 
   if (route.params.id === 'academicActivities') {
-    const [err, result] = await to (usePersonalProfile.findAcademicActivities())
+    const [err, result] = await to (useJournalEditor.findJournalEditor())
     if (err) {
       isLoading.value = false
       return Promise.reject(err)
@@ -105,52 +114,104 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
     return result
   }
 }, {
-  transform: (data) => {
-    if (isResume(data)) {
-      return {
-        ...data?.data,
-        translations: data?.data.translations.filter((item) => item.resumeLanguages_code === locale.value)[0],
-      }
-    }
-    if (isCurriculumVitae(data)) {
-      return {
-        ...data?.data,
-        translations: data?.data.translations.filter((item) => item.curriculumVitaeLanguages_code === locale.value)[0],
-      }
-    }
-    if (isAcademicActivities(data)) {
-      return {
-        ...data?.data,
-        translations: data?.data.translations.filter((item) => item.academicActivitiesLanguages_code === locale.value)[0],
-      }
-    }
-    if (isAcademicRecognition(data)) {
-      return {
-        ...data?.data,
-        translations: data?.data.translations.filter((item) => item.academicRecognitionLanguages_code === locale.value)[0],
-      }
-    }
-    if (isCoursesTaught(data)) {
-      return {
-        ...data?.data,
-        translations: data?.data.translations.filter((item) => item.coursesTaughtLanguages_code === locale.value)[0],
-      }
-    }
-    if (isPatentApplication(data)) {
-      return {
-        ...data?.data,
-        translations: data?.data.translations.filter((item) => item.patentApplicationLanguages_code === locale.value)[0],
-      }
-    }
-    if (isServicesToPractitionersCommunity(data)) {
-      return {
-        ...data?.data,
-        translations: data?.data.translations.filter((item) => item.servicesToPractitionersCommunityLanguages_code === locale.value)[0],
-      }
-    }
-  },
+  // transform: (data) => {
+  //   if (isResume(data)) {
+  //     return {
+  //       ...data?.data,
+  //       translations: data?.data.translations.filter((item) => item.resumeLanguages_code === locale.value)[0],
+  //       isAcademicActivitiesComponent: false,
+  //     }
+  //   }
+  //   if (isCurriculumVitae(data)) {
+  //     return {
+  //       ...data?.data,
+  //       translations: data?.data.translations.filter((item) => item.curriculumVitaeLanguages_code === locale.value)[0],
+  //       isAcademicActivitiesComponent: false,
+  //     }
+  //   }
+  //   if (isJournalEditor(data)) {
+  //     return {
+  //       ...data?.data,
+  //       translations: data?.data.translations.filter((item) => item.journalEditorLanguages_code === locale.value)[0],
+  //       isAcademicActivitiesComponent: true,
+  //     }
+  //   }
+  //   if (isAcademicRecognition(data)) {
+  //     return {
+  //       ...data?.data,
+  //       translations: data?.data.translations.filter((item) => item.academicRecognitionLanguages_code === locale.value)[0],
+  //       isAcademicActivitiesComponent: false,
+  //     }
+  //   }
+  //   if (isCoursesTaught(data)) {
+  //     return {
+  //       ...data?.data,
+  //       translations: data?.data.translations.filter((item) => item.coursesTaughtLanguages_code === locale.value)[0],
+  //       isAcademicActivitiesComponent: false,
+  //     }
+  //   }
+  //   if (isPatentApplication(data)) {
+  //     return {
+  //       ...data?.data,
+  //       translations: data?.data.translations.filter((item) => item.patentApplicationLanguages_code === locale.value)[0],
+  //       isAcademicActivitiesComponent: false,
+  //     }
+  //   }
+  //   if (isServicesToPractitionersCommunity(data)) {
+  //     return {
+  //       ...data?.data,
+  //       translations: data?.data.translations.filter((item) => item.servicesToPractitionersCommunityLanguages_code === locale.value)[0],
+  //       isAcademicActivitiesComponent: false,
+  //     }
+  //   }
+  // },
   watch: [locale],
 })
+
+function transferBasicData(data: typeof personalProfile['value']) {
+  if (isResume(data)) {
+    return {
+      ...data?.data,
+      translations: data?.data.translations.filter((item) => item.resumeLanguages_code === locale.value)[0],
+      isAcademicActivitiesComponent: false,
+    }
+  }
+  if (isCurriculumVitae(data)) {
+    return {
+      ...data?.data,
+      translations: data?.data.translations.filter((item) => item.curriculumVitaeLanguages_code === locale.value)[0],
+      isAcademicActivitiesComponent: false,
+    }
+  }
+  if (isAcademicRecognition(data)) {
+    return {
+      ...data?.data,
+      translations: data?.data.translations.filter((item) => item.academicRecognitionLanguages_code === locale.value)[0],
+      isAcademicActivitiesComponent: false,
+    }
+  }
+  if (isCoursesTaught(data)) {
+    return {
+      ...data?.data,
+      translations: data?.data.translations.filter((item) => item.coursesTaughtLanguages_code === locale.value)[0],
+      isAcademicActivitiesComponent: false,
+    }
+  }
+  if (isPatentApplication(data)) {
+    return {
+      ...data?.data,
+      translations: data?.data.translations.filter((item) => item.patentApplicationLanguages_code === locale.value)[0],
+      isAcademicActivitiesComponent: false,
+    }
+  }
+  if (isServicesToPractitionersCommunity(data)) {
+    return {
+      ...data?.data,
+      translations: data?.data.translations.filter((item) => item.servicesToPractitionersCommunityLanguages_code === locale.value)[0],
+      isAcademicActivitiesComponent: false,
+    }
+  }
+}
 
 useSeoMeta({
   title: '個人資料',
