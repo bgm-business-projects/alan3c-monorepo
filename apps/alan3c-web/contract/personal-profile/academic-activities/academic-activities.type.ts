@@ -1,4 +1,7 @@
 import { z } from 'zod'
+import { committeeMemberSchema } from './committee-member/committee-member.type'
+import { journalEditorSchema } from './journal-editor/journal-editor.type'
+import { paperReviewerSchema } from './paper-reviewer/paper-reviewer.type'
 
 const translationSchema = z.object({
   id: z.number(), // translation 的 ID
@@ -17,3 +20,11 @@ export const academicActivitiesSchema = z.object({
 
 export type AcademicActivities = z.infer<typeof academicActivitiesSchema>
 export const isAcademicActivities = (data: unknown): data is AcademicActivities => academicActivitiesSchema.safeParse(data).success
+
+export const academicActivitiesDataSchema = z.object({
+  journalEditor: journalEditorSchema,
+  paperReviewer: paperReviewerSchema,
+  committeeMember: committeeMemberSchema,
+})
+export type AcademicActivitiesData = z.infer<typeof academicActivitiesDataSchema>
+export const isAcademicActivitiesData = (data: unknown): data is AcademicActivitiesData => academicActivitiesDataSchema.safeParse(data).success

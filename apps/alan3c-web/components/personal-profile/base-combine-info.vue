@@ -3,7 +3,7 @@
     class="w-full"
   >
     <div v-if="transferData">
-      <span>{{ transferData?.title }}</span>
+      <span class="whitespace-pre-line">{{ transferData?.title }}</span>
     </div>
   </div>
 </template>

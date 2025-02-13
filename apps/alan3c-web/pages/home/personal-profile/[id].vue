@@ -6,7 +6,10 @@
           <q-inner-loading :showing="isLoading" />
         </div>
         <template v-else>
-          <academic-activities v-if="isJournalEditor(personalProfile)" :data="personalProfile.data" />
+          <academic-activities
+            v-if="isAcademicActivitiesData(personalProfile)"
+            :data="personalProfile"
+          />
           <template v-else>
             <base-info
               v-if="personalProfile"
@@ -22,9 +25,11 @@
 <script setup lang="ts">
 import AcademicActivities from '~/components/personal-profile/academic-activities.vue'
 import BaseInfo from '~/components/personal-profile/base-info.vue'
+import { useCommitteeMemberApi } from '~/composables/academic-activities/use-committee-member-api'
 import { useJournalEditorApi } from '~/composables/academic-activities/use-journal-editor-api'
+import { usePaperReviewerApi } from '~/composables/academic-activities/use-paper-reviewer-api'
 import { usePersonalProfileApi } from '~/composables/use-personal-profile'
-import { isJournalEditor } from '~/contract/personal-profile/academic-activities/journal-editor/journal-editor.type'
+import { isAcademicActivitiesData } from '~/contract/personal-profile/academic-activities/academic-activities.type'
 import { isAcademicRecognition } from '~/contract/personal-profile/academic-recognition/academic-recognition.type'
 import { isCoursesTaught } from '~/contract/personal-profile/courses-taught/courses-taught.type'
 import { isCurriculumVitae } from '~/contract/personal-profile/curriculum-vitae/curriculum-vitae.type'
@@ -40,6 +45,8 @@ const usePersonalProfile = usePersonalProfileApi()
 const isLoading = ref(false)
 
 const useJournalEditor = useJournalEditorApi()
+const usePaperReviewer = usePaperReviewerApi()
+const useCommitteeMember = useCommitteeMemberApi()
 
 const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncData('personal-profile', async () => {
   isLoading.value = true
@@ -64,15 +71,31 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
   }
 
   if (route.params.id === 'academicActivities') {
-    const [err, result] = await to (useJournalEditor.findJournalEditor({
-      query: {},
-    }))
-    if (err) {
+    try {
+      const [journalEditorResult, paperReviewerResult, committeeMemberResult] = await Promise.all([
+        useJournalEditor.findJournalEditor({
+          query: {},
+        }),
+        usePaperReviewer.findPaperReviewer({
+          query: {},
+        }),
+        useCommitteeMember.findCommitteeMember({
+          query: {},
+        }),
+      ])
+
       isLoading.value = false
-      return Promise.reject(err)
+
+      return {
+        journalEditor: journalEditorResult,
+        paperReviewer: paperReviewerResult,
+        committeeMember: committeeMemberResult,
+      }
     }
-    isLoading.value = false
-    return result
+    catch (error) {
+      isLoading.value = false
+      return Promise.reject(error)
+    }
   }
 
   if (route.params.id === 'academicRecognition') {
@@ -107,7 +130,6 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
 
   if (route.params.id === 'servicesToPractitionersCommunity') {
     const [err, result] = await to (usePersonalProfile.findServicesToPractitionersCommunity())
-    console.log('result', isServicesToPractitionersCommunity(result))
     if (err) {
       isLoading.value = false
       return Promise.reject(err)
@@ -175,42 +197,36 @@ function transferBasicData(data: typeof personalProfile['value']) {
     return {
       ...data?.data,
       translations: data?.data.translations.filter((item) => item.resumeLanguages_code === locale.value)[0],
-      isAcademicActivitiesComponent: false,
     }
   }
   if (isCurriculumVitae(data)) {
     return {
       ...data?.data,
       translations: data?.data.translations.filter((item) => item.curriculumVitaeLanguages_code === locale.value)[0],
-      isAcademicActivitiesComponent: false,
     }
   }
   if (isAcademicRecognition(data)) {
     return {
       ...data?.data,
       translations: data?.data.translations.filter((item) => item.academicRecognitionLanguages_code === locale.value)[0],
-      isAcademicActivitiesComponent: false,
     }
   }
   if (isCoursesTaught(data)) {
     return {
       ...data?.data,
       translations: data?.data.translations.filter((item) => item.coursesTaughtLanguages_code === locale.value)[0],
-      isAcademicActivitiesComponent: false,
     }
   }
   if (isPatentApplication(data)) {
     return {
       ...data?.data,
       translations: data?.data.translations.filter((item) => item.patentApplicationLanguages_code === locale.value)[0],
-      isAcademicActivitiesComponent: false,
     }
   }
   if (isServicesToPractitionersCommunity(data)) {
     return {
       ...data?.data,
       translations: data?.data.translations.filter((item) => item.servicesToPractitionersCommunityLanguages_code === locale.value)[0],
-      isAcademicActivitiesComponent: false,
     }
   }
 }

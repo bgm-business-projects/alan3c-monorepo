@@ -131,6 +131,16 @@ export default defineI18nConfig(() => ({
       authoredBooks: {
         coAuthor: 'Co Author',
       },
+      academicActivities: {
+        journalEditor: '(一) 擔任國內外多項學術期刊編輯委員',
+        academicActivity: '(二) 近年內參與之學術活動',
+        paperReviewer: '(三) 擔任國際學術期刊之論文評審委員 (Technical Reviewer)',
+        committeeMember: '(四) 應聘擔任國內重要委員會委員',
+        societyDirector: '(五) 擔任學會理事',
+        consultantRole: '(六) 擔任顧問',
+        academicGroup: '(七) 參加學術團體',
+        conferenceAttendee: '(八) 出席國際學術會議',
+      },
     },
     zh: {
       webName: '多媒體暨網路安全實驗室',
@@ -260,6 +270,16 @@ export default defineI18nConfig(() => ({
       },
       authoredBooks: {
         coAuthor: '合著者',
+      },
+      academicActivities: {
+        journalEditor: '(一) 擔任國內外多項學術期刊編輯委員',
+        academicActivity: '(二) 近年內參與之學術活動',
+        paperReviewer: '(三) 擔任國際學術期刊之論文評審委員 (Technical Reviewer)',
+        committeeMember: '(四) 應聘擔任國內重要委員會委員',
+        societyDirector: '(五) 擔任學會理事',
+        consultantRole: '(六) 擔任顧問',
+        academicGroup: '(七) 參加學術團體',
+        conferenceAttendee: '(八) 出席國際學術會議',
       },
     },
   },
