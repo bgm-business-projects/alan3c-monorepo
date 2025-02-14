@@ -80,19 +80,149 @@
         </div>
       </div>
     </div>
+    <div class="flex flex-col gap-1.5rem">
+      <h2
+        class="text-xl font-semibold"
+      >
+        {{ t('academicActivities.societyDirector') }}
+      </h2>
+      <div class="flex flex-col gap-1rem">
+        <template v-if="props.data.societyDirector.data.length && props.data.societyDirector.data.length > 0">
+          <div v-for="(item, index) in props.data.societyDirector.data" :key="item.id" class="flex flex-nowrap gap-.5rem">
+            <span>{{ index + 1 }}.</span>
+            <span class="whitespace-pre-line">
+              {{ item.translations.find((item) => item.societyDirectorLanguages_code === locale)?.title }}
+            </span>
+          </div>
+        </template>
+        <div
+          v-else
+          class="bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+          :class="locale === 'zh' ? ['tracking-.1rem']
+            : locale === 'en' ? ['tracking-.05rem']
+              : []"
+        >
+          {{ t('notFound') }}
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-1.5rem">
+      <h2
+        class="text-xl font-semibold"
+      >
+        {{ t('academicActivities.consultantRole') }}
+      </h2>
+      <div class="flex flex-col gap-1rem">
+        <template v-if="props.data.consultantRole.data.length && props.data.consultantRole.data.length > 0">
+          <div v-for="(item, index) in props.data.consultantRole.data" :key="item.id" class="flex flex-nowrap gap-.5rem">
+            <span>{{ index + 1 }}.</span>
+            <span class="whitespace-pre-line">
+              {{ item.translations.find((item) => item.consultantRoleLanguages_code === locale)?.title }}
+            </span>
+          </div>
+        </template>
+        <div
+          v-else
+          class="bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+          :class="locale === 'zh' ? ['tracking-.1rem']
+            : locale === 'en' ? ['tracking-.05rem']
+              : []"
+        >
+          {{ t('notFound') }}
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-1.5rem">
+      <h2
+        class="text-xl font-semibold"
+      >
+        {{ t('academicActivities.academicGroup') }}
+      </h2>
+      <div class="flex flex-col gap-1rem">
+        <template v-if="props.data.academicGroup.data.length && props.data.academicGroup.data.length > 0">
+          <div v-for="(item, index) in props.data.academicGroup.data" :key="item.id" class="flex flex-nowrap gap-.5rem">
+            <span>{{ index + 1 }}.</span>
+            <span class="whitespace-pre-line">
+              {{ item.translations.find((item) => item.academicGroupLanguages_code === locale)?.title }}
+            </span>
+          </div>
+        </template>
+        <div
+          v-else
+          class="bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+          :class="locale === 'zh' ? ['tracking-.1rem']
+            : locale === 'en' ? ['tracking-.05rem']
+              : []"
+        >
+          {{ t('notFound') }}
+        </div>
+      </div>
+    </div>
+
+    <!-- (八) 出席國際學術會議 -->
+    <div class="flex flex-col gap-1.5rem">
+      <h2
+        class="text-xl font-semibold"
+      >
+        {{ t('academicActivities.conferenceAttendee') }}
+      </h2>
+      <div class="flex flex-col gap-1rem">
+        <template v-if="props.data.conferenceAttendee.data.length && props.data.conferenceAttendee.data.length > 0">
+          <table>
+            <tr>
+              <th>編號</th>
+              <th>會議名稱</th>
+              <th>發表論文數</th>
+              <th>地點</th>
+              <th>時間</th>
+            </tr>
+            <tr v-for="(item, index) in props.data.conferenceAttendee.data" :key="item.id">
+              <td>{{ index + 1 }}</td>
+              <td>{{ item.translations.find((item) => item.conferenceAttendeeLanguages_code === locale)?.conferenceName }}</td>
+              <td>{{ item.publishedPapers }}</td>
+              <td>{{ item.translations.find((item) => item.conferenceAttendeeLanguages_code === locale)?.location }}</td>
+              <td>{{ dayjs(item.sortDate).format('YYYY.MM') }}</td>
+            </tr>
+          </table>
+          <!-- <div v-for="(item, index) in props.data.conferenceAttendee.data" :key="item.id" class="flex flex-nowrap gap-.5rem">
+            <span>{{ index + 1 }}.</span>
+            <span class="whitespace-pre-line">
+              {{ item.translations.find((item) => item.conferenceAttendeeLanguages_code === locale)?.conferenceName }}
+            </span>
+          </div> -->
+        </template>
+        <div
+          v-else
+          class="bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+          :class="locale === 'zh' ? ['tracking-.1rem']
+            : locale === 'en' ? ['tracking-.05rem']
+              : []"
+        >
+          {{ t('notFound') }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { AcademicGroup } from '~/contract/personal-profile/academic-activities/academic-group/academic-group.type'
 import type { CommitteeMember } from '~/contract/personal-profile/academic-activities/committee-member/committee-member.type'
+import type { ConferenceAttendee } from '~/contract/personal-profile/academic-activities/conference-attendee/conference-attendee.type'
+import type { ConsultantRole } from '~/contract/personal-profile/academic-activities/consultant-role/consultant-role.type'
 import type { JournalEditor } from '~/contract/personal-profile/academic-activities/journal-editor/journal-editor.type'
 import type { PaperReviewer } from '~/contract/personal-profile/academic-activities/paper-reviewer/paper-reviewer.type'
+import type { SocietyDirector } from '~/contract/personal-profile/academic-activities/society-director/society-director.type'
 
 interface Props {
   data: {
     journalEditor: JournalEditor;
     paperReviewer: PaperReviewer;
     committeeMember: CommitteeMember;
+    societyDirector: SocietyDirector;
+    consultantRole: ConsultantRole;
+    academicGroup: AcademicGroup;
+    conferenceAttendee: ConferenceAttendee;
   };
 }
 const props = withDefaults(defineProps<Props>(), {
@@ -103,7 +233,19 @@ const emit = defineEmits<{
 }>()
 
 const { t, locale } = useI18n()
+
+const dayjs = useDayjs()
 </script>
 
 <style scoped lang="sass">
+table, td, th
+  border: 1px solid #ddd
+  text-align: left
+
+table
+  border-collapse: collapse
+  width: 100%
+
+th, td
+  padding: 8px 15px
 </style>

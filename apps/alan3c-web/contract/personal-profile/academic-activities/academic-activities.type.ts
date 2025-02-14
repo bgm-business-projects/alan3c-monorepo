@@ -1,7 +1,11 @@
 import { z } from 'zod'
+import { academicGroupSchema } from './academic-group/academic-group.type'
 import { committeeMemberSchema } from './committee-member/committee-member.type'
+import { conferenceAttendeeSchema } from './conference-attendee/conference-attendee.type'
+import { consultantRoleSchema } from './consultant-role/consultant-role.type'
 import { journalEditorSchema } from './journal-editor/journal-editor.type'
 import { paperReviewerSchema } from './paper-reviewer/paper-reviewer.type'
+import { societyDirectorSchema } from './society-director/society-director.type'
 
 const translationSchema = z.object({
   id: z.number(), // translation 的 ID
@@ -25,6 +29,15 @@ export const academicActivitiesDataSchema = z.object({
   journalEditor: journalEditorSchema,
   paperReviewer: paperReviewerSchema,
   committeeMember: committeeMemberSchema,
+  societyDirector: societyDirectorSchema,
+  consultantRole: consultantRoleSchema,
+  academicGroup: academicGroupSchema,
+  conferenceAttendee: conferenceAttendeeSchema,
 })
 export type AcademicActivitiesData = z.infer<typeof academicActivitiesDataSchema>
 export const isAcademicActivitiesData = (data: unknown): data is AcademicActivitiesData => academicActivitiesDataSchema.safeParse(data).success
+
+// export function isAcademicActivitiesData(data: unknown): data is AcademicActivitiesData {
+//   console.log(academicActivitiesDataSchema.parse(data).conferenceAttendee.data)
+//   return academicActivitiesDataSchema.safeParse(data).success
+// }

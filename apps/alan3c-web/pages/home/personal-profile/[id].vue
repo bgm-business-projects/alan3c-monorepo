@@ -25,9 +25,13 @@
 <script setup lang="ts">
 import AcademicActivities from '~/components/personal-profile/academic-activities.vue'
 import BaseInfo from '~/components/personal-profile/base-info.vue'
+import { useAcademicGroupApi } from '~/composables/academic-activities/use-academic-group-api'
 import { useCommitteeMemberApi } from '~/composables/academic-activities/use-committee-member-api'
+import { useConferenceAttendeeApi } from '~/composables/academic-activities/use-conference-attendee-api'
+import { useConsultantRoleApi } from '~/composables/academic-activities/use-consultant-role-api'
 import { useJournalEditorApi } from '~/composables/academic-activities/use-journal-editor-api'
 import { usePaperReviewerApi } from '~/composables/academic-activities/use-paper-reviewer-api'
+import { useSocietyDirectorApi } from '~/composables/academic-activities/use-society-director-api'
 import { usePersonalProfileApi } from '~/composables/use-personal-profile'
 import { isAcademicActivitiesData } from '~/contract/personal-profile/academic-activities/academic-activities.type'
 import { isAcademicRecognition } from '~/contract/personal-profile/academic-recognition/academic-recognition.type'
@@ -47,6 +51,10 @@ const isLoading = ref(false)
 const useJournalEditor = useJournalEditorApi()
 const usePaperReviewer = usePaperReviewerApi()
 const useCommitteeMember = useCommitteeMemberApi()
+const useSocietyDirector = useSocietyDirectorApi()
+const useConsultantRole = useConsultantRoleApi()
+const useAcademicGroup = useAcademicGroupApi()
+const useConferenceAttendee = useConferenceAttendeeApi()
 
 const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncData('personal-profile', async () => {
   isLoading.value = true
@@ -72,7 +80,7 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
 
   if (route.params.id === 'academicActivities') {
     try {
-      const [journalEditorResult, paperReviewerResult, committeeMemberResult] = await Promise.all([
+      const [journalEditorResult, paperReviewerResult, committeeMemberResult, societyDirectorResult, consultantRoleResult, academicGroupResult, conferenceAttendeeResult] = await Promise.all([
         useJournalEditor.findJournalEditor({
           query: {},
         }),
@@ -80,6 +88,18 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
           query: {},
         }),
         useCommitteeMember.findCommitteeMember({
+          query: {},
+        }),
+        useSocietyDirector.findSocietyDirector({
+          query: {},
+        }),
+        useConsultantRole.findConsultantRole({
+          query: {},
+        }),
+        useAcademicGroup.findAcademicGroup({
+          query: {},
+        }),
+        useConferenceAttendee.findConferenceAttendee({
           query: {},
         }),
       ])
@@ -90,6 +110,10 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
         journalEditor: journalEditorResult,
         paperReviewer: paperReviewerResult,
         committeeMember: committeeMemberResult,
+        societyDirector: societyDirectorResult,
+        consultantRole: consultantRoleResult,
+        academicGroup: academicGroupResult,
+        conferenceAttendee: conferenceAttendeeResult,
       }
     }
     catch (error) {
