@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import AcademicActivities from '~/components/personal-profile/academic-activities.vue'
 import BaseInfo from '~/components/personal-profile/base-info.vue'
+import { useAcademicActivityApi } from '~/composables/academic-activities/use-academic-activity-api'
 import { useAcademicGroupApi } from '~/composables/academic-activities/use-academic-group-api'
 import { useCommitteeMemberApi } from '~/composables/academic-activities/use-committee-member-api'
 import { useConferenceAttendeeApi } from '~/composables/academic-activities/use-conference-attendee-api'
@@ -49,6 +50,7 @@ const usePersonalProfile = usePersonalProfileApi()
 const isLoading = ref(false)
 
 const useJournalEditor = useJournalEditorApi()
+const useAcademicActivity = useAcademicActivityApi()
 const usePaperReviewer = usePaperReviewerApi()
 const useCommitteeMember = useCommitteeMemberApi()
 const useSocietyDirector = useSocietyDirectorApi()
@@ -80,8 +82,11 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
 
   if (route.params.id === 'academicActivities') {
     try {
-      const [journalEditorResult, paperReviewerResult, committeeMemberResult, societyDirectorResult, consultantRoleResult, academicGroupResult, conferenceAttendeeResult] = await Promise.all([
+      const [journalEditorResult, academicActivityResult, paperReviewerResult, committeeMemberResult, societyDirectorResult, consultantRoleResult, academicGroupResult, conferenceAttendeeResult] = await Promise.all([
         useJournalEditor.findJournalEditor({
+          query: {},
+        }),
+        useAcademicActivity.findAcademicActivity({
           query: {},
         }),
         usePaperReviewer.findPaperReviewer({
@@ -108,6 +113,7 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
 
       return {
         journalEditor: journalEditorResult,
+        academicActivity: academicActivityResult,
         paperReviewer: paperReviewerResult,
         committeeMember: committeeMemberResult,
         societyDirector: societyDirectorResult,

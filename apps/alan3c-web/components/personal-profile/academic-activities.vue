@@ -28,6 +28,63 @@
         </div>
       </div>
     </div>
+    <!-- (二) 近年內參與之學術活動 -->
+    <div class="flex flex-col gap-1.5rem">
+      <h2
+        class="text-xl font-semibold"
+      >
+        {{ t('academicActivities.academicActivity') }}
+      </h2>
+      <div class="flex flex-col gap-1rem">
+        <template v-if="props.data.academicActivity.data.length && props.data.academicActivity.data.length > 0">
+          <q-list>
+            <q-expansion-item
+              v-for="(item, index) in props.data.academicActivity.data" :key="item.id"
+              expand-separator
+              :label="`${index + 1}. ${item.translations.find((item) => item.academicActivityLanguages_code === locale)?.text}`"
+            >
+              <q-card class="flex flex-col gap-.1rem">
+                <q-card-section class="flex flex-col gap-1rem">
+                  <div
+                    v-for="content in item.itemList.slice().sort((a, b) => {
+                      const dateA = a.academicActivityItem_id.sortDate ? new Date(a.academicActivityItem_id.sortDate).getTime() : Number.MAX_SAFE_INTEGER;
+                      const dateB = b.academicActivityItem_id.sortDate ? new Date(b.academicActivityItem_id.sortDate).getTime() : Number.MAX_SAFE_INTEGER;
+                      return dateB - dateA;
+                    })"
+                    :key="content.academicActivityItem_id.translations.find((item) => item.academicActivityItemLanguages_code === locale)?.id"
+                    class="flex flex-nowrap items-start gap-.7rem"
+                  >
+                    <span class="text-7px pt-.3rem">
+                      ■
+                    </span>
+                    <span>
+                      {{ content.academicActivityItem_id.translations.find((item) => item.academicActivityItemLanguages_code === locale)?.text }}
+                    </span>
+                  </div>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </q-list>
+
+          <!-- <div v-for="(item, index) in props.data.academicActivity.data" :key="item.id" class="flex flex-nowrap gap-.5rem">
+            <span>{{ index + 1 }}.</span>
+            <span class="whitespace-pre-line">
+              {{ item.translations.find((item) => item.paperReviewerLanguages_code === locale)?.title }}
+            </span>
+          </div> -->
+        </template>
+        <div
+          v-else
+          class="bg-#f4f4f4 flex justify-center py-10rem rounded-.5rem font-medium text-lg text-#666"
+          :class="locale === 'zh' ? ['tracking-.1rem']
+            : locale === 'en' ? ['tracking-.05rem']
+              : []"
+        >
+          {{ t('notFound') }}
+        </div>
+      </div>
+    </div>
+
     <div class="flex flex-col gap-1.5rem">
       <h2
         class="text-xl font-semibold"
@@ -206,6 +263,7 @@
 </template>
 
 <script setup lang="ts">
+import type { AcademicActivity } from '~/contract/personal-profile/academic-activities/academic-activity/academic-activity.type'
 import type { AcademicGroup } from '~/contract/personal-profile/academic-activities/academic-group/academic-group.type'
 import type { CommitteeMember } from '~/contract/personal-profile/academic-activities/committee-member/committee-member.type'
 import type { ConferenceAttendee } from '~/contract/personal-profile/academic-activities/conference-attendee/conference-attendee.type'
@@ -217,6 +275,7 @@ import type { SocietyDirector } from '~/contract/personal-profile/academic-activ
 interface Props {
   data: {
     journalEditor: JournalEditor;
+    academicActivity: AcademicActivity;
     paperReviewer: PaperReviewer;
     committeeMember: CommitteeMember;
     societyDirector: SocietyDirector;
@@ -248,4 +307,11 @@ table
 
 th, td
   padding: 8px 15px
+
+:deep() .q-item__label
+  font-size: 16px !important
+  font-weight: 700
+
+// :deep() .q-list--bordered
+//   border: none !important
 </style>

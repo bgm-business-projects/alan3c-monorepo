@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { academicActivitySchema } from './academic-activity/academic-activity.type'
 import { academicGroupSchema } from './academic-group/academic-group.type'
 import { committeeMemberSchema } from './committee-member/committee-member.type'
 import { conferenceAttendeeSchema } from './conference-attendee/conference-attendee.type'
@@ -27,6 +28,7 @@ export const isAcademicActivities = (data: unknown): data is AcademicActivities 
 
 export const academicActivitiesDataSchema = z.object({
   journalEditor: journalEditorSchema,
+  academicActivity: academicActivitySchema,
   paperReviewer: paperReviewerSchema,
   committeeMember: committeeMemberSchema,
   societyDirector: societyDirectorSchema,

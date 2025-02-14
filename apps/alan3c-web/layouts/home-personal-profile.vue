@@ -2,8 +2,9 @@
   <div class="flex flex-col items-center layout-padding">
     <div id="top" />
     <slot name="header" />
-    <div class="max-width py-4.5rem min-h-[calc(100dvh-197px)]">
-      <div ref="containerRef" class="flex max-width py-1.5rem sm:py-3rem">
+    <div ref="containerRef" class="max-width py-4.5rem min-h-[calc(100dvh-197px)]">
+      <div class="flex w-full py-1.5rem sm:py-3rem">
+        {{ containerWidth }}
         <base-breadcrumbs
           :bread-list="[
             {
@@ -53,7 +54,7 @@
               </nuxt-link>
             </li>
           </ul>
-          <div class="flex flex-1" :style="{ width: contentWidthStyle }">
+          <div class="flex flex-1" :style="{ width: !containerWidth ? '' : contentWidthStyle }">
             <nuxt-page />
           </div>
         </div>
