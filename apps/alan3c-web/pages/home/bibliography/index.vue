@@ -54,10 +54,7 @@
 
             <nuxt-link
               :to="localePath({
-                name: 'home-bibliography-id',
-                params: {
-                  id: bookChapters?.[0],
-                },
+                name: 'home-bibliography-book-chapters',
               })"
               class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
             >
@@ -72,10 +69,7 @@
 
             <nuxt-link
               :to="localePath({
-                name: 'home-bibliography-id',
-                params: {
-                  id: localJournalPapers?.[0],
-                },
+                name: 'home-bibliography-local-journal-papers',
               })"
               class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
             >
@@ -90,10 +84,7 @@
 
             <nuxt-link
               :to="localePath({
-                name: 'home-bibliography-id',
-                params: {
-                  id: internationalConferencePapers?.[0],
-                },
+                name: 'home-bibliography-international-conference-papers',
               })"
               class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
             >
@@ -108,10 +99,7 @@
 
             <nuxt-link
               :to="localePath({
-                name: 'home-bibliography-id',
-                params: {
-                  id: localConferencePapers?.[0],
-                },
+                name: 'home-bibliography-local-conference-papers',
               })"
               class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
             >
@@ -126,10 +114,7 @@
 
             <nuxt-link
               :to="localePath({
-                name: 'home-bibliography-id',
-                params: {
-                  id: guestEditorial?.[0],
-                },
+                name: 'home-bibliography-guest-editorial',
               })"
               class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
             >
@@ -144,10 +129,7 @@
 
             <nuxt-link
               :to="localePath({
-                name: 'home-bibliography-id',
-                params: {
-                  id: domesticMagazineArticles?.[0],
-                },
+                name: 'home-bibliography-domestic-magazine-articles',
               })"
               class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
             >
@@ -177,10 +159,7 @@
 
             <nuxt-link
               :to="localePath({
-                name: 'home-bibliography-id',
-                params: {
-                  id: technicalReports?.[0],
-                },
+                name: 'home-bibliography-technical-reports',
               })"
               class="border bg-#FDFDFD rounded-.5rem px-1rem lg:px-2rem py-1rem tracking-.1rem flex lg:items-center gap-1rem flex-col lg:flex-row items-start"
             >

@@ -66,7 +66,7 @@ const useBibliography = useBibliographyApi()
 
 const isLoading = ref(false)
 
-const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('bibliography-authoredBooks', async () => {
+const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('bibliography-authored-books', async () => {
   isLoading.value = true
   const [err, result] = await to (useBibliography.findAuthoredBooks({
     query: {},

@@ -109,7 +109,7 @@
 </template>
 
 <script setup lang="ts">
-import BaseLoginDialog from '../../../components/base-login-dialog.vue'
+// import BaseLoginDialog from '../../../components/base-login-dialog.vue'
 
 const { locale, t } = useI18n()
 
@@ -143,15 +143,15 @@ const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('b
 
 const $q = useQuasar()
 
-onMounted(() => {
-  openPasswordDialog()
-})
+// onMounted(() => {
+//   openPasswordDialog()
+// })
 
-function openPasswordDialog() {
-  $q.dialog({
-    component: BaseLoginDialog,
-  })
-}
+// function openPasswordDialog() {
+//   $q.dialog({
+//     component: BaseLoginDialog,
+//   })
+// }
 
 useSeoMeta({
   title: '著作目錄',

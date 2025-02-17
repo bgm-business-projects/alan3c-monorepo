@@ -133,6 +133,132 @@ export const useAuthStore = defineStore('auth', () => {
     return result
   }
 
+  // 取得 Book Chapters
+  async function fetchBookChapters() {
+    const useBookChapters = useBibliographyApi(bibliographyToken)
+    if (!bibliographyToken.value)
+      return undefined
+
+    const [err, result] = await to(useBookChapters.findBookChapters({
+      query: {},
+    }))
+
+    if (err) {
+      // logoutBibliography()
+      throw new Error(err.message)
+    }
+
+    return result
+  }
+
+  // 取得 Local Journal Papers
+  async function fetchLocalJournalPapers() {
+    const useLocalJournalPapers = useBibliographyApi(bibliographyToken)
+    if (!bibliographyToken.value)
+      return undefined
+
+    const [err, result] = await to(useLocalJournalPapers.findLocalJournalPapers({
+      query: {},
+    }))
+
+    if (err) {
+      // logoutBibliography()
+      throw new Error(err.message)
+    }
+
+    return result
+  }
+
+  // 取得 International Conference Papers
+  async function fetchInternationalConferencePapers() {
+    const useInternationalConferencePapers = useBibliographyApi(bibliographyToken)
+    if (!bibliographyToken.value)
+      return undefined
+
+    const [err, result] = await to(useInternationalConferencePapers.findInternationalConferencePapers({
+      query: {},
+    }))
+
+    if (err) {
+      // logoutBibliography()
+      throw new Error(err.message)
+    }
+
+    return result
+  }
+
+  // 取得 Local Conference Papers
+  async function fetchLocalConferencePapers() {
+    const useLocalConferencePapers = useBibliographyApi(bibliographyToken)
+    if (!bibliographyToken.value)
+      return undefined
+
+    const [err, result] = await to(useLocalConferencePapers.findLocalConferencePapers({
+      query: {},
+    }))
+
+    if (err) {
+      // logoutBibliography()
+      throw new Error(err.message)
+    }
+
+    return result
+  }
+
+  // 取得 Guest Editorial
+  async function fetchGuestEditorial() {
+    const useGuestEditorial = useBibliographyApi(bibliographyToken)
+    if (!bibliographyToken.value)
+      return undefined
+
+    const [err, result] = await to(useGuestEditorial.findGuestEditorial({
+      query: {},
+    }))
+
+    if (err) {
+      // logoutBibliography()
+      throw new Error(err.message)
+    }
+
+    return result
+  }
+
+  // 取得 Guest Editorial
+  async function fetchDomesticMagazineArticles() {
+    const useDomesticMagazineArticles = useBibliographyApi(bibliographyToken)
+    if (!bibliographyToken.value)
+      return undefined
+
+    const [err, result] = await to(useDomesticMagazineArticles.findDomesticMagazineArticles({
+      query: {},
+    }))
+
+    if (err) {
+      // logoutBibliography()
+      throw new Error(err.message)
+    }
+
+    return result
+  }
+
+  // 取得 Technical Reports
+  async function fetchTechnicalReports() {
+    const useTechnicalReports = useBibliographyApi(bibliographyToken)
+    if (!bibliographyToken.value)
+      return undefined
+
+    const [err, result] = await to(useTechnicalReports.findTechnicalReports({
+      query: {},
+    }))
+
+    if (err) {
+      // logoutBibliography()
+      throw new Error(err.message)
+    }
+
+    return result
+  }
+
   // 取得 Submitted Papers
   async function fetchSubmittedPapers() {
     const useSubmittedPapers = useBibliographyApi(submittedPapersToken)
@@ -449,5 +575,12 @@ export const useAuthStore = defineStore('auth', () => {
     loginImageProcessingCreator,
     loginArtificialIntelligenceCreator,
     // fetchInternationalJournalPapersCreator,
+    fetchBookChapters,
+    fetchLocalJournalPapers,
+    fetchInternationalConferencePapers,
+    fetchLocalConferencePapers,
+    fetchGuestEditorial,
+    fetchDomesticMagazineArticles,
+    fetchTechnicalReports,
   }
 })
