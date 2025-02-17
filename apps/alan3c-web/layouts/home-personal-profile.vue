@@ -170,12 +170,12 @@ const bottomLineStyle = computed(() => {
   }
 })
 
-watch(bottomLineStyle, (newValue, oldValue) => {
-  console.log(oldValue, newValue)
-}, {
-  immediate: true,
-  deep: true,
-})
+// watch(bottomLineStyle, (newValue, oldValue) => {
+//   console.log(oldValue, newValue)
+// }, {
+//   immediate: true,
+//   deep: true,
+// })
 </script>
 
 <style lang="sass" scoped>
