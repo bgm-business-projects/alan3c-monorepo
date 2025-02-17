@@ -4,7 +4,6 @@
     <slot name="header" />
     <div ref="containerRef" class="max-width py-4.5rem min-h-[calc(100dvh-197px)]">
       <div class="flex w-full py-1.5rem sm:py-3rem">
-        {{ containerWidth }}
         <base-breadcrumbs
           :bread-list="[
             {

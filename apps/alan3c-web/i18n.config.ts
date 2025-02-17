@@ -139,7 +139,7 @@ export default defineI18nConfig(() => ({
         societyDirector: '(五) 擔任學會理事',
         consultantRole: '(六) 擔任顧問',
         academicGroup: '(七) 參加學術團體',
-        conferenceAttendee: '(八) 出席國際學術會議',
+        conferenceAttendee: '(八) 出席國際學術會議 (1983-2001)',
       },
     },
     zh: {
@@ -279,7 +279,7 @@ export default defineI18nConfig(() => ({
         societyDirector: '(五) 擔任學會理事',
         consultantRole: '(六) 擔任顧問',
         academicGroup: '(七) 參加學術團體',
-        conferenceAttendee: '(八) 出席國際學術會議',
+        conferenceAttendee: '(八) 出席國際學術會議 (1983-2001)',
       },
     },
   },

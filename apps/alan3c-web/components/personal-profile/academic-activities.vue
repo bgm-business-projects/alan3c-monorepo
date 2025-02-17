@@ -110,6 +110,9 @@
           {{ t('notFound') }}
         </div>
       </div>
+      <div class="font-medium text-base text-#333">
+        {{ props.data.paperReviewerExtension.data.translations.find((item) => item.paperReviewerExtensionLanguages_code === locale)?.text }}
+      </div>
     </div>
     <div class="flex flex-col gap-1.5rem">
       <h2
@@ -263,26 +266,10 @@
 </template>
 
 <script setup lang="ts">
-import type { AcademicActivity } from '~/contract/personal-profile/academic-activities/academic-activity/academic-activity.type'
-import type { AcademicGroup } from '~/contract/personal-profile/academic-activities/academic-group/academic-group.type'
-import type { CommitteeMember } from '~/contract/personal-profile/academic-activities/committee-member/committee-member.type'
-import type { ConferenceAttendee } from '~/contract/personal-profile/academic-activities/conference-attendee/conference-attendee.type'
-import type { ConsultantRole } from '~/contract/personal-profile/academic-activities/consultant-role/consultant-role.type'
-import type { JournalEditor } from '~/contract/personal-profile/academic-activities/journal-editor/journal-editor.type'
-import type { PaperReviewer } from '~/contract/personal-profile/academic-activities/paper-reviewer/paper-reviewer.type'
-import type { SocietyDirector } from '~/contract/personal-profile/academic-activities/society-director/society-director.type'
+import type { AcademicActivitiesData } from '~/contract/personal-profile/academic-activities/academic-activities.type'
 
 interface Props {
-  data: {
-    journalEditor: JournalEditor;
-    academicActivity: AcademicActivity;
-    paperReviewer: PaperReviewer;
-    committeeMember: CommitteeMember;
-    societyDirector: SocietyDirector;
-    consultantRole: ConsultantRole;
-    academicGroup: AcademicGroup;
-    conferenceAttendee: ConferenceAttendee;
-  };
+  data: AcademicActivitiesData;
 }
 const props = withDefaults(defineProps<Props>(), {
 })

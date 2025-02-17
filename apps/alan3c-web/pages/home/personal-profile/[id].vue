@@ -82,7 +82,7 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
 
   if (route.params.id === 'academicActivities') {
     try {
-      const [journalEditorResult, academicActivityResult, paperReviewerResult, committeeMemberResult, societyDirectorResult, consultantRoleResult, academicGroupResult, conferenceAttendeeResult] = await Promise.all([
+      const [journalEditorResult, academicActivityResult, paperReviewerResult, paperReviewerExtensionResult, committeeMemberResult, societyDirectorResult, consultantRoleResult, academicGroupResult, conferenceAttendeeResult] = await Promise.all([
         useJournalEditor.findJournalEditor({
           query: {},
         }),
@@ -90,6 +90,9 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
           query: {},
         }),
         usePaperReviewer.findPaperReviewer({
+          query: {},
+        }),
+        usePaperReviewer.findPaperReviewerExtension({
           query: {},
         }),
         useCommitteeMember.findCommitteeMember({
@@ -115,6 +118,7 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
         journalEditor: journalEditorResult,
         academicActivity: academicActivityResult,
         paperReviewer: paperReviewerResult,
+        paperReviewerExtension: paperReviewerExtensionResult,
         committeeMember: committeeMemberResult,
         societyDirector: societyDirectorResult,
         consultantRole: consultantRoleResult,

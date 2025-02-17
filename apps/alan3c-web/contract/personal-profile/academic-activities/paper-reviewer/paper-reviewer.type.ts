@@ -19,3 +19,20 @@ export const paperReviewerSchema = z.object({
 
 export type PaperReviewer = z.infer<typeof paperReviewerSchema>
 export const isPaperReviewer = (data: unknown): data is PaperReviewer => paperReviewerSchema.safeParse(data).success
+
+const extensionTranslationSchema = z.object({
+  id: z.number(), // translation 的 ID
+  paperReviewerExtension_id: z.number(), // 所屬 resume 的 ID
+  paperReviewerExtensionLanguages_code: z.string(), // 語言代碼
+  text: z.string().nullable(), // 名稱，可以為 null
+})
+
+// 供項目下方備註使用
+export const paperReviewerExtensionSchema = z.object({
+  data: z.object({
+    id: z.number(),
+    translations: z.array(extensionTranslationSchema),
+  }),
+})
+
+export type PaperReviewerExtension = z.infer<typeof paperReviewerExtensionSchema>

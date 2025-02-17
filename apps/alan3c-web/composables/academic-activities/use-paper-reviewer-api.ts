@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { paperReviewerContract } from '~/contract/personal-profile/academic-activities/paper-reviewer'
 
 type PaperReviewerRequest = ClientInferRequest<typeof paperReviewerContract>
+
 export function usePaperReviewerApi(
   accessToken?: MaybeRefOrGetter<string | undefined>,
 ) {
@@ -34,7 +35,27 @@ export function usePaperReviewerApi(
     }
   }
 
+  async function findPaperReviewerExtension(params?: PaperReviewerRequest['getPaperReviewerExtension']) {
+    if (params) {
+      const query = paperReviewerContract.getPaperReviewerExtension.query.parse(params.query)
+      const result = await paperReviewerApi.value.getPaperReviewerExtension({
+        ...params,
+        query,
+      })
+      if (result.status === 200) {
+        return result.body
+      }
+    }
+    else {
+      const result = await paperReviewerApi.value.getPaperReviewerExtension()
+      if (result.status === 200) {
+        return result.body
+      }
+    }
+  }
+
   return {
     findPaperReviewer,
+    findPaperReviewerExtension,
   }
 }

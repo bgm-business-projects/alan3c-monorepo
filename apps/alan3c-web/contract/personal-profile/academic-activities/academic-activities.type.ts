@@ -5,7 +5,7 @@ import { committeeMemberSchema } from './committee-member/committee-member.type'
 import { conferenceAttendeeSchema } from './conference-attendee/conference-attendee.type'
 import { consultantRoleSchema } from './consultant-role/consultant-role.type'
 import { journalEditorSchema } from './journal-editor/journal-editor.type'
-import { paperReviewerSchema } from './paper-reviewer/paper-reviewer.type'
+import { paperReviewerExtensionSchema, paperReviewerSchema } from './paper-reviewer/paper-reviewer.type'
 import { societyDirectorSchema } from './society-director/society-director.type'
 
 const translationSchema = z.object({
@@ -30,6 +30,7 @@ export const academicActivitiesDataSchema = z.object({
   journalEditor: journalEditorSchema,
   academicActivity: academicActivitySchema,
   paperReviewer: paperReviewerSchema,
+  paperReviewerExtension: paperReviewerExtensionSchema,
   committeeMember: committeeMemberSchema,
   societyDirector: societyDirectorSchema,
   consultantRole: consultantRoleSchema,
