@@ -249,7 +249,7 @@ export default defineI18nConfig(() => ({
         academicRecognition: '學術榮譽',
         coursesTaught: '曾任教科目',
         patentApplication: '專利申請',
-        servicesToPractitionersCommunity: `針對執業者社群的服務`,
+        servicesToPractitionersCommunity: '社群服務',
       },
       scholar: {
         from: '來自',
