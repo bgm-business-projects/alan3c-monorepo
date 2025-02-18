@@ -25,7 +25,7 @@
         </h1>
       </div>
       <div class="w-full flex flex-col gap-2rem">
-        <div class="hidden lg:!flex gap-.5rem w-full">
+        <div class="hidden lg:!flex gap-[.8rem_.8rem] w-full flex-wrap ">
           <div
             v-for="category in categories" :key="category.name"
             class="bg-[#f4f4f4] px-1rem py-.2rem rounded-.5rem"
@@ -48,62 +48,14 @@
     <div class="max-width">
       <div
         v-if="!isLoading"
-        class="w-full flex flex-col pb-1rem overflow-x-scroll"
+        class="w-full flex flex-col pb-1rem"
       >
         <div id="information" class="text-2xl font-semibold">
           Information
         </div>
         <div class="w-full">
-          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.curriculumVitae" />
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.information" />
           <!-- <div class="w-full" v-html="curriculumVitaeData?.data.curriculumVitae" /> -->
-        </div>
-
-        <div id="activities-society" class="text-2xl font-semibold mt-3rem">
-          Activities (Society)
-        </div>
-        <div class="w-full">
-          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.activitiesSociety" />
-          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.activitiesSociety" /> -->
-        </div>
-
-        <div id="activities-other" class="text-2xl font-semibold mt-3rem">
-          Activities (Other)
-        </div>
-        <div class="w-full">
-          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.activitiesOther" />
-          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.activitiesOther" /> -->
-        </div>
-
-        <div id="technical-reviewer" class="text-2xl font-semibold mt-3rem">
-          Technical Reviewer
-        </div>
-        <div class="w-full">
-          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.technicalReviewer" />
-          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.technicalReviewer" /> -->
-        </div>
-
-        <div id="consulting" class="text-2xl font-semibold mt-3rem">
-          Consulting
-        </div>
-        <div class="w-full">
-          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.consulting" />
-          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.consulting" /> -->
-        </div>
-
-        <div id="projects" class="text-2xl font-semibold mt-3rem ">
-          Projects
-        </div>
-        <div class="w-full">
-          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.projects" />
-          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.projects" /> -->
-        </div>
-
-        <div id="theses-master" class="text-2xl font-semibold mt-3rem">
-          Theses (Master)
-        </div>
-        <div class="w-full">
-          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.thesesMaster" />
-          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.thesesMaster" /> -->
         </div>
 
         <div id="awards" class="text-2xl font-semibold mt-3rem">
@@ -111,6 +63,78 @@
         </div>
         <div class="w-full">
           <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.awards" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.activitiesSociety" /> -->
+        </div>
+
+        <div id="society-activities " class="text-2xl font-semibold mt-3rem">
+          Professional Society Activities
+        </div>
+        <div class="w-full">
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.professionalSocietyActivities" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.activitiesOther" /> -->
+        </div>
+
+        <div id="other-activities" class="text-2xl font-semibold mt-3rem">
+          Other Activities
+        </div>
+        <div class="w-full">
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.otherActivities" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.technicalReviewer" /> -->
+        </div>
+
+        <div id="technical-reviewer" class="text-2xl font-semibold mt-3rem">
+          Technical Reviewer
+        </div>
+        <div class="w-full">
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.technicalReviewer" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.consulting" /> -->
+        </div>
+
+        <div id="consulting-memberships " class="text-2xl font-semibold mt-3rem ">
+          Consulting Memberships in Academic and Professional Societies
+        </div>
+        <div class="w-full">
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.consultingMembershipsInAcademicAndProfessionalSocieties" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.projects" /> -->
+        </div>
+
+        <div id="project-records" class="text-2xl font-semibold mt-3rem">
+          Project Records
+        </div>
+        <div class="w-full">
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.projectRecords" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.thesesMaster" /> -->
+        </div>
+
+        <div id="master" class="text-2xl font-semibold mt-3rem">
+          Master Theses Supervision
+        </div>
+        <div class="w-full">
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.masterThesesSupervision" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.awards" /> -->
+        </div>
+
+        <div id="ph-d" class="text-2xl font-semibold mt-3rem">
+          Ph. D. Dissertation Supervision
+        </div>
+        <div class="w-full">
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.phDDissertationSupervision" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.awards" /> -->
+        </div>
+
+        <div id="patents" class="text-2xl font-semibold mt-3rem">
+          Patents
+        </div>
+        <div class="w-full">
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.patents" />
+          <!-- <div class="w-full" v-html="curriculumVitaeData?.data.awards" /> -->
+        </div>
+
+        <div id="lecture" class="text-2xl font-semibold mt-3rem">
+          Lecture
+        </div>
+        <div class="w-full">
+          <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.lecture" />
           <!-- <div class="w-full" v-html="curriculumVitaeData?.data.awards" /> -->
         </div>
       </div>
@@ -154,21 +178,28 @@ const categories = ref([
     name: 'Information',
     route: {
       name: 'home-curriculum-vitae',
-      hash: '#information',
+      hash: '',
     },
   },
   {
-    name: 'Activities (Society)',
+    name: 'Awards',
     route: {
       name: 'home-curriculum-vitae',
-      hash: '#activities-society',
+      hash: '#awards',
     },
   },
   {
-    name: 'Activities (Other)',
+    name: 'Society Activities ',
     route: {
       name: 'home-curriculum-vitae',
-      hash: '#activities-other',
+      hash: '#society-activities ',
+    },
+  },
+  {
+    name: 'Other Activities',
+    route: {
+      name: 'home-curriculum-vitae',
+      hash: '#other-activities',
     },
   },
   {
@@ -179,31 +210,45 @@ const categories = ref([
     },
   },
   {
-    name: 'Consulting',
+    name: 'Consulting Memberships ',
     route: {
       name: 'home-curriculum-vitae',
-      hash: '#consulting',
+      hash: '#consulting-memberships ',
     },
   },
   {
-    name: 'Projects',
+    name: 'Project Records',
     route: {
       name: 'home-curriculum-vitae',
-      hash: '#projects',
+      hash: '#project-records',
     },
   },
   {
-    name: 'Theses (Master)',
+    name: 'Master',
     route: {
       name: 'home-curriculum-vitae',
-      hash: '#theses-master',
+      hash: '#master',
     },
   },
   {
-    name: 'Awards',
+    name: 'Ph. D.',
     route: {
       name: 'home-curriculum-vitae',
-      hash: '#awards',
+      hash: '#ph-d',
+    },
+  },
+  {
+    name: 'Patents',
+    route: {
+      name: 'home-curriculum-vitae',
+      hash: '#patents',
+    },
+  },
+  {
+    name: 'Lecture',
+    route: {
+      name: 'home-curriculum-vitae',
+      hash: '#lecture',
     },
   },
 ])
