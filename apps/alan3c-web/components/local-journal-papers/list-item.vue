@@ -3,14 +3,13 @@
     <div class="flex flex-nowrap">
       <div class="flex flex-nowrap">
         <span>{{ props.index }}.</span>
-        <span class="w-5px" />
       </div>
-      <div class="flex">
-        <span>{{ props.data.author }}</span>
-        <span>{{ props.data.publicationYear }}</span>
-        <span>{{ props.data.title }}</span>
-        <span>{{ props.data.source }}</span>
-        <span>{{ props.data.volNoPg }}</span>
+      <div class="flex gap-.1rem">
+        <span v-if="props.data.author">{{ props.data.author }}</span>
+        <span v-if="props.data.publicationYear">, ({{ props.data.publicationYear }})</span>
+        <span v-if="props.data.title">: "{{ props.data.title }},"</span>
+        <span v-if="props.data.source">{{ props.data.source }}</span>
+        <span v-if="props.data.volNoPg">, {{ props.data.volNoPg }}.</span>
       </div>
     </div>
   </div>

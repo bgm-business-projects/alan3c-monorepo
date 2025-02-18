@@ -16,9 +16,9 @@
             },
           },
           {
-            name: t('bibliography.localJournalPapers'),
+            name: t('bibliography.localConferencePapers'),
             route: {
-              name: 'home-bibliography-local-journal-papers',
+              name: 'home-bibliography-local-conference-papers',
             },
           },
         ]"
@@ -26,7 +26,7 @@
     </div>
     <div class="max-width flex flex-col gap-2rem">
       <h1 class="text-2xl font-bold text-primary">
-        {{ t('bibliography.localJournalPapers') }}
+        {{ t('bibliography.localConferencePapers') }}
       </h1>
     </div>
     <div class="max-width flex flex-col gap-1rem">

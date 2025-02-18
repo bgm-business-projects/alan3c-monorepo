@@ -6,13 +6,13 @@
         <span class="w-5px" />
       </div>
       <div class="flex">
-        <span>{{ props.data.author }}</span>
-        <span>{{ props.data.publicationYear }}</span>
-        <span>{{ props.data.title }}</span>
-        <span>{{ props.data.publicationConference }}</span>
-        <span>{{ props.data.location }}</span>
-        <span>{{ dayjs(props.data.date).format('MMM. YYYY') }}</span>
-        <span>{{ props.data.numPages }}</span>
+        <span v-if="props.data.author">{{ props.data.author }}</span>
+        <span v-if="props.data.publicationYear">, ({{ props.data.publicationYear }})</span>
+        <span v-if="props.data.title">: "{{ props.data.title }},"</span>
+        <span v-if="props.data.publicationConference" class="ml-.1rem">{{ props.data.publicationConference }}</span>
+        <span v-if="props.data.location">,{{ props.data.location }}</span>
+        <span v-if="props.data.date">, {{ dayjs(props.data.date).format('MMM. YYYY') }}</span>
+        <span v-if="props.data.numPages">, {{ props.data.numPages }}.</span>
       </div>
     </div>
   </div>

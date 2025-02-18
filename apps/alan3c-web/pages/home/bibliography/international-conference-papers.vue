@@ -26,7 +26,7 @@
     </div>
     <div class="max-width flex flex-col gap-2rem">
       <h1 class="text-2xl font-bold text-primary">
-        {{ t('bibliography.bookChapters') }}
+        {{ t('bibliography.internationalConferencePapers') }}
       </h1>
     </div>
     <div class="max-width flex flex-col gap-1rem">

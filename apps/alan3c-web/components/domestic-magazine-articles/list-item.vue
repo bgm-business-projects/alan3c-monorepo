@@ -1,18 +1,17 @@
 <template>
   <div class="flex">
-    <div class="flex flex-nowrap">
+    <div class="flex flex-nowrap gap-.1rem">
       <div class="flex flex-nowrap">
         <span>{{ props.index }}.</span>
-        <span class="w-5px" />
       </div>
       <div class="flex">
-        <span>{{ props.data.author }}</span>
-        <span class="block mr-.5rem">( {{ props.data.publicationYear }} ) : </span>
-        <span>"{{ props.data.title }}"</span>
-        <span>，{{ props.data.publicationSource }}</span>
-        <span>，{{ props.data.volNoPg }}</span>
-        <span>，{{ dayjs(props.data.date).format('YYYY年M月') }}</span>
-        <span>，{{ props.data.numPages }}</span>
+        <span v-if="props.data.author">{{ props.data.author }}</span>
+        <span v-if="props.data.publicationYear" class="block mx-.2rem">( {{ props.data.publicationYear }} ) :</span>
+        <span v-if="props.data.title">"{{ props.data.title }}"</span>
+        <span v-if="props.data.publicationSource">，{{ props.data.publicationSource }}</span>
+        <span v-if="props.data.volNoPg">，{{ props.data.volNoPg }}</span>
+        <span v-if="props.data.date">，{{ dayjs(props.data.date).format('YYYY年M月') }}</span>
+        <span v-if="props.data.numPages">，{{ props.data.numPages }}</span>
       </div>
     </div>
   </div>

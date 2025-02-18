@@ -46,12 +46,42 @@
           <template v-else>
             <div class="w-full flex flex-col gap-2rem items-start">
               <div v-for="item, index in bibliography.data" :key="item.id">
-                <a v-if="item.file?.filename_disk" :href="combineImageUrl(item.file?.filename_disk)" target="_blank" class="underline text-primary">
-                  {{ index + 1 }}
-                </a>
-                <span v-else>
-                  {{ index + 1 }}
-                </span>. {{ item.author }} , ({{ item.year }}) : {{ item.titleOfThePaper }} {{ item.journalName }} {{ item.journalName }}, Vol. {{ item.vol }}, No. {{ item.no }}, {{ item.month }}, {{ item.year }}, pp. {{ item.pp }}
+                <span class="mr-.2rem">
+                  <a v-if="item.file?.filename_disk" :href="combineImageUrl(item.file?.filename_disk)" target="_blank" class="underline text-primary">
+                    {{ index + 1 }}
+                  </a>
+                  <span v-else>
+                    {{ index + 1 }}
+                  </span>
+                  <span>.</span>
+                </span>
+                <span v-if="item.author">
+                  {{ item.author }}
+                </span>
+                <span v-if="item.year">
+                  , ({{ item.year }})
+                </span>
+                <span v-if="item.titleOfThePaper">
+                  : {{ item.titleOfThePaper }}
+                </span>
+                <span v-if="item.journalName">
+                  {{ item.journalName }}
+                </span>
+                <span v-if="item.vol">
+                  , Vol. {{ item.vol }}
+                </span>
+                <span v-if="item.no">
+                  , No. {{ item.no }}
+                </span>
+                <span v-if="item.month">
+                  , {{ item.month }}
+                </span>
+                <span v-if="item.year">
+                  . {{ item.year }}
+                </span>
+                <span v-if="item.pp">
+                  , pp. {{ item.pp }}
+                </span>
                 <span v-if="transferStatus(item.status)">
                   (
                   {{ transferStatus(item.status) }}

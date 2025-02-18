@@ -6,11 +6,11 @@
         <span class="w-5px" />
       </div>
       <div class="flex">
-        <span>{{ props.data.author }}</span>
-        <span>{{ props.data.publicationYear }}</span>
-        <span>{{ props.data.title }}</span>
-        <span>{{ props.data.publicationSource }}</span>
-        <span>{{ props.data.volNoPg }}</span>
+        <span v-if="props.data.author">{{ props.data.author }}</span>
+        <span v-if="props.data.publicationYear">,({{ props.data.publicationYear }})</span>
+        <span v-if="props.data.title " class="ml-.2rem">: "{{ props.data.title }}"</span>
+        <span v-if="props.data.publicationSource">{{ props.data.publicationSource }}</span>
+        <span v-if="props.data.volNoPg">, {{ props.data.volNoPg }}</span>
       </div>
     </div>
   </div>

@@ -44,12 +44,11 @@
         <template v-else>
           <div class="w-full flex flex-col gap-2rem items-start">
             <div v-for="(item, index) in bibliography.data" :key="index" :data="item" :index="index + 1">
-              <div class="flex flex-nowrap">
+              <div class="flex flex-nowrap gap-.2rem">
                 <div class="flex flex-nowrap">
                   <span>{{ index + 1 }}.</span>
-                  <span class="w-5px" />
                 </div>
-                <div class="flex">
+                <div v-if="item.title" class="flex">
                   <span>{{ item.title }}</span>
                 </div>
               </div>

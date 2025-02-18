@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-2rem w-full flex-col lg:flex-row lg:justify-start">
+  <div class="flex gap-2rem w-full flex-col lg:flex-row lg:justify-start lg:items-start">
     <div class="w-150px aspect-3/4 overflow-hidden flex justify-center items-center">
       <nuxt-img v-if="props.data?.mainImage?.filename_disk" class="min-w-full min-h-full object-cover" :src="combineImageUrl(props.data?.mainImage?.filename_disk)" />
       <div v-else class="flex justify-center items-center bg-gray-100 w-full h-full">
