@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { basicFileSchema } from '../basic-schema'
+import { basicFileSchema } from '../../basic-schema'
 
 export const authoredBooksSchema = z.object({
   meta: z.object({
