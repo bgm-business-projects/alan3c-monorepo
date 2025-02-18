@@ -109,7 +109,7 @@ export function useBibliographyApi(
   }
 
   async function findInternationalConferencePapers(params: BibliographyRequest['getInternationalConferencePapers']) {
-    const query = bibliographyContract.getLocalJournalPapers.query.parse(params.query)
+    const query = bibliographyContract.getInternationalConferencePapers.query.parse(params.query)
     const result = await bibliographyApi.value.getInternationalConferencePapers({
       ...params,
       query,
