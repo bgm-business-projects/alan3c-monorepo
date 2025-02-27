@@ -68,7 +68,7 @@
           </div>
           <div
             v-if="isGrowthRecordDeep(lifeSnippets?.target)"
-            class="w-full flex"
+            class="w-full flex gap-1rem"
           >
             <base-card
               v-for="(item, index) in lifeSnippets?.target?.data.growthRecord"
@@ -82,7 +82,7 @@
           </div>
           <div
             v-if="isLeisureTimeDeep(lifeSnippets?.target)"
-            class="w-full flex"
+            class="w-full flex gap-1rem"
           >
             <base-card
               v-for="(item, index) in lifeSnippets?.target?.data.leisureTime"
@@ -96,7 +96,7 @@
           </div>
           <div
             v-if="isAcademicLectureDeep(lifeSnippets?.target)"
-            class="w-full flex"
+            class="w-full flex gap-1rem"
           >
             <base-card
               v-for="(item, index) in lifeSnippets?.target?.data.academicLecture"
@@ -110,7 +110,7 @@
           </div>
           <div
             v-if="isPrimeOfLifeDeep(lifeSnippets?.target)"
-            class="w-full flex"
+            class="w-full flex gap-1rem"
           >
             <base-card
               v-for="(item, index) in lifeSnippets?.target?.data.primeOfLife"
@@ -125,7 +125,7 @@
           </div>
           <div
             v-if="isAdministrativeYearsDeep(lifeSnippets?.target)"
-            class="w-full flex"
+            class="w-full flex gap-1rem"
           >
             <base-card
               v-for="(item, index) in lifeSnippets?.target?.data.administrativeYears"

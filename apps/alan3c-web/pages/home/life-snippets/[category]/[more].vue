@@ -94,6 +94,7 @@
             無更多圖片
           </div>
         </div>
+
         <div
           v-if="isAcademicLectureMoreFile(lifeSnippetsMoreFile)"
           class="flex gap-1rem w-full"
@@ -262,10 +263,11 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
   }
 
   if (key === 'growthRecord') {
+    const targetId = Number(route.query.id)
     const [err, result] = await to (useLifeSnippets.findGrowthRecordMoreFile(
       {
         query: {
-          'filter[growthRecord][growthRecord_id][id][_eq]': 1,
+          'filter[growthRecord][growthRecord_id][id][_eq]': targetId,
         },
       },
     ))
@@ -278,10 +280,11 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
   }
 
   if (key === 'leisureTime') {
+    const targetId = Number(route.query.id)
     const [err, result] = await to (useLifeSnippets.findLeisureTimeMoreFile(
       {
         query: {
-          'filter[leisureTime][leisureTime_id][id][_eq]': 1,
+          'filter[leisureTime][leisureTime_id][id][_eq]': targetId,
         },
       },
     ))
@@ -294,10 +297,11 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
   }
 
   if (key === 'academicLecture') {
+    const targetId = Number(route.query.id)
     const [err, result] = await to (useLifeSnippets.findAcademicLectureMoreFile(
       {
         query: {
-          'filter[academicLecture][academicLecture_id][id][_eq]': 1,
+          'filter[academicLecture][academicLecture_id][id][_eq]': targetId,
         },
       },
     ))
@@ -310,10 +314,11 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
   }
 
   if (key === 'primeOfLife') {
+    const targetId = Number(route.query.id)
     const [err, result] = await to (useLifeSnippets.findPrimeOfLifeMoreFile(
       {
         query: {
-          'filter[primeOfLife][primeOfLife_id][id][_eq]': 1,
+          'filter[primeOfLife][primeOfLife_id][id][_eq]': targetId,
         },
       },
     ))
@@ -326,10 +331,11 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
   }
 
   if (key === 'administrativeYears') {
+    const targetId = Number(route.query.id)
     const [err, result] = await to (useLifeSnippets.findAdministrativeYearsMoreFile(
       {
         query: {
-          'filter[administrativeYears][administrativeYears_id][id][_eq]': 1,
+          'filter[administrativeYears][administrativeYears_id][id][_eq]': targetId,
         },
       },
     ))
