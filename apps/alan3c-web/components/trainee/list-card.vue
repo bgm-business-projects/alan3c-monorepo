@@ -7,24 +7,24 @@
       </div>
     </div>
     <div class="flex flex-col justify-center gap-.5rem w-full lg:w-35%">
-      <h3 v-if="props.data.translations.name" class="font-bold text-lg">
+      <h3 v-if="props.data.translations?.name" class="font-bold text-lg">
         {{ props.data.translations.name }}
       </h3>
-      <p v-if="props.data.translations.topic">
+      <p v-if="props.data.translations?.topic">
         {{ props.data.translations.topic }}
       </p>
-      <p v-if="props.data.translations.graduation">
+      <p v-if="props.data.translations?.graduation">
         {{ props.data.translations.graduation }}
       </p>
     </div>
     <div class="flex flex-col justify-center gap-.5rem flex-1">
-      <h3 v-if="props.data.translations.title " class="font-bold text-lg">
+      <h3 v-if="props.data.translations?.title " class="font-bold text-lg">
         {{ props.data.translations.title }}
       </h3>
-      <p v-if="props.data.email">
+      <p v-if="props.data?.email">
         E-Mail : {{ props.data.email }}
       </p>
-      <p v-if="props.data.web">
+      <p v-if="props.data?.web">
         Web : <a class="!underline" :href="props.data.web" target="_blank">{{ props.data.web }}</a>
       </p>
     </div>

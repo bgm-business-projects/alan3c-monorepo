@@ -27,19 +27,19 @@
           v-for="category in traineeCategories" :key="category.id"
           class="bg-[#f4f4f4] px-1rem py-.2rem rounded-.5rem hover:bg-accent duration-500 flex items-center"
           :class="{
-            'bg-accent': category.translations.name === currentCategory,
+            'bg-accent': category.translations?.name === currentCategory,
           }"
         >
           <nuxt-link
             :to="localePath({
               name: 'trainee',
               query: {
-                category: category.translations.name,
+                category: category.translations?.name,
               },
             })"
           >
             <div class="whitespace-nowrap">
-              {{ category.translations.name }}
+              {{ category.translations?.name }}
             </div>
           </nuxt-link>
           <div />
@@ -124,7 +124,7 @@ const options = computed(() => {
   if (!traineeCategories.value)
     return undefined
   return traineeCategories.value.map((item) => {
-    return item.translations.name
+    return item.translations?.name
   })
 })
 
@@ -189,7 +189,7 @@ const { data: trainee, refresh: refreshTrainee } = useLazyAsyncData('trainee', a
       originalData: data,
     }
   },
-  watch: [locale, currentCategory],
+  watch: [locale, currentCategory, currentPage],
 })
 
 const listMeta = computed(() => {
@@ -197,6 +197,7 @@ const listMeta = computed(() => {
     if (Number.parseInt(trainee.value?.originalData.meta.filter_count) / limit.value < 1) {
       return 1
     }
+    return Math.ceil(Number.parseInt(trainee.value?.originalData.meta.filter_count) / limit.value)
   }
   return undefined
 })
