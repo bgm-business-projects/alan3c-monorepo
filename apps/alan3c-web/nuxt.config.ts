@@ -22,9 +22,9 @@ export default defineNuxtConfig({
     vueI18n: './i18n.config.ts',
   },
   image: {
-    domains: [
-      'https://alan3c.de.r.appspot.com',
-    ],
+    ipx: {
+      baseURL: '/',
+    },
   },
   quasar: {
     plugins: [
@@ -70,7 +70,11 @@ export default defineNuxtConfig({
     public: {
       // 客戶端和服務端都可以訪問的環境變數
       // eslint-disable-next-line node/prefer-global/process
-      apiBaseUrl: process.env.NUXT_API_BASE_URL || 'http://localhost:3000',
+      apiBaseSSRUrl: process.env.NUXT_API_BASE_SSR_URL,
+      // eslint-disable-next-line node/prefer-global/process
+      apiBaseCSRUrl: process.env.NUXT_API_BASE_CSR_URL,
+      // eslint-disable-next-line node/prefer-global/process
+      apiBaseUrl: '',
     },
     baseUrl: '',
   },
@@ -88,7 +92,7 @@ export default defineNuxtConfig({
       scrollBehaviorType: 'smooth',
     },
   },
-  nitro: {
-    preset: 'cloudflare', // 預設為 node-server
-  },
+  // nitro: {
+  //   preset: 'cloudflare', // 預設為 node-server
+  // },
 })

@@ -81,9 +81,9 @@ interface Props {
 }
 
 const config = useRuntimeConfig()
-const downloadHref = computed(() => `${config.public.apiBaseUrl}/assets/${props.data.file?.id}?download`)
+const downloadHref = computed(() => `${config.public.apiBaseCSRUrl}/assets/${props.data.file?.id}?download`)
 
-const previewHref = computed(() => `${config.public.apiBaseUrl}/assets/${props.data.file?.id}`)
+const previewHref = computed(() => `${config.public.apiBaseCSRUrl}/assets/${props.data.file?.id}`)
 
 const writingModeStyle = computed(() => {
   if (locale.value === 'zh') {

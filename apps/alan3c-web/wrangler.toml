@@ -1,9 +1,0 @@
-name = "alan3c-web"
-main = "./.output/server/index.mjs"
-workers_dev = true
-compatibility_date = "2025-01-14"
-
-[site]
-bucket = ".output/public"
-[vars]
-NUXT_API_BASE_URL = "https://alan3c.de.r.appspot.com"

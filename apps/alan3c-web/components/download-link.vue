@@ -25,7 +25,7 @@ interface Props {
   id: string;
 }
 const config = useRuntimeConfig()
-const downloadHref = computed(() => `${config.public.apiBaseUrl}/assets/${props.id}?download`)
+const downloadHref = computed(() => `${config.public.apiBaseCSRUrl}/assets/${props.id}?download`)
 </script>
 
 <style scoped lang="sass">

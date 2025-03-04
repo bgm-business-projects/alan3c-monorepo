@@ -3,5 +3,5 @@ export function combineImageUrl(url?: string) {
   if (!url)
     return ''
 
-  return `${config.public.apiBaseUrl}/assets/${url}`
+  return `${config.public.apiBaseCSRUrl}/assets/${url}`
 }

@@ -17,6 +17,16 @@
 <script setup lang="ts">
 import TheFooter from './components/the-footer.vue'
 import TheHeader from './components/the-header.vue'
+
+const config = useRuntimeConfig()
+
+// 直接覆蓋 `config.public.apiBaseUrl`
+if (import.meta.server) {
+  config.public.apiBaseUrl = config.public.apiBaseSSRUrl // 給 SSR 用
+}
+else {
+  config.public.apiBaseUrl = config.public.apiBaseCSRUrl // 給 CSR 用
+}
 </script>
 
 <style lang="sass">

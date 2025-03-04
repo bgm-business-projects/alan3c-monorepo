@@ -127,7 +127,7 @@ async function addDownloadCount(collection: string, id: string) {
 const config = useRuntimeConfig()
 
 function downloadFile(fileId: string) {
-  const fileUrl = `${config.public.apiBaseUrl}/assets/${fileId}`
+  const fileUrl = `${config.public.apiBaseCSRUrl}/assets/${fileId}`
   // 建立一個隱藏的 a 標籤，觸發下載
   const a = document.createElement('a')
   a.href = `${fileUrl}?download`

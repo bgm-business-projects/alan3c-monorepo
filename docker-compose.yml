@@ -1,0 +1,80 @@
+# version: "3"
+services:
+  database:
+    image: postgis/postgis:17-master
+    # Required when running on platform other than amd64, like Apple M1/M2:
+    # platform: linux/amd64
+    # ports:
+    #   - 5432:5432
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+      - ./apps/pgsql-backup:/tmp
+
+    environment:
+      POSTGRES_USER: "directus"
+      POSTGRES_PASSWORD: "directus"
+      POSTGRES_DB: "directus"
+
+  directus:
+    image: directus/directus:11.3.5
+    # ports:
+    #   - 8080:8080
+    volumes:
+      - ./apps/directus-admin/uploads:/directus/uploads
+      - ./apps/directus-admin/extensions:/directus/extensions
+    depends_on:
+      - database
+    environment:
+      #  對外設定
+      HOST: "0.0.0.0"
+      PORT: 8080
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: "true"
+      PUBLIC_URL: "__/"
+
+      # 安全設定
+      SECRET: "_BOmpdvMra-pJYwP0VJe3HZvJBbvHbKy"
+
+      # 資料庫設定
+      DB_CLIENT: "pg"
+      DB_HOST: "database"
+      DB_PORT: "5432"
+      DB_DATABASE: "directus"
+      DB_USER: "directus"
+      DB_PASSWORD: "directus"
+      # DB_CLIENT: "pg"
+      # DB_HOST: "192.168.0.51"
+      # DB_PORT: "5432"
+      # DB_DATABASE: "directus"
+      # DB_USER: "directus"
+      # DB_PASSWORD: "directus"
+
+      # 快取設定
+      # CACHE_ENABLED: "true"
+      # CACHE_AUTO_PURGE: "true"
+      # CACHE_STORE: "redis"
+      # REDIS: "redis://cache:6379"
+
+      # 管理員帳號
+      ADMIN_EMAIL: "admin@example.com"
+      ADMIN_PASSWORD: "d1r3ctu5"
+
+      # 所見即所得編輯器禁止阻擋
+      CONTENT_SECURITY_POLICY_DIRECTIVES__CHILD_SRC: "*.youtube.com youtube.com"
+      CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC: "*.youtube.com,youtube.com"
+
+  website:
+    build:
+      args:
+        NUXT_API_BASE_CSR_URL: "/__"
+        NUXT_API_BASE_SSR_URL: "http://directus:8080"
+      context: ./apps/alan3c-web
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - directus
+      - website
