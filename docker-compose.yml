@@ -2,10 +2,7 @@
 services:
   database:
     image: postgis/postgis:17-master
-    # Required when running on platform other than amd64, like Apple M1/M2:
-    # platform: linux/amd64
-    # ports:
-    #   - 5432:5432
+    restart: unless-stopped  # 加入 restart 設定
     volumes:
       - ./data/database:/var/lib/postgresql/data
       - ./apps/pgsql-backup:/tmp
@@ -17,13 +14,13 @@ services:
 
   directus:
     image: directus/directus:11.3.5
-    # ports:
-    #   - 8080:8080
+    restart: unless-stopped  # 加入 restart 設定
     volumes:
       - ./apps/directus-admin/uploads:/directus/uploads
       - ./apps/directus-admin/extensions:/directus/extensions
     depends_on:
       - database
+
     environment:
       #  對外設定
       HOST: "0.0.0.0"
@@ -42,18 +39,7 @@ services:
       DB_DATABASE: "directus"
       DB_USER: "directus"
       DB_PASSWORD: "directus"
-      # DB_CLIENT: "pg"
-      # DB_HOST: "192.168.0.51"
-      # DB_PORT: "5432"
-      # DB_DATABASE: "directus"
-      # DB_USER: "directus"
-      # DB_PASSWORD: "directus"
 
-      # 快取設定
-      # CACHE_ENABLED: "true"
-      # CACHE_AUTO_PURGE: "true"
-      # CACHE_STORE: "redis"
-      # REDIS: "redis://cache:6379"
 
       # 管理員帳號
       ADMIN_EMAIL: "admin@example.com"
@@ -64,12 +50,15 @@ services:
       CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC: "*.youtube.com,youtube.com"
 
   website:
+    restart: unless-stopped  # 加入 restart 設定
     build:
       args:
         NUXT_API_BASE_CSR_URL: "/__"
         NUXT_API_BASE_SSR_URL: "http://directus:8080"
       context: ./apps/alan3c-web
+  
   nginx:
+    restart: unless-stopped  # 加入 restart 設定
     image: nginx:latest
     ports:
       - "80:80"

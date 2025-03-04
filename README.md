@@ -8,10 +8,21 @@ docker-compose restart
 ```
 
 
+## 停止
+```bash
+docker-compose down
+```
+
+
 ## 進入 db container
 ```bash
 docker exec -it alan3c-monorepo-database-1 bash
 docker exec -it alan3c-monorepo-database-1 sh
+```
+
+## 離開
+```bash
+exit
 ```
 
 ## 匯入資料庫
