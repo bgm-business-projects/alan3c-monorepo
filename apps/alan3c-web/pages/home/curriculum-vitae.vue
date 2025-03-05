@@ -66,7 +66,7 @@
           <!-- <div class="w-full" v-html="curriculumVitaeData?.data.activitiesSociety" /> -->
         </div>
 
-        <div id="society-activities " class="text-2xl font-semibold mt-3rem">
+        <div id="society-activities" class="text-2xl font-semibold mt-3rem">
           Professional Society Activities
         </div>
         <div class="w-full">
@@ -90,7 +90,7 @@
           <!-- <div class="w-full" v-html="curriculumVitaeData?.data.consulting" /> -->
         </div>
 
-        <div id="consulting-memberships " class="text-2xl font-semibold mt-3rem ">
+        <div id="consulting-memberships" class="text-2xl font-semibold mt-3rem ">
           Consulting Memberships in Academic and Professional Societies
         </div>
         <div class="w-full">
@@ -185,14 +185,14 @@ const categories = ref([
     name: 'Awards',
     route: {
       name: 'home-curriculum-vitae',
-      hash: '#awards',
+      hash: decodeURIComponent('#awards'),
     },
   },
   {
-    name: 'Society Activities ',
+    name: 'Society Activities',
     route: {
       name: 'home-curriculum-vitae',
-      hash: '#society-activities ',
+      hash: decodeURIComponent('#society-activities'),
     },
   },
   {
@@ -210,7 +210,7 @@ const categories = ref([
     },
   },
   {
-    name: 'Consulting Memberships ',
+    name: 'Consulting Memberships',
     route: {
       name: 'home-curriculum-vitae',
       hash: '#consulting-memberships ',
@@ -220,7 +220,7 @@ const categories = ref([
     name: 'Project Records',
     route: {
       name: 'home-curriculum-vitae',
-      hash: '#project-records',
+      hash: decodeURIComponent('#project-records'),
     },
   },
   {
