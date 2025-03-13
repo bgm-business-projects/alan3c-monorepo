@@ -1,0 +1,14 @@
+name = "alan3c-web"
+main = "./.output/server/index.mjs"
+workers_dev = true
+compatibility_date = "2025-01-14"
+
+[site]
+bucket = ".output/public"
+[vars]
+NUXT_API_BASE_URL = "https://alan3c.de.r.appspot.com"
+
+# ⚠️ 使用 wrangler 部署 Nuxt 至 Cloudflare Workers，需在 nuxt.config.ts 加入：
+# nitro: {
+#   preset: 'cloudflare', # 預設為 node-server
+# }
