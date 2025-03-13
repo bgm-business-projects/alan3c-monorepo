@@ -39,3 +39,29 @@ pg_restore -U directus -d directus --no-owner --no-privileges --clean --if-exist
 ```bash
 docker exec -it alan3c-monorepo-directus-1 sh
 ```
+
+
+## 更新專案
+```bash
+### 1. **去 github 更新專案**
+```sh
+git pull
+```
+### 2. **關閉並移除容器**
+```sh
+docker-compose down
+```
+這會關閉並移除 `docker-compose` 啟動的所有容器。
+
+---
+
+### 3. **刪除已建置的 Docker 映像檔**
+```sh
+docker images
+```
+這會列出所有的 Docker 映像檔，你可以找到對應的 `IMAGE ID` 或 `REPOSITORY` 名稱。
+
+然後執行：
+```sh
+docker rmi <image_id>
+```
