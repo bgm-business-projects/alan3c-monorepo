@@ -174,6 +174,7 @@
 
 <script setup lang="ts">
 import type { LifeSnippets } from '~/contract/life-snippets/life-snippets.type'
+import { isEmpty } from 'lodash-es'
 import { isAcademicLectureMoreFile } from '../../../../contract/life-snippets/academic-lecture/academic-lecture.type'
 import { isAdministrativeYearsMoreFile } from '../../../../contract/life-snippets/administrative-years/administrative-years.type'
 import { isGrowthRecordMoreFile } from '../../../../contract/life-snippets/growth-record/growth-record.type'
@@ -192,7 +193,7 @@ const route = useRoute()
 
 const isLoading = ref(false)
 
-const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLazyAsyncData('life-snippets-more-file', async () => {
+const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await useLazyAsyncData('life-snippets-more-file', async () => {
   isLoading.value = true
   const categoryList: LifeSnippets = {
     teacherStudentSnapshots: undefined,
@@ -339,14 +340,18 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = useLaz
         },
       },
     ))
-    if (err) {
-      isLoading.value = false
-      return Promise.reject(err)
-    }
+
     isLoading.value = false
     return result
   }
 }, {
   watch: [locale],
 })
+
+if (isEmpty(lifeSnippetsMoreFile.value) || !lifeSnippetsMoreFile.value) {
+  throw createError({
+    statusCode: 500,
+    statusMessage: 'Page Not Founddd',
+  })
+}
 </script>
