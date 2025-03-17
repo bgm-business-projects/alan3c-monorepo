@@ -1,13 +1,15 @@
 @font-face {
 	font-family: 'Fira Mono';
 	font-style: normal;
-	src: url(https://alan3c.de.r.appspot.com/admin/assets/FiraMono-Medium-CE-6Frqh.woff2) format('woff2');
+	src: url(https://oppa-toy-creative.de.r.appspot.com/admin/assets/FiraMono-Medium-CE-6Frqh.woff2) format('woff2'),
+	url(https://oppa-toy-creative.de.r.appspot.com/admin/assets/FiraMono-Medium-CjwgnWCQ.woff) format('woff');
 }
 
 @font-face {
 	font-family: 'Merriweather';
 	font-style: normal;
-	src: url(https://alan3c.de.r.appspot.com/admin/assets/merriweather-regular-D4NWdWaV.woff2) format('woff2');
+	src: url(https://oppa-toy-creative.de.r.appspot.com/admin/assets/merriweather-regular-D4NWdWaV.woff2) format('woff2'),
+	url(https://oppa-toy-creative.de.r.appspot.com/admin/assets/merriweather-regular-B5k5JYwq.woff) format('woff');
 }
 
 ::selection {
@@ -53,6 +55,7 @@ h3 {
 	font-size: 19px;
 	line-height: 29px;
 	margin-top: 1.25em;
+	white-space: wrap;
 }
 h4 {
 	font-size: 16px;
