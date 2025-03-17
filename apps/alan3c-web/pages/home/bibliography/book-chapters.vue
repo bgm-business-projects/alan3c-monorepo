@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import type { DialogChainObject } from 'quasar'
-import type { BookChapters } from '~/contract/bibliography/book-chapters.type'
+import type { BookChapters } from '../../../contract/bibliography/book-chapters/book-chapters.type'
 import BaseLoginDialog from '../../../components/base-login-dialog.vue'
 import ListItem from '../../../components/book-chapters/list-item.vue'
 
@@ -116,6 +116,7 @@ const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('b
       }
     }
     isLoading.value = false
+    console.log('result', getDataResult)
     return getDataResult
   }
 }, {

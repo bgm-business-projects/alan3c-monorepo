@@ -140,7 +140,9 @@ export const useAuthStore = defineStore('auth', () => {
       return undefined
 
     const [err, result] = await to(useBookChapters.findBookChapters({
-      query: {},
+      query: {
+        limit: '9999',
+      },
     }))
 
     if (err) {
