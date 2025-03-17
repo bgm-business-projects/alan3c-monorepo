@@ -350,8 +350,8 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await 
 
 if (isEmpty(lifeSnippetsMoreFile.value) || !lifeSnippetsMoreFile.value) {
   throw createError({
-    statusCode: 500,
-    statusMessage: 'Page Not Founddd',
+    statusCode: 404,
+    statusMessage: 'Data Not Found',
   })
 }
 </script>
