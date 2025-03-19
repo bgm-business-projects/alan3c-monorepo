@@ -100,6 +100,7 @@ export default defineNuxtConfig({
         'script-src': ['\'self\'', '\'strict-dynamic\'', '\'nonce-{{nonce}}\''],
       },
     },
+    corsHandler: false,
   },
   nitro: {
     // preset: 'cloudflare', // 預設為 node-server
