@@ -26,7 +26,7 @@ services:
       HOST: "0.0.0.0"
       PORT: 8080
       CORS_ENABLED: "true"
-      CORS_ORIGIN: "true"
+      CORS_ORIGIN: "false"
       PUBLIC_URL: "__/"
 
       # 安全設定
