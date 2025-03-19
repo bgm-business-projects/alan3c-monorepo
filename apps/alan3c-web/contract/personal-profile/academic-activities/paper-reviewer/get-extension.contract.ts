@@ -7,6 +7,7 @@ export const getPaperReviewerExtension = {
   path: `/items/paperReviewerExtension`,
   query: z.object({
     fields: z.string().default('*,translations.*'),
+    limit: z.number().default(9999),
   }),
   responses: {
     200: paperReviewerExtensionSchema,

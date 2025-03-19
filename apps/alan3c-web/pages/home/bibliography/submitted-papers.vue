@@ -91,7 +91,7 @@
 
 <script setup lang="ts">
 import type { DialogChainObject } from 'quasar'
-import type { SubmittedPapers } from '~/contract/bibliography/submitted-papers.type'
+import type { SubmittedPapers } from '~/contract/bibliography/submitted-papers/submitted-papers.type'
 import BaseWysiwygPreview from '~/components/wysiwyg-preview/base-wysiwyg-preview.vue'
 import BaseLoginDialog from '../../../components/base-login-dialog.vue'
 

@@ -160,7 +160,9 @@ export const useAuthStore = defineStore('auth', () => {
       return undefined
 
     const [err, result] = await to(useLocalJournalPapers.findLocalJournalPapers({
-      query: {},
+      query: {
+        limit: '9999',
+      },
     }))
 
     if (err) {
@@ -178,7 +180,9 @@ export const useAuthStore = defineStore('auth', () => {
       return undefined
 
     const [err, result] = await to(useInternationalConferencePapers.findInternationalConferencePapers({
-      query: {},
+      query: {
+        limit: '9999',
+      },
     }))
 
     if (err) {
@@ -196,7 +200,9 @@ export const useAuthStore = defineStore('auth', () => {
       return undefined
 
     const [err, result] = await to(useLocalConferencePapers.findLocalConferencePapers({
-      query: {},
+      query: {
+        limit: '9999',
+      },
     }))
 
     if (err) {
@@ -214,7 +220,9 @@ export const useAuthStore = defineStore('auth', () => {
       return undefined
 
     const [err, result] = await to(useGuestEditorial.findGuestEditorial({
-      query: {},
+      query: {
+        limit: '9999',
+      },
     }))
 
     if (err) {
@@ -232,7 +240,9 @@ export const useAuthStore = defineStore('auth', () => {
       return undefined
 
     const [err, result] = await to(useDomesticMagazineArticles.findDomesticMagazineArticles({
-      query: {},
+      query: {
+        limit: '9999',
+      },
     }))
 
     if (err) {
@@ -250,7 +260,9 @@ export const useAuthStore = defineStore('auth', () => {
       return undefined
 
     const [err, result] = await to(useTechnicalReports.findTechnicalReports({
-      query: {},
+      query: {
+        limit: '9999',
+      },
     }))
 
     if (err) {

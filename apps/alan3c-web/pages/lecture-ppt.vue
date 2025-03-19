@@ -83,6 +83,7 @@
         v-model="currentPage"
         color="primary"
         :max="listMeta"
+        :max-pages="6"
         flat
         direction-links
       />

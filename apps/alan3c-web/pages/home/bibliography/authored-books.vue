@@ -69,7 +69,9 @@ const isLoading = ref(false)
 const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('bibliography-authored-books', async () => {
   isLoading.value = true
   const [err, result] = await to (useBibliography.findAuthoredBooks({
-    query: {},
+    query: {
+      limit: '9999',
+    },
   }))
   if (err) {
     isLoading.value = false
