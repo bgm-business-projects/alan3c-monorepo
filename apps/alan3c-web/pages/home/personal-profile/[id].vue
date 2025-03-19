@@ -23,6 +23,7 @@
 </template>
 
 <script setup lang="ts">
+import { isEmpty } from 'lodash-es'
 import AcademicActivities from '~/components/personal-profile/academic-activities.vue'
 import BaseInfo from '~/components/personal-profile/base-info.vue'
 import { useAcademicActivityApi } from '~/composables/academic-activities/use-academic-activity-api'
@@ -58,7 +59,7 @@ const useConsultantRole = useConsultantRoleApi()
 const useAcademicGroup = useAcademicGroupApi()
 const useConferenceAttendee = useConferenceAttendeeApi()
 
-const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncData('personal-profile', async () => {
+const { data: personalProfile, refresh: refreshPersonalProfile } = await useAsyncData('personal-profile', async () => {
   isLoading.value = true
   if (route.params.id === 'resume') {
     const [err, result] = await to (usePersonalProfile.findResume())
@@ -225,6 +226,13 @@ const { data: personalProfile, refresh: refreshPersonalProfile } = useLazyAsyncD
   // },
   watch: [locale],
 })
+
+if (isEmpty(personalProfile.value) || !personalProfile.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Data Not Found',
+  })
+}
 
 function transferBasicData(data: typeof personalProfile['value']) {
   if (isResume(data)) {

@@ -48,6 +48,7 @@
 </template>
 
 <script setup lang="ts">
+import { isEmpty } from 'lodash-es'
 import BaseWysiwygPreview from '~/components/wysiwyg-preview/base-wysiwyg-preview.vue'
 
 const { locale, t } = useI18n()
@@ -60,7 +61,7 @@ const route = useRoute()
 
 const isLoading = ref(false)
 
-const { data: proceedings, refresh: refreshProceedings } = useLazyAsyncData('proceedings-single', async () => {
+const { data: proceedings, refresh: refreshProceedings } = await useAsyncData(`proceedings-${route.params.id}`, async () => {
   isLoading.value = true
   const [err, result] = await to (useProceedings.findOne({
     query: {
@@ -80,6 +81,13 @@ const { data: proceedings, refresh: refreshProceedings } = useLazyAsyncData('pro
   },
   watch: [locale],
 })
+
+if (isEmpty(proceedings.value) || !proceedings.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Data Not Found',
+  })
+}
 
 useSeoMeta({
   title: '薪火相傳。文心薈萃文集',

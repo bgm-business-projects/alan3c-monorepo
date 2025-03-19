@@ -193,7 +193,7 @@ const route = useRoute()
 
 const isLoading = ref(false)
 
-const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await useLazyAsyncData('life-snippets-more-file', async () => {
+const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await useAsyncData('life-snippets-more-file', async () => {
   isLoading.value = true
   const categoryList: LifeSnippets = {
     teacherStudentSnapshots: undefined,

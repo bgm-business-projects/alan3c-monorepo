@@ -48,6 +48,7 @@
 </template>
 
 <script setup lang="ts">
+import { isEmpty } from 'lodash-es'
 import BaseWysiwygPreview from '~/components/wysiwyg-preview/base-wysiwyg-preview.vue'
 
 const { locale, t } = useI18n()
@@ -58,7 +59,7 @@ const route = useRoute()
 
 const isLoading = ref(false)
 
-const { data: compilation, refresh: refreshCompilation } = useLazyAsyncData('compilation-single', async () => {
+const { data: compilation, refresh: refreshCompilation } = await useAsyncData('compilation-single', async () => {
   isLoading.value = true
   const [err, result] = await to (useCompilation.findOne({
     query: {
@@ -78,6 +79,13 @@ const { data: compilation, refresh: refreshCompilation } = useLazyAsyncData('com
   },
   watch: [locale],
 })
+
+if (isEmpty(compilation.value) || !compilation.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Data Not Found',
+  })
+}
 
 useSeoMeta({
   title: '真誠文集',

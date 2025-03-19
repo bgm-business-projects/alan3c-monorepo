@@ -145,6 +145,7 @@
 
 <script lang="ts" setup>
 import type { LifeSnippets } from '~/contract/life-snippets/life-snippets.type'
+import { isEmpty } from 'lodash-es'
 import BaseBreadcrumbs from '~/components/base-breadcrumbs.vue'
 import BaseCard from '~/components/life-snippets/base-card.vue'
 import { isAcademicLectureDeep } from '~/contract/life-snippets/academic-lecture/academic-lecture.type'
@@ -197,7 +198,7 @@ function getSnippetById(data: LifeSnippets, id: string): string | null {
 
 const isLoading = ref(false)
 
-const { data: lifeSnippets, refresh: refreshLifeSnippets } = useLazyAsyncData('life-snippets', async () => {
+const { data: lifeSnippets, refresh: refreshLifeSnippets } = await useAsyncData('life-snippets', async () => {
   isLoading.value = true
   const categoryList: LifeSnippets = {
     teacherStudentSnapshots: undefined,
@@ -274,6 +275,13 @@ const { data: lifeSnippets, refresh: refreshLifeSnippets } = useLazyAsyncData('l
 }, {
   watch: [locale, route],
 })
+
+if (isEmpty(lifeSnippets.value) || !lifeSnippets.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Data Not Found',
+  })
+}
 
 function hasLanguageCodeProperty(
   item: any,

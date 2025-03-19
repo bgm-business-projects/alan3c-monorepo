@@ -59,6 +59,7 @@
 
 <script setup lang="ts">
 import type { DialogChainObject } from 'quasar'
+import { isEmpty } from 'lodash-es'
 import { pipe } from 'remeda'
 import BaseWysiwygPreview from '~/components/wysiwyg-preview/base-wysiwyg-preview.vue'
 import { type BibliographyData, isBookChapters, isDomesticMagazineArticles, isGuestEditorial, isInternationalConferencePapers, isLocalConferencePapers, isLocalJournalPapers, isTechnicalReports } from '~/contract/bibliography/bibliography.type'
@@ -82,7 +83,7 @@ const dialog = ref<DialogChainObject>()
 
 const isClient = ref(false)
 
-const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData(`bibliography-${route.params.id}`, async () => {
+const { data: bibliography, refresh: refreshBibliography } = await useAsyncData(`bibliography-${route.params.id}`, async () => {
   isLoading.value = true
   if (import.meta.server || !isClient.value)
     return
@@ -164,6 +165,13 @@ const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData(`b
   },
   watch: [locale, isClient],
 })
+
+if (isEmpty(bibliography.value) || !bibliography.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Data Not Found',
+  })
+}
 
 onMounted(() => {
   isClient.value = true
