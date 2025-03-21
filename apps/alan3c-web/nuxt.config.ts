@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     'nuxt-anchorscroll',
     'nuxt-swiper',
     'nuxt-marquee',
+    'nuxt-security',
   ],
   i18n: {
     strategy: 'no_prefix',
@@ -73,7 +74,7 @@ export default defineNuxtConfig({
       apiBaseSSRUrl: process.env.NUXT_API_BASE_SSR_URL,
       // eslint-disable-next-line node/prefer-global/process
       apiBaseCSRUrl: process.env.NUXT_API_BASE_CSR_URL,
-      // eslint-disable-next-line node/prefer-global/process
+
       apiBaseUrl: '',
     },
     baseUrl: '',
@@ -91,6 +92,15 @@ export default defineNuxtConfig({
     options: {
       scrollBehaviorType: 'smooth',
     },
+  },
+  security: {
+    // Options
+    headers: {
+      contentSecurityPolicy: {
+        'script-src': ['\'self\'', '\'strict-dynamic\'', '\'nonce-{{nonce}}\''],
+      },
+    },
+    corsHandler: false,
   },
   nitro: {
     // preset: 'cloudflare', // 預設為 node-server
