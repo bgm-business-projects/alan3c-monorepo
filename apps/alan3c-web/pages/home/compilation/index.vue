@@ -132,6 +132,7 @@ const listMeta = computed(() => {
     if (Number.parseInt(compilation.value?.originalData.meta.filter_count) / limit.value < 1) {
       return 1
     }
+    return Math.ceil(Number.parseInt(compilation.value?.originalData.meta.filter_count) / limit.value)
   }
   return undefined
 })
