@@ -32,7 +32,7 @@ exit
 
 ## 匯入資料庫
 ```bash
-pg_restore -U directus -d directus --no-owner --no-privileges --clean --if-exists -v /tmp/20250304-alan3c.backup
+pg_restore -U directus -d directus --no-owner --no-privileges --clean --if-exists -v /tmp/20250328-alan3c.backup
 ```
 
 ## 進入 directus container
