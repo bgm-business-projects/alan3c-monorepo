@@ -114,7 +114,7 @@
               <div>
                 {{ item.reportDate }}
               </div>
-              <div class="underline cursor-pointer" @click="addDownloadCount('artificialIntelligence', item.id.toString())">
+              <div>
                 {{ item.thesisTitle }}
               </div>
               <div>
@@ -127,13 +127,13 @@
                 {{ item.reporter }}
               </div>
               <div class="underline cursor-pointer" @click="addDownloadCount('artificialIntelligence', item.id.toString())">
-                {{ item.file?.title }}
+                {{ t('downloadFile') }}
               </div>
               <div class="underline cursor-pointer" @click="openVideoDialog(combineImageUrl(item.video?.filename_disk))">
-                {{ item.video?.title }}
+                {{ t('downloadVideo') }}
               </div>
               <div>
-                {{ item.downloadCount }}
+                {{ item.downloadCount ?? 0 }}
               </div>
             </template>
           </template>

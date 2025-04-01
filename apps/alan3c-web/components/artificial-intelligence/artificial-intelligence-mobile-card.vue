@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="text-#767676 underline cursor-pointer" @click="addDownloadCount('artificialIntelligence', props.data.id.toString())">
-          {{ props.data.file?.title }}
+          {{ t('downloadFile') }}
         </div>
       </div>
       <div class="flex flex-col gap-.1rem">
@@ -75,7 +75,7 @@
           </div>
         </div>
         <div class="text-#767676 underline cursor-pointer" @click="openVideoDialog(combineImageUrl(props.data.video?.filename_disk))">
-          {{ props.data.video?.title }}
+          {{ t('downloadVideo') }}
         </div>
       </div>
       <div class="flex flex-col gap-.1rem">
@@ -86,7 +86,7 @@
           </div>
         </div>
         <div class="text-#767676">
-          {{ props.data.downloadCount }}
+          {{ props.data.downloadCount ?? 0 }}
         </div>
       </div>
     </div>

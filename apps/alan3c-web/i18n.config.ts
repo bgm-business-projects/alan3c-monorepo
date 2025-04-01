@@ -5,6 +5,8 @@ export default defineI18nConfig(() => ({
     en: {
       webName: 'MSN LAB',
       universityDepartments: 'Room 702, Science and Aerospace Building',
+      downloadVideo: 'Download Video',
+      downloadFile: 'Download File',
       download: 'Download',
       preview: 'Preview',
       back: 'Back To',
@@ -145,6 +147,8 @@ export default defineI18nConfig(() => ({
     zh: {
       webName: '多媒體暨網路安全實驗室',
       universityDepartments: '逢甲大學資訊工程學系 ( 科航702室 )',
+      downloadVideo: '下載影片',
+      downloadFile: '下載檔案',
       download: '下載檔案',
       preview: '預覽檔案',
       search: '搜尋',
