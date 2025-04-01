@@ -179,15 +179,15 @@ const data = computed(() => [
       name: 'home',
     },
   },
-  {
-    name: t('navbar.trainee'),
-    route: {
-      name: 'trainee',
-      query: {
-        category: traineeCategories.value?.find((item) => item.translations.traineeCategoryLanguages_code === locale.value)?.translations.name,
-      },
-    },
-  },
+  // {
+  //   name: t('navbar.trainee'),
+  //   route: {
+  //     name: 'trainee',
+  //     query: {
+  //       category: traineeCategories.value?.find((item) => item.translations.traineeCategoryLanguages_code === locale.value)?.translations.name,
+  //     },
+  //   },
+  // },
   {
     name: t('navbar.researchFocus'),
     route: {
