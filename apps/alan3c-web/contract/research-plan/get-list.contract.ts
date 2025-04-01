@@ -10,6 +10,7 @@ export const getResearchPlan = {
     limit: z.string().optional(),
     offset: z.string().optional(),
     fields: z.string().default('*,translations.*'),
+    sort: z.string().default('-startDate'),
   }),
   responses: {
     200: researchPlanSchema,

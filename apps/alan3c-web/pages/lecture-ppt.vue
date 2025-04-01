@@ -156,6 +156,8 @@ const { data: lecturePpt, refresh: refreshLecturePpt } = useLazyAsyncData('lectu
   isLoading.value = true
   const [err, result] = await to (useLecturePpt.findList({
     query: {
+      'limit': `${limit.value}`,
+      'offset': `${offset.value}`,
       'filter[lectureTitle][_icontains]': keyword.value ? keyword.value : undefined,
     },
   }))
