@@ -20,6 +20,7 @@ export const getTraineeList = {
     'limit': z.string().optional(),
     'offset': z.string().optional(),
     'fields': z.string().default(`*,${mainImage},${translations},${traineeCategory},${file}`),
+    'sort': z.string().default('id'),
   })),
 
 } satisfies AppRoute
