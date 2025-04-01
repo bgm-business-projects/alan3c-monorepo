@@ -18,6 +18,12 @@
       <div class="flex items-center gap-.5rem">
         <div class="w-6px h-6px bg-primary rounded-full" />
         <div class="tracking-1px text-lg font-medium">
+          {{ t('lecturePPT.numberValue') }}
+        </div>
+      </div>
+      <div class="flex items-center gap-.5rem">
+        <div class="w-6px h-6px bg-primary rounded-full" />
+        <div class="tracking-1px text-lg font-medium">
           {{ t('lecturePPT.date') }}
         </div>
       </div>
@@ -36,9 +42,12 @@
       <template v-if="!isLoading">
         <template v-if="lecturePpt?.data.length && lecturePpt?.data.length > 0">
           <template
-            v-for="item in lecturePpt?.data"
+            v-for="(item, index) in lecturePpt?.data"
             :key="item.id"
           >
+            <div>
+              {{ Number(index) + offset + 1 }}
+            </div>
             <div>
               {{ item.uploadDate }}
             </div>
@@ -70,9 +79,11 @@
       </template>
       <div class="w-full flex flex-col gap-1.5rem xl:hidden">
         <lecture-ppt-mobile-card
-          v-for="item in lecturePpt?.data"
+          v-for="(item, index) in lecturePpt?.data"
           :key="item.id"
           :data="item"
+          :index
+          :offset
         />
       </div>
     </template>
@@ -224,7 +235,7 @@ useSeoMeta({
 .custom-grid
   display: grid
   align-items: center
-  grid-template-columns: auto 1fr auto
+  grid-template-columns: auto auto 1fr auto
   gap: 1rem 2.5rem
   align-items: start
 

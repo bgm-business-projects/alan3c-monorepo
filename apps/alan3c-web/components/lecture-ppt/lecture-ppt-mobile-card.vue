@@ -5,6 +5,17 @@
         <div class="flex items-center gap-.5rem">
           <div class="w-6px h-6px bg-primary rounded-full" />
           <div class="tracking-1px font-medium">
+            {{ t('lecturePPT.numberValue') }}
+          </div>
+        </div>
+        <div class="text-#767676">
+          {{ Number(index) + offset + 1 }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-.1rem">
+        <div class="flex items-center gap-.5rem">
+          <div class="w-6px h-6px bg-primary rounded-full" />
+          <div class="tracking-1px font-medium">
             {{ t('lecturePPT.date') }}
           </div>
         </div>
@@ -43,6 +54,8 @@ import type { LecturePpt } from '~/contract/lecture-ppt/lecture-ppt.type'
 
 interface Props {
   data: LecturePpt['data'][number];
+  index: number;
+  offset: number;
 }
 const props = withDefaults(defineProps<Props>(), {
 })

@@ -82,6 +82,7 @@ export default defineI18nConfig(() => ({
         downloads: 'Downloads',
       },
       lecturePPT: {
+        numberValue: 'Number',
         date: 'Date',
         title: 'Project Title',
         downloads: 'Downloads',
@@ -224,6 +225,7 @@ export default defineI18nConfig(() => ({
         downloads: '下載次數',
       },
       lecturePPT: {
+        numberValue: '編號',
         date: '上傳日期',
         title: '演講題目',
         downloads: '下載次數',
