@@ -34,7 +34,7 @@
               {{ t('home.researchArea') }}
             </h2>
             <ul class="flex flex-col gap-.5rem font-medium">
-              <li v-for="item in home?.translations?.incumbent" :key="item.title">
+              <li v-for="item in home?.translations?.researcArea" :key="item.title">
                 {{ item.title }}
               </li>
             </ul>

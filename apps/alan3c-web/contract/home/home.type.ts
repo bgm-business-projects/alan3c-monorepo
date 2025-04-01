@@ -14,7 +14,7 @@ const translationSchema = z.object({
   home_id: z.number(),
   homeLanguages_code: z.enum(['en', 'zh']),
   incumbent: z.array(incumbentSchema),
-  researchArea: z.array(researchAreaSchema),
+  researcArea: z.array(researchAreaSchema),
 })
 
 export const homeSchema = z.object(
