@@ -48,7 +48,7 @@
               <template v-if="item.translations.name && item.translations.location">
                 <div class="flex">
                   <div>
-                    {{ Number(index) + 1 }}
+                    {{ Number(index) + offset + 1 }}
                   </div>
                 </div>
                 <div class="flex">
