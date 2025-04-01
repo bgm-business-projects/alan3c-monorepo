@@ -27,10 +27,10 @@ export const getGrowthRecordDeep = {
 
 export const getGrowthRecordMoreFile = {
   method: 'GET',
-  path: `/items/growthRecordMain`,
+  path: `/items/growthRecord`,
   query: z.object({
-    'filter[growthRecord][growthRecord_id][id][_eq]': z.number(),
-    'fields': z.string().default('growthRecord.growthRecord_id.moreFileList.directus_files_id.*'),
+    'filter[id][_eq]': z.number(),
+    'fields': z.string().default('*,moreFileList.directus_files_id.*'),
   }),
   responses: {
     200: growthRecordMoreFileSchema,

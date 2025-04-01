@@ -27,10 +27,10 @@ export const getPrimeOfLifeDeep = {
 
 export const getPrimeOfLifeMoreFile = {
   method: 'GET',
-  path: `/items/primeOfLifeMain`,
+  path: `/items/primeOfLife`,
   query: z.object({
-    'filter[primeOfLife][primeOfLife_id][id][_eq]': z.number(),
-    'fields': z.string().default('primeOfLife.primeOfLife_id.moreFileList.directus_files_id.*'),
+    'filter[id][_eq]': z.number(),
+    'fields': z.string().default('*,moreFileList.directus_files_id.*'),
   }),
   responses: {
     200: primeOfLifeMoreFileSchema,

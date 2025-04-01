@@ -27,10 +27,10 @@ export const getAcademicLectureDeep = {
 
 export const getAcademicLectureMoreFile = {
   method: 'GET',
-  path: `/items/academicLectureMain`,
+  path: `/items/academicLecture`,
   query: z.object({
-    'filter[academicLecture][academicLecture_id][id][_eq]': z.number(),
-    'fields': z.string().default('academicLecture.academicLecture_id.moreFileList.directus_files_id.*'),
+    'filter[id][_eq]': z.number(),
+    'fields': z.string().default('*,moreFileList.directus_files_id.*'),
   }),
   responses: {
     200: academicLectureMoreFileSchema,

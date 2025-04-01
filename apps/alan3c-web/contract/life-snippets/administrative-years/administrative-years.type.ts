@@ -50,13 +50,16 @@ export const administrativeYearsDeepSchema = z.object({
 })
 
 export const administrativeYearsMoreFileSchema = z.object({
-  data: z.object({
-    administrativeYears: z.array(z.object({
-      administrativeYears_id: z.object({
-        moreFileList: z.array(z.object({
-          directus_files_id: basicFileSchema,
-        })).default([]),
-      }),
+  key: z.literal('administrativeYears'),
+  result: z.object({
+    data: z.array(z.object({
+      id: z.number(),
+      file: z.string(),
+      name: z.string(),
+      moreFileList: z.array(z.object({
+        directus_files_id: basicFileSchema,
+      })),
+      translations: z.array(z.number()),
     })),
   }),
 })

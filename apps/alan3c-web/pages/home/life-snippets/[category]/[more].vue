@@ -63,14 +63,14 @@
           class="flex gap-1rem w-full"
         >
           <div
-            v-for="(item, index) in lifeSnippetsMoreFile.data.teacherStudentSnapshots[0].teacherStudentSnapshots_id.moreFileList"
+            v-for="(item, index) in lifeSnippetsMoreFile.result.data[0].moreFileList"
             :key="index"
             class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
           </div>
           <div
-            v-if="lifeSnippetsMoreFile.data.teacherStudentSnapshots[0].teacherStudentSnapshots_id.moreFileList.length === 0"
+            v-if="lifeSnippetsMoreFile.result.data?.[0].moreFileList.length === 0"
             class="bg-#f4f4f4 w-full min-h-[calc(100dvh-517px)] rounded-1rem flex justify-center items-center text-lg font-medium text-#868686"
           >
             無更多圖片
@@ -81,14 +81,14 @@
           class="flex gap-1rem w-full"
         >
           <div
-            v-for="(item, index) in lifeSnippetsMoreFile.data.growthRecord[0].growthRecord_id.moreFileList"
+            v-for="(item, index) in lifeSnippetsMoreFile.result.data[0].moreFileList"
             :key="index"
             class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
           </div>
           <div
-            v-if="lifeSnippetsMoreFile.data.growthRecord[0].growthRecord_id.moreFileList.length === 0"
+            v-if="lifeSnippetsMoreFile.result.data?.[0].moreFileList.length === 0"
             class="bg-#f4f4f4 w-full min-h-[calc(100dvh-517px)] rounded-1rem flex justify-center items-center text-lg font-medium text-#868686"
           >
             無更多圖片
@@ -100,14 +100,14 @@
           class="flex gap-1rem w-full"
         >
           <div
-            v-for="(item, index) in lifeSnippetsMoreFile.data.academicLecture[0].academicLecture_id.moreFileList"
+            v-for="(item, index) in lifeSnippetsMoreFile.result.data[0].moreFileList"
             :key="index"
             class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
           </div>
           <div
-            v-if="lifeSnippetsMoreFile.data.academicLecture[0].academicLecture_id.moreFileList.length === 0"
+            v-if="lifeSnippetsMoreFile.result.data[0].moreFileList.length === 0"
             class="bg-#f4f4f4 w-full min-h-[calc(100dvh-517px)] rounded-1rem flex justify-center items-center text-lg font-medium text-#868686"
           >
             無更多圖片
@@ -118,14 +118,14 @@
           class="flex gap-1rem w-full"
         >
           <div
-            v-for="(item, index) in lifeSnippetsMoreFile.data.administrativeYears[0].administrativeYears_id.moreFileList"
+            v-for="(item, index) in lifeSnippetsMoreFile.result.data[0].moreFileList"
             :key="index"
             class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
           </div>
           <div
-            v-if="lifeSnippetsMoreFile.data.administrativeYears[0].administrativeYears_id.moreFileList.length === 0"
+            v-if="lifeSnippetsMoreFile.result.data[0].moreFileList.length === 0"
             class="bg-#f4f4f4 w-full min-h-[calc(100dvh-517px)] rounded-1rem flex justify-center items-center text-lg font-medium text-#868686"
           >
             無更多圖片
@@ -136,14 +136,14 @@
           class="flex gap-1rem w-full"
         >
           <div
-            v-for="(item, index) in lifeSnippetsMoreFile.data.primeOfLife[0].primeOfLife_id.moreFileList"
+            v-for="(item, index) in lifeSnippetsMoreFile.result.data[0].moreFileList"
             :key="index"
             class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
           </div>
           <div
-            v-if="lifeSnippetsMoreFile.data.primeOfLife[0].primeOfLife_id.moreFileList.length === 0"
+            v-if="lifeSnippetsMoreFile.result.data[0].moreFileList.length === 0"
             class="bg-#f4f4f4 w-full min-h-[calc(100dvh-517px)] rounded-1rem flex justify-center items-center text-lg font-medium text-#868686"
           >
             無更多圖片
@@ -154,14 +154,14 @@
           class="flex gap-1rem w-full"
         >
           <div
-            v-for="(item, index) in lifeSnippetsMoreFile.data.leisureTime[0].leisureTime_id.moreFileList"
+            v-for="(item, index) in lifeSnippetsMoreFile.result.data[0].moreFileList"
             :key="index"
             class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
           >
             <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
           </div>
           <div
-            v-if="lifeSnippetsMoreFile.data.leisureTime[0].leisureTime_id.moreFileList.length === 0"
+            v-if="lifeSnippetsMoreFile.result.data[0].moreFileList.length === 0"
             class="bg-#f4f4f4 w-full min-h-[calc(100dvh-517px)] rounded-1rem flex justify-center items-center text-lg font-medium text-#868686"
           >
             無更多圖片
@@ -193,7 +193,7 @@ const route = useRoute()
 
 const isLoading = ref(false)
 
-const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await useAsyncData('life-snippets-more-file', async () => {
+const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await useAsyncData(`life-snippets-${route.params.name}-${route.query.id}`, async () => {
   isLoading.value = true
   const categoryList: LifeSnippets = {
     teacherStudentSnapshots: undefined,
@@ -251,7 +251,7 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await 
     const [err, result] = await to (useLifeSnippets.findTeacherStudentSnapshotsMoreFile(
       {
         query: {
-          'filter[teacherStudentSnapshots][teacherStudentSnapshots_id][id][_eq]': targetId,
+          'filter[id][_eq]': targetId,
         },
       },
     ))
@@ -260,7 +260,10 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await 
       return Promise.reject(err)
     }
     isLoading.value = false
-    return result
+    return {
+      key: 'teacherStudentSnapshots',
+      result,
+    }
   }
 
   if (key === 'growthRecord') {
@@ -268,7 +271,7 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await 
     const [err, result] = await to (useLifeSnippets.findGrowthRecordMoreFile(
       {
         query: {
-          'filter[growthRecord][growthRecord_id][id][_eq]': targetId,
+          'filter[id][_eq]': targetId,
         },
       },
     ))
@@ -277,7 +280,10 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await 
       return Promise.reject(err)
     }
     isLoading.value = false
-    return result
+    return {
+      key: 'growthRecord',
+      result,
+    }
   }
 
   if (key === 'leisureTime') {
@@ -285,7 +291,7 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await 
     const [err, result] = await to (useLifeSnippets.findLeisureTimeMoreFile(
       {
         query: {
-          'filter[leisureTime][leisureTime_id][id][_eq]': targetId,
+          'filter[id][_eq]': targetId,
         },
       },
     ))
@@ -294,7 +300,10 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await 
       return Promise.reject(err)
     }
     isLoading.value = false
-    return result
+    return {
+      key: 'leisureTime',
+      result,
+    }
   }
 
   if (key === 'academicLecture') {
@@ -302,7 +311,7 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await 
     const [err, result] = await to (useLifeSnippets.findAcademicLectureMoreFile(
       {
         query: {
-          'filter[academicLecture][academicLecture_id][id][_eq]': targetId,
+          'filter[id][_eq]': targetId,
         },
       },
     ))
@@ -311,7 +320,10 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await 
       return Promise.reject(err)
     }
     isLoading.value = false
-    return result
+    return {
+      key: 'academicLecture',
+      result,
+    }
   }
 
   if (key === 'primeOfLife') {
@@ -319,7 +331,7 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await 
     const [err, result] = await to (useLifeSnippets.findPrimeOfLifeMoreFile(
       {
         query: {
-          'filter[primeOfLife][primeOfLife_id][id][_eq]': targetId,
+          'filter[id][_eq]': targetId,
         },
       },
     ))
@@ -328,7 +340,10 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await 
       return Promise.reject(err)
     }
     isLoading.value = false
-    return result
+    return {
+      key: 'primeOfLife',
+      result,
+    }
   }
 
   if (key === 'administrativeYears') {
@@ -336,13 +351,16 @@ const { data: lifeSnippetsMoreFile, refresh: refreshTraineeCategories } = await 
     const [err, result] = await to (useLifeSnippets.findAdministrativeYearsMoreFile(
       {
         query: {
-          'filter[administrativeYears][administrativeYears_id][id][_eq]': targetId,
+          'filter[id][_eq]': targetId,
         },
       },
     ))
 
     isLoading.value = false
-    return result
+    return {
+      key: 'administrativeYears',
+      result,
+    }
   }
 }, {
   watch: [locale],

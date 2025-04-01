@@ -50,13 +50,16 @@ export const growthRecordDeepSchema = z.object({
 })
 
 export const growthRecordMoreFileSchema = z.object({
-  data: z.object({
-    growthRecord: z.array(z.object({
-      growthRecord_id: z.object({
-        moreFileList: z.array(z.object({
-          directus_files_id: basicFileSchema,
-        })).default([]),
-      }),
+  key: z.literal('growthRecord'),
+  result: z.object({
+    data: z.array(z.object({
+      id: z.number(),
+      file: z.string(),
+      name: z.string(),
+      moreFileList: z.array(z.object({
+        directus_files_id: basicFileSchema,
+      })),
+      translations: z.array(z.number()),
     })),
   }),
 })

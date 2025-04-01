@@ -27,10 +27,10 @@ export const getAdministrativeYearsDeep = {
 
 export const getAdministrativeYearsMoreFile = {
   method: 'GET',
-  path: `/items/administrativeYearsMain`,
+  path: `/items/administrativeYears`,
   query: z.object({
-    'filter[administrativeYears][administrativeYears_id][id][_eq]': z.number(),
-    'fields': z.string().default('administrativeYears.administrativeYears_id.moreFileList.directus_files_id.*'),
+    'filter[id][_eq]': z.number(),
+    'fields': z.string().default('*,moreFileList.directus_files_id.*'),
   }),
   responses: {
     200: administrativeYearsMoreFileSchema,

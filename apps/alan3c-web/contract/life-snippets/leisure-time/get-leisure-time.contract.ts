@@ -27,10 +27,10 @@ export const getLeisureTimeDeep = {
 
 export const getLeisureTimeMoreFile = {
   method: 'GET',
-  path: `/items/leisureTimeMain`,
+  path: `/items/leisureTime`,
   query: z.object({
-    'filter[leisureTime][leisureTime_id][id][_eq]': z.number(),
-    'fields': z.string().default('leisureTime.leisureTime_id.moreFileList.directus_files_id.*'),
+    'filter[id][_eq]': z.number(),
+    'fields': z.string().default('*,moreFileList.directus_files_id.*'),
   }),
   responses: {
     200: leisureTimeMoreFileSchema,

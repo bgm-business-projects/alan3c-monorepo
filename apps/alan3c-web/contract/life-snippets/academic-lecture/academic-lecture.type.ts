@@ -49,13 +49,16 @@ export const academicLectureDeepSchema = z.object({
 })
 
 export const academicLectureMoreFileSchema = z.object({
-  data: z.object({
-    academicLecture: z.array(z.object({
-      academicLecture_id: z.object({
-        moreFileList: z.array(z.object({
-          directus_files_id: basicFileSchema,
-        })).default([]),
-      }),
+  key: z.literal('academicLecture'),
+  result: z.object({
+    data: z.array(z.object({
+      id: z.number(),
+      file: z.string(),
+      name: z.string(),
+      moreFileList: z.array(z.object({
+        directus_files_id: basicFileSchema,
+      })),
+      translations: z.array(z.number()),
     })),
   }),
 })

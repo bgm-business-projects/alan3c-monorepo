@@ -27,10 +27,10 @@ export const getTeacherStudentSnapshotsDeep = {
 
 export const getTeacherStudentSnapshotsMoreFile = {
   method: 'GET',
-  path: `/items/teacherStudentSnapshotsMain`,
+  path: `/items/teacherStudentSnapshots`,
   query: z.object({
-    'filter[teacherStudentSnapshots][teacherStudentSnapshots_id][id][_eq]': z.number(),
-    'fields': z.string().default('teacherStudentSnapshots.teacherStudentSnapshots_id.moreFileList.directus_files_id.*'),
+    'filter[id][_eq]': z.number(),
+    'fields': z.string().default('*,moreFileList.directus_files_id.*'),
   }),
   responses: {
     200: teacherStudentSnapshotsMoreFileSchema,
