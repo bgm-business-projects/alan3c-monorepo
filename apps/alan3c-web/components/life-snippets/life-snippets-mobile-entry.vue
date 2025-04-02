@@ -1,16 +1,18 @@
 <template>
-  <div class="w-full flex items-center justify-center gap-2rem">
-    <div class="flex flex-col justify-center items-center gap-10px w-full">
-      <nuxt-img
-        class="w-full"
-        :src="combineImageUrl(lifeSnippetsMain?.data.mainImage.filename_disk)"
-      />
+  <div class="w-full flex items-center justify-center gap-3rem">
+    <div class="w-full flex justify-center items-center gap-10px">
+      <div class="flex flex-col justify-center items-center w-full aspect-1/1 bg-#f4f4f4">
+        <nuxt-img
+          class="w-full max-w-full max-h-full object-contain"
+          :src="combineImageUrl(lifeSnippetsMain?.data.mainImage.filename_disk)"
+        />
+      </div>
       <h2 class="text-lg font-semibold">
         {{ lifeSnippetsMain?.data.translations.filter((item) => item.lifeSnippetsLanguages_code === locale)[0]?.name }}
       </h2>
     </div>
     <div
-      class="max-width flex justify-center items-center gap-1rem"
+      class="max-width flex justify-center items-center gap-x-1rem gap-y-2rem"
     >
       <div
         v-for="(item, index) in 6"
@@ -24,11 +26,13 @@
           })"
           class="w-full flex flex-col items-center flex-nowrap gap-10px"
         >
-          <nuxt-img
-            v-if="getImage(index + 1)"
-            :src="getImage(index + 1)"
-            class="w-full"
-          />
+          <div class="bg-#f4f4f4 aspect-1/1 overflow-hidden flex justify-center items-center">
+            <nuxt-img
+              v-if="getImage(index + 1)"
+              :src="getImage(index + 1)"
+              class="w-full max-h-full max-w-full object-contain"
+            />
+          </div>
           <h2 class="text-lg font-semibold">
             {{ getTranslation(index + 1) }}
           </h2>

@@ -14,11 +14,11 @@
           })"
           class="w-full flex flex-col items-center flex-nowrap gap-10px"
         >
-          <div class="w-full aspect-1/1 bg-#f4f4f4 relative overflow-hidden">
+          <div class="w-full aspect-1/1 bg-#f4f4f4 relative overflow-hidden flex justify-center items-center">
             <nuxt-img
               v-if="getImage(index + 1)"
               :src="getImage(index + 1)"
-              class="min-w-full hover:min-w-120% absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%] duration-500"
+              class="object-contain w-full max-w-full max-h-full"
             />
           </div>
           <h2 class="text-lg font-medium">
@@ -28,9 +28,9 @@
       </div>
     </div>
     <div class="flex flex-col justify-center items-center gap-10px">
-      <div class="w-200px bg-#f4f4f4">
+      <div class="w-200px bg-#f4f4f4 overflow-hidden aspect-1/1 flex justify-center items-center">
         <nuxt-img
-          class="w-full"
+          class="w-full object-contain max-h-full flex justify-center items-center "
           :src="combineImageUrl(lifeSnippetsMain?.data.mainImage.filename_disk)"
         />
       </div>
