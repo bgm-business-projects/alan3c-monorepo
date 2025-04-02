@@ -190,7 +190,12 @@ const { data: trainee, refresh: refreshTrainee } = useLazyAsyncData('trainee', a
       originalData: data,
     }
   },
-  watch: [locale, currentCategory, currentPage],
+  watch: [locale, currentPage],
+})
+
+watch(currentCategory, () => {
+  currentPage.value = 1
+  refreshTrainee()
 })
 
 const listMeta = computed(() => {
