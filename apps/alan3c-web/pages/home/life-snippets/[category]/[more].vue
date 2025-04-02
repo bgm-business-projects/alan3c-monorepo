@@ -65,9 +65,12 @@
           <div
             v-for="(item, index) in lifeSnippetsMoreFile.result.data[0].moreFileList"
             :key="index"
-            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
+            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] relative bg-#f4f4f4"
           >
-            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+            <nuxt-img
+              :src="combineImageUrl(item.directus_files_id.filename_disk)"
+              class="min-w-full min-h-full object-contain"
+            />
           </div>
           <div
             v-if="lifeSnippetsMoreFile.result.data?.[0].moreFileList.length === 0"
@@ -83,9 +86,12 @@
           <div
             v-for="(item, index) in lifeSnippetsMoreFile.result.data[0].moreFileList"
             :key="index"
-            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
+            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] relative bg-#f4f4f4"
           >
-            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+            <nuxt-img
+              :src="combineImageUrl(item.directus_files_id.filename_disk)"
+              class="min-w-full min-h-full object-contain"
+            />
           </div>
           <div
             v-if="lifeSnippetsMoreFile.result.data?.[0].moreFileList.length === 0"
@@ -102,9 +108,12 @@
           <div
             v-for="(item, index) in lifeSnippetsMoreFile.result.data[0].moreFileList"
             :key="index"
-            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
+            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] relative bg-#f4f4f4"
           >
-            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+            <nuxt-img
+              :src="combineImageUrl(item.directus_files_id.filename_disk)"
+              class="min-w-full min-h-full object-contain"
+            />
           </div>
           <div
             v-if="lifeSnippetsMoreFile.result.data[0].moreFileList.length === 0"
@@ -120,9 +129,12 @@
           <div
             v-for="(item, index) in lifeSnippetsMoreFile.result.data[0].moreFileList"
             :key="index"
-            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
+            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] relative bg-#f4f4f4"
           >
-            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+            <nuxt-img
+              :src="combineImageUrl(item.directus_files_id.filename_disk)"
+              class="min-w-full min-h-full object-contain"
+            />
           </div>
           <div
             v-if="lifeSnippetsMoreFile.result.data[0].moreFileList.length === 0"
@@ -138,9 +150,12 @@
           <div
             v-for="(item, index) in lifeSnippetsMoreFile.result.data[0].moreFileList"
             :key="index"
-            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
+            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] relative bg-#f4f4f4"
           >
-            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+            <nuxt-img
+              :src="combineImageUrl(item.directus_files_id.filename_disk)"
+              class="min-w-full min-h-full object-contain"
+            />
           </div>
           <div
             v-if="lifeSnippetsMoreFile.result.data[0].moreFileList.length === 0"
@@ -156,9 +171,12 @@
           <div
             v-for="(item, index) in lifeSnippetsMoreFile.result.data[0].moreFileList"
             :key="index"
-            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] aspect-4/3 overflow-hidden relative"
+            class="w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] relative bg-#f4f4f4"
           >
-            <nuxt-img :src="combineImageUrl(item.directus_files_id.filename_disk)" class="absolute top-50% left-50% translate-x-[-50%] translate-y-[-50%]" />
+            <nuxt-img
+              :src="combineImageUrl(item.directus_files_id.filename_disk)"
+              class="min-w-full min-h-full object-contain"
+            />
           </div>
           <div
             v-if="lifeSnippetsMoreFile.result.data[0].moreFileList.length === 0"
