@@ -12,11 +12,11 @@
       },
     })"
   >
-    <div class="flex items-center justify-center relative w-full bg-#f4f4f4">
-      <nuxt-img v-if="props.mainImage" :src="props.mainImage" class="min-w-full min-h-full object-contain" />
+    <div class="aspect-4/3 flex items-center justify-center relative w-full bg-#f4f4f4 overflow-hidden">
+      <nuxt-img v-if="props.mainImage" :src="props.mainImage" class="object-contain max-w-full max-h-full w-full" />
     </div>
     <div v-if="props.name" class="bg-accent px-.5rem py-.5rem rounded-.7rem">
-      <div class="border-warning border-dashed border-1px w-full py-.2rem px-.8rem rounded-.5rem">
+      <div class="border-warning border-dashed border-1px w-full py-.2rem px-1.3rem rounded-.5rem">
         {{ props.name }}
       </div>
     </div>
