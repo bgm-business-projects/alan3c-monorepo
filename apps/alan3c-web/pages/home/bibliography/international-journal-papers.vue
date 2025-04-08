@@ -62,9 +62,9 @@
                   , ({{ item.year }})
                 </span>
                 <span v-if="item.titleOfThePaper">
-                  : {{ item.titleOfThePaper }}
+                  : "{{ item.titleOfThePaper }}"
                 </span>
-                <span v-if="item.journalName">
+                <span v-if="item.journalName" class="text-italic">
                   {{ item.journalName }}
                 </span>
                 <span v-if="item.vol">
@@ -88,6 +88,7 @@
                   {{ item.statusDate }}
                   )
                 </span>
+                .
               </div>
             </div>
           </template>

@@ -5,19 +5,30 @@
         <span>{{ props.index }}.</span>
         <span class="w-5px" />
       </div>
-      <div class="flex">
-        <span v-if="props.data.author">{{ props.data.author }}</span>
-        <span v-if="props.data.publicationYear">,({{ props.data.publicationYear }})</span>
-        <span v-if="props.data.title " class="ml-.2rem">: "{{ props.data.title }}"</span>
-        <span v-if="props.data.publicationSource">{{ props.data.publicationSource }}</span>
-        <span v-if="props.data.volNoPg">, {{ props.data.volNoPg }}</span>
+      <div>
+        <span v-if="props.data.author">
+          {{ props.data.author }}
+        </span>
+        <span v-if="props.data.publicationYear">
+          ,({{ props.data.publicationYear }})
+        </span>
+        <span v-if="props.data.title ">
+          : "{{ props.data.title }}"
+        </span>
+        <span v-if="props.data.publicationSource" class="text-italic">
+          {{ props.data.publicationSource }}
+        </span>
+        <span v-if="props.data.volNoPg">
+          , {{ props.data.volNoPg }}
+        </span>
+        .
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { BookChapters } from '~/contract/bibliography/book-chapters.type'
+import type { BookChapters } from '../../contract/bibliography/book-chapters/book-chapters.type'
 
 const props = withDefaults(defineProps<Props>(), {
 })

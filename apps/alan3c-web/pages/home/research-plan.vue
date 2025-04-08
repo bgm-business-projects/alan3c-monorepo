@@ -26,16 +26,19 @@
     <div
       class="max-width custom-grid"
     >
-      <div class="font-medium text-lg">
+      <div class="font-medium text-lg flex">
+        {{ t('researchPlan.no') }}
+      </div>
+      <div class="font-medium text-lg flex">
         {{ t('researchPlan.planeName') }}
       </div>
-      <div class="font-medium text-lg">
+      <div class="font-medium text-lg flex">
         {{ t('researchPlan.timePeriod') }}
       </div>
-      <div class="font-medium text-lg">
+      <div class="font-medium text-lg flex">
         {{ t('researchPlan.sponsor') }}
       </div>
-      <div class="font-medium text-lg">
+      <div class="font-medium text-lg flex">
         {{ t('researchPlan.grantNumber') }}
       </div>
       <template v-if="!isLoading">
@@ -44,23 +47,28 @@
             v-for="(item, index) in researchPlan?.transformedData"
             :key="index"
           >
-            <div class="flex">
-              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem flex-1">
+            <div class="flex justify-start h-full">
+              <div class="py-.4rem rounded-.4rem flex-1 flex justify-start text-left">
+                {{ Number(index) + offset + 1 }}
+              </div>
+            </div>
+            <div class="flex h-full">
+              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem flex-1 h-full">
                 {{ item.translations?.name }}
               </div>
             </div>
-            <div class="flex">
-              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem flex-1">
+            <div class="flex h-full">
+              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem flex-1 h-full">
                 {{ item?.startDate }} - {{ item?.endDate }}
               </div>
             </div>
-            <div class="flex">
-              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem flex-1">
+            <div class="flex h-full">
+              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem flex-1 h-full">
                 {{ item.translations?.sponsor }}
               </div>
             </div>
-            <div class="flex">
-              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem flex-1">
+            <div class="flex h-full">
+              <div class="bg-accent px-1.5rem py-.4rem rounded-.4rem flex-1 h-full">
                 {{ item?.referenceNumber }}
               </div>
             </div>
@@ -84,12 +92,13 @@
           {{ t('notFound') }}
         </div>
       </template>
-      <div class="flex lg:hidden w-full">
+      <div class="flex lg:hidden w-full gap-[1.5rem]">
         <template v-if="researchPlan?.transformedData && researchPlan?.transformedData.length > 0 && !researchPlan?.transformedData.every(item => !item.translations?.name)">
           <research-plan-mobile-card
             v-for="(item, index) in researchPlan?.originalData?.data"
-            :key="index"
+            :key="Number(index) + offset + 1"
             :data="item"
+            :index="Number(index) + offset + 1"
           />
         </template>
       </div>
@@ -175,7 +184,7 @@ useSeoMeta({
   display: grid
   align-items: center
   justify-content: start
-  grid-template-columns: auto auto auto auto
+  grid-template-columns: auto auto auto auto auto
   gap: 1rem 1rem
 
 @media (max-width: 1024px)

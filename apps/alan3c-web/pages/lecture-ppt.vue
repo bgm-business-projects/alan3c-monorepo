@@ -82,7 +82,7 @@
           v-for="(item, index) in lecturePpt?.data"
           :key="item.id"
           :data="item"
-          :index
+          :index="Number(index) + offset + 1"
           :offset
         />
       </div>

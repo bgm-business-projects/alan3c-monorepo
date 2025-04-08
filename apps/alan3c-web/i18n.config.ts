@@ -88,6 +88,7 @@ export default defineI18nConfig(() => ({
         downloads: 'Downloads',
       },
       researchPlan: {
+        no: 'No.',
         planeName: 'Project Title',
         timePeriod: 'Time Period',
         sponsor: 'Sponsor',
@@ -231,6 +232,7 @@ export default defineI18nConfig(() => ({
         downloads: '下載次數',
       },
       researchPlan: {
+        no: '序號',
         planeName: '計畫名稱',
         timePeriod: '期間',
         sponsor: '贊助單位',

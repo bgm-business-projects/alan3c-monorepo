@@ -92,7 +92,7 @@
             <academic-lecture-record-mobile-card
               v-for="(item, index) in futureSpeech?.data.originalData?.data"
               :key="index"
-              :index="index + 1"
+              :index="Number(index) + offset + 1"
               :data="item"
             />
           </div>

@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import type { DialogChainObject } from 'quasar'
-import type { LocalConferencePapers } from '~/contract/bibliography/local-conference-papers.type'
+import type { LocalConferencePapers } from '../../../contract/bibliography/local-conference-papers/local-conference-papers.type'
 import BaseLoginDialog from '../../../components/base-login-dialog.vue'
 import ListItem from '../../../components/local-conference-papers/list-item.vue'
 

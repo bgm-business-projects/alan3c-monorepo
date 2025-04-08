@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full border rounded-.5rem">
+  <div class="flex w-full border rounded-.5rem relative">
     <div class="bg-[#f4f4f4] flex justify-center py-.4rem px-1rem font-medium w-full">
       {{ transformedData.translations?.name }}
     </div>
@@ -28,6 +28,9 @@
         </div>
       </div>
     </div>
+    <div class="absolute left-0 top-0 bg-accent border translate-x-[-40%] translate-y-[-40%] px-.5rem pt-.1rem pb-.2rem rounded-.3rem">
+      {{ props.index }}
+    </div>
   </div>
 </template>
 
@@ -36,6 +39,7 @@ import type { ResearchPlan } from '~/contract/research-plan/research-plan.type'
 
 interface Props {
   data: ResearchPlan['data'][number];
+  index: number;
 }
 const props = withDefaults(defineProps<Props>(), {
 })

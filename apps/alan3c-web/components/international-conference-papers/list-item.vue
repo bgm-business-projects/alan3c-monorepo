@@ -5,18 +5,17 @@
         <span>{{ props.index }}.</span>
         <span class="w-5px" />
       </div>
-      <div class="flex gap-.1rem">
-        <span>
-          <template v-if="props.data.author">
-            {{ props.data.author }}
-          </template>
-          <template v-if="props.data.publicationYear">, ({{ props.data.publicationYear }})</template>
-          <template v-if="props.data.title">: "{{ props.data.title }},"</template>
-          <template v-if="props.data.publicationConference">{{ props.data.publicationConference }}</template>
-          <template v-if="props.data.location ">, {{ props.data.location }}</template>
-          <template v-if="props.data.date">, {{ dayjs(props.data.date).format('MMM YYYY') }}</template>
-          <template v-if="props.data.numPages">, {{ props.data.numPages }}.</template>
+      <div>
+        <span v-if="props.data.author">
+          {{ props.data.author }}
         </span>
+        <span v-if="props.data.publicationYear">, ({{ props.data.publicationYear }})</span>
+        <span v-if="props.data.title">: "{{ props.data.title }},"</span>
+        <span v-if="props.data.publicationConference">{{ props.data.publicationConference }}</span>
+        <span v-if="props.data.location ">, {{ props.data.location }}</span>
+        <span v-if="props.data.date">, {{ dayjs(props.data.date).format('MMM YYYY') }}</span>
+        <span v-if="props.data.numPages">, {{ props.data.numPages }}</span>
+        .
         <!-- <span v-if="props.data.author">{{ props.data.author }}</span>
         <span v-if="props.data.publicationYear">, ({{ props.data.publicationYear }})</span>
         <span v-if="props.data.title">: "{{ props.data.title }},"</span>
