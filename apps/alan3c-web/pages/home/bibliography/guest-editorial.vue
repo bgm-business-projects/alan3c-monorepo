@@ -67,7 +67,7 @@
 
 <script setup lang="ts">
 import type { DialogChainObject } from 'quasar'
-import type { GuestEditorial } from '~/contract/bibliography/guest-editorial.type'
+import type { GuestEditorial } from '../../../contract/bibliography/guest-editorial/guest-editorial.type'
 import BaseLoginDialog from '../../../components/base-login-dialog.vue'
 
 const { locale, t } = useI18n()
@@ -98,6 +98,7 @@ const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('b
       })
       dialog.value?.hide()
       isLoading.value = false
+      refreshBibliography()
       return result
     }
   }

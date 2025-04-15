@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import type { DialogChainObject } from 'quasar'
-import type { DomesticMagazineArticles } from '~/contract/bibliography/domestic-magazine-articles.type'
+import type { DomesticMagazineArticles } from '../../../contract/bibliography/domestic-magazine-articles/domestic-magazine-articles.type'
 import BaseLoginDialog from '../../../components/base-login-dialog.vue'
 import ListItem from '../../../components/domestic-magazine-articles/list-item.vue'
 
@@ -90,6 +90,7 @@ const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('b
       })
       dialog.value?.hide()
       isLoading.value = false
+      refreshBibliography()
       return result
     }
   }

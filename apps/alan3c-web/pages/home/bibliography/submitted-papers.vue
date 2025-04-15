@@ -127,6 +127,7 @@ const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('s
       })
       dialog.value?.hide()
       isLoading.value = false
+      refreshBibliography()
       return result
     }
   }

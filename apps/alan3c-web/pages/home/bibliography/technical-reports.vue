@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import type { DialogChainObject } from 'quasar'
-import type { TechnicalReports } from '~/contract/bibliography/technical-reports.type'
+import type { TechnicalReports } from '../../../contract/bibliography/technical-reports/technical-reports.type'
 import BaseLoginDialog from '../../../components/base-login-dialog.vue'
 import ListItem from '../../../components/technical-reports/list-item.vue'
 
@@ -90,6 +90,7 @@ const { data: bibliography, refresh: refreshBibliography } = useLazyAsyncData('b
       })
       dialog.value?.hide()
       isLoading.value = false
+      refreshBibliography()
       return result
     }
   }
