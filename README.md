@@ -65,3 +65,11 @@ docker images
 ```sh
 docker rmi <image_id>
 ```
+
+
+### 檢查是否有被變更的檔案
+```sh
+git status 
+# 排除 apps/directus-admin/uploads/
+git status --porcelain | grep -v 'apps/directus-admin/uploads/'
+```
