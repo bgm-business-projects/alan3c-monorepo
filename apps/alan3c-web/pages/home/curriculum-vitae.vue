@@ -67,7 +67,7 @@
         </div>
 
         <div id="society-activities" class="text-2xl font-semibold mt-3rem">
-          Professional Society Activities
+          Society Activities
         </div>
         <div class="w-full">
           <base-wysiwyg-preview class="w-full" :html-code="curriculumVitaeData?.data.professionalSocietyActivities" />
